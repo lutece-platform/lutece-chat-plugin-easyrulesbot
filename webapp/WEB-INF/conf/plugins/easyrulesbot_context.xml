@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" >
+
+
+    <!-- Response processor -->
+    <bean id="easyrulesbot.responseProcessor.inputString" class="fr.paris.lutece.plugins.easyrulesbot.service.response.InputStringResponseProcessor" />
+    <bean id="easyrulesbot.responseProcessor.yesNo" class="fr.paris.lutece.plugins.easyrulesbot.service.response.YesNoResponseProcessor" />
+
+    <!-- Conditions -->
+    <bean id="easyrulesbot.condition.dataKeyExists" class="fr.paris.lutece.plugins.easyrulesbot.service.rules.conditions.RuleDataKeyExistsCondition"/>
+    <bean id="easyrulesbot.condition.avatar" class="fr.paris.lutece.plugins.easyrulesbot.service.rules.conditions.DataValueCondition">
+        <property name="dataKey">
+            <value>avatar</value>
+        </property>
+        <property name="dataValue">
+            <value>true</value>
+        </property>
+    </bean>
+    
+    <!-- Rules -->
+    <bean id="easyrulesbot.rule.greetings" class="fr.paris.lutece.plugins.easyrulesbot.service.rules.BotRule" >
+        <property name="name">
+            <value>greetings</value>
+        </property>    
+        <property name="priority">
+            <value>0</value>
+        </property>    
+        <property name="description">
+            <value>Greetings</value>
+        </property>    
+        <property name="question">
+            <value>Bonjour, quel est votre prénom ?</value>
+        </property>    
+        <property name="dataKey">
+            <value>username</value>
+        </property>    
+        <property name="responseProcessor">
+            <ref bean="easyrulesbot.responseProcessor.inputString" />
+        </property>
+        <property name="listConditions">
+            <list>
+                 <ref bean="easyrulesbot.condition.dataKeyExists" />
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="easyrulesbot.rule.avatar" class="fr.paris.lutece.plugins.easyrulesbot.service.rules.BotRule" >
+        <property name="name">
+            <value>avatar</value>
+        </property>    
+        <property name="priority">
+            <value>1</value>
+        </property>    
+        <property name="description">
+            <value>Check for Avatar</value>
+        </property>    
+        <property name="question">
+            <value>Souhaitez-vous gérer des avatars ?</value>
+        </property>    
+        <property name="dataKey">
+            <value>avatar</value>
+        </property>    
+        <property name="responseProcessor">
+            <ref bean="easyrulesbot.responseProcessor.yesNo" />
+        </property>
+        <property name="listConditions">
+            <list>
+                 <ref bean="easyrulesbot.condition.dataKeyExists" />
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="easyrulesbot.rule.avatarServer" class="fr.paris.lutece.plugins.easyrulesbot.service.rules.BotRule" >
+        <property name="name">
+            <value>avatarserver</value>
+        </property>    
+        <property name="priority">
+            <value>2</value>
+        </property>    
+        <property name="description">
+            <value>Check for Avatar Server</value>
+        </property>    
+        <property name="question">
+            <value>Souhaitez-vous gérer vos avatars avec un serveur dédié plutôt qu'avec Gravatar ?</value>
+        </property>    
+        <property name="dataKey">
+            <value>avatarserver</value>
+        </property>    
+        <property name="responseProcessor">
+            <ref bean="easyrulesbot.responseProcessor.yesNo" />
+        </property>
+        <property name="listConditions">
+            <list>
+                 <ref bean="easyrulesbot.condition.dataKeyExists" />
+                 <ref bean="easyrulesbot.condition.avatar" />
+            </list>
+        </property>
+    </bean>
+    
+    <!-- Rule engine -->
+    <bean id="easyrulesbot.rulesEngine" class="org.easyrules.spring.RulesEngineFactoryBean">
+        <property name="skipOnFirstAppliedRule" value="true"/>
+        <property name="skipOnFirstFailedRule" value="true"/>
+        <property name="priorityThreshold" value="10"/>
+        <property name="silentMode" value="false"/>
+        <property name="rules">
+            <list>
+                <ref bean="easyrulesbot.rule.greetings"/>
+                <ref bean="easyrulesbot.rule.avatar"/>
+                <ref bean="easyrulesbot.rule.avatarServer"/>
+            </list>
+        </property>
+        <property name="ruleListeners">
+            <list>
+            </list>
+        </property>
+    </bean>
+    
+</beans>

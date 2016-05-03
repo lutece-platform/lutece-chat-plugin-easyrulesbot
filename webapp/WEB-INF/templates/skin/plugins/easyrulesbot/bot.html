@@ -1,0 +1,57 @@
+<script src="js/plugins/easyrulesbot/typed.js" type="text/javascript"></script>
+
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-2">
+        <!--Liste des Posts-->
+        <div class="direct-chat-messages">
+            <#list posts_list as post >
+
+            <div class="bubble <#if post.author==1>bubble-alt yellow</#if>">
+                
+                <#if (post_index+1) == posts_list?size>
+                <span id="typed"></span>
+                <#else>
+                     ${post.content}
+                </#if>
+            </div>
+            </#list>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-2">
+        <form class="form" action="jsp/site/Portal.jsp" method="post" >
+            <input type="hidden" name="page" value="bot" />
+            <input type="hidden" name="action" value="response" />
+            <input type="text" name="response">
+            <button class="btn btn-primary btn-sm" type="submit" >
+                <i class="fa fa-comment"></i>
+                Envoyer
+            </button>
+        </form>
+    </div>
+</div>
+<script>
+ $(function(){
+
+        $("#typed").typed({
+            strings: ["${posts_list[posts_list?size-1].content}"],
+            // stringsElement: $('#typed-strings'),
+            typeSpeed: 30,
+            backDelay: 500,
+            loop: false,
+            contentType: 'html', // or text
+            // defaults to false for infinite loop
+            loopCount: false,
+            callback: function(){ foo(); },
+            resetCallback: function() { newTyped(); }
+        });
+
+        $(".reset").click(function(){
+            $("#typed").typed('reset');
+        });
+
+    });
+    </script>
