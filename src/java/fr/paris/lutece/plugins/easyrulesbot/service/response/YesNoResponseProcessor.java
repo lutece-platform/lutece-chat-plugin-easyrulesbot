@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.easyrulesbot.service.response;
 
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseNotUnderstoodException;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
+import java.util.List;
 
 
 /**
@@ -42,6 +43,41 @@ import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.Response
  */
 public class YesNoResponseProcessor implements ResponseProcessor
 {
+    private static final String TRUE = "true";
+    private static final String FALSE = "false";
+    
+    private List<String> _listYesTerms;
+    private List<String> _listNoTerms;
+    private String _strInvalideResponseMessage;
+
+    /**
+     * Set the Yes terms list
+     * @param list the Yes terms list
+     */
+    public void setYesTermsList( List<String> list )
+    {
+        _listYesTerms = list;
+    }
+    
+    /**
+     * Set the No terms list
+     * @param list the No terms list
+     */
+    public void setNoTermsList( List<String> list )
+    {
+        _listNoTerms = list;
+    }
+    
+    /**
+     * Set the Invalid Response Message
+     * @param strMessage The message
+     */
+    public void setInvalidResponseMessage( String strMessage )
+    {
+        _strInvalideResponseMessage = strMessage;
+    }
+    
+    
     /**
      * {@inheritDoc }
      */
@@ -49,23 +85,22 @@ public class YesNoResponseProcessor implements ResponseProcessor
     public String processResponse( String strResponse )
         throws ResponseProcessingException
     {
-        // FIXME
-        String[] terms = strResponse.split( " " );
-
-        for ( String term : terms )
+        strResponse = strResponse.toLowerCase();
+        for( String term : _listYesTerms )
         {
-            term = term.toLowerCase(  );
-
-            if ( term.equals( "oui" ) )
+            if( strResponse.contains( term ))
             {
-                return "true";
+                return TRUE;
             }
-            else if ( term.equals( "non" ) )
+        }
+        for( String term : _listNoTerms )
+        {
+            if( strResponse.contains( term ))
             {
-                return "false";
+                return FALSE;
             }
         }
 
-        throw new ResponseNotUnderstoodException(  );
+        throw new ResponseNotUnderstoodException( _strInvalideResponseMessage );
     }
 }

@@ -42,8 +42,8 @@ public class ResponseNotUnderstoodException extends ResponseProcessingException
     /**
      *
      */
-    public ResponseNotUnderstoodException(  )
+    public ResponseNotUnderstoodException( String strMessage )
     {
-        super(  );
+        super( strMessage );
     }
 }

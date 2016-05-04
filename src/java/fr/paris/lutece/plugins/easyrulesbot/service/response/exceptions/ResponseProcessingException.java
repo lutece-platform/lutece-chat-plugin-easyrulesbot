@@ -39,11 +39,13 @@ package fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions;
  */
 public class ResponseProcessingException extends Exception
 {
+
+    private static final long serialVersionUID = 1L;
     /**
      *
      */
-    public ResponseProcessingException(  )
+    public ResponseProcessingException( String strMessage )
     {
-        super(  );
+        super( strMessage );
     }
 }

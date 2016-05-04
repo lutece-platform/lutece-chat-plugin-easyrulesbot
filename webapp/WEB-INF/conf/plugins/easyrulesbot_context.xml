@@ -7,8 +7,39 @@
 
     <!-- Response processor -->
     <bean id="easyrulesbot.responseProcessor.inputString" class="fr.paris.lutece.plugins.easyrulesbot.service.response.InputStringResponseProcessor" />
-    <bean id="easyrulesbot.responseProcessor.yesNo" class="fr.paris.lutece.plugins.easyrulesbot.service.response.YesNoResponseProcessor" />
-
+    <bean id="easyrulesbot.responseProcessor.yesNo" class="fr.paris.lutece.plugins.easyrulesbot.service.response.YesNoResponseProcessor" >
+        <property name="yesTermsList">
+            <list>
+                <value>oui</value>
+                <value>yes</value>
+                <value>yeah</value>
+                <value>ok</value>
+                <value>ouai</value>
+                <value>evidemment</value>
+                <value>évidemment</value>
+                <value>bien sur</value>
+                <value>bien sûr</value>
+                <value>of course</value>
+                <value>affirmatif</value>
+                <value>avec plaisir</value>
+            </list>
+        </property>
+        <property name="noTermsList">
+            <list>
+                <value>non</value>
+                <value>sans façon</value>
+                <value>négatif</value>
+                <value>negatif</value>
+                <value>pas la peine</value>
+                <value>no way</value>
+            </list>
+        </property>
+        <property name="invalidResponseMessage">
+            <value>Désolé. je n'ai pas compris votre réponse. Pourriez-vous la reformuler en utilisant une forme affirmative (oui, ok, avec plaisir, ...) ou négative (non, no way, ...)</value>
+        </property>
+                
+    </bean>    
+    
     <!-- Conditions -->
     <bean id="easyrulesbot.condition.dataKeyExists" class="fr.paris.lutece.plugins.easyrulesbot.service.rules.conditions.RuleDataKeyExistsCondition"/>
     <bean id="easyrulesbot.condition.avatar" class="fr.paris.lutece.plugins.easyrulesbot.service.rules.conditions.DataValueCondition">
@@ -42,7 +73,7 @@
         </property>
         <property name="listConditions">
             <list>
-                 <ref bean="easyrulesbot.condition.dataKeyExists" />
+                <ref bean="easyrulesbot.condition.dataKeyExists" />
             </list>
         </property>
     </bean>
@@ -68,7 +99,7 @@
         </property>
         <property name="listConditions">
             <list>
-                 <ref bean="easyrulesbot.condition.dataKeyExists" />
+                <ref bean="easyrulesbot.condition.dataKeyExists" />
             </list>
         </property>
     </bean>
@@ -94,8 +125,8 @@
         </property>
         <property name="listConditions">
             <list>
-                 <ref bean="easyrulesbot.condition.dataKeyExists" />
-                 <ref bean="easyrulesbot.condition.avatar" />
+                <ref bean="easyrulesbot.condition.dataKeyExists" />
+                <ref bean="easyrulesbot.condition.avatar" />
             </list>
         </property>
     </bean>

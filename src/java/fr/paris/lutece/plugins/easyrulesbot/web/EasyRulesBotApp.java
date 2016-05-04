@@ -43,8 +43,6 @@ import fr.paris.lutece.portal.util.mvc.xpage.annotations.Controller;
 import fr.paris.lutece.portal.web.xpages.XPage;
 
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -104,7 +102,7 @@ public class EasyRulesBotApp extends MVCApplication
         }
         catch ( ResponseProcessingException ex )
         {
-            _executor.addBotPost( "Je n'ai pas compris votre réponse. Désolé." );
+            _executor.addBotPost( ex.getMessage() );
         }
 
         return redirectView( request, VIEW_HOME );
