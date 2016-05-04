@@ -35,13 +35,10 @@ package fr.paris.lutece.plugins.easyrulesbot.service;
 
 import fr.paris.lutece.plugins.easyrulesbot.business.Bot;
 import fr.paris.lutece.plugins.easyrulesbot.business.BotExecutor;
-import fr.paris.lutece.plugins.easyrulesbot.business.rules.BotRule;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
-import org.easyrules.api.RulesEngine;
 
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -49,21 +46,29 @@ import java.util.Map;
  */
 public class BotService
 {
-    private static final String BEAN_ENGINE_FACTORY = "easyrulesbot.rulesEngine";
     private static List<Bot> _listBots;
 
     /**
      * Provides a bot executor
+     * @param strBotKey The bot key
      * @return The bot executor
      */
-    public static BotExecutor getExecutor(  )
+    public static BotExecutor getExecutor( String strBotKey )
     {
-        Bot bot = getBots(  ).get( 0 ); // FIXME
+        Bot bot = getBot( strBotKey ); 
+        if( bot == null )
+        {
+            return null;
+        }
         BotExecutor executor = new BotExecutor( bot );
 
         return executor;
     }
 
+    /**
+     * Get all bots
+     * @return The bots list
+     */
     public static List<Bot> getBots(  )
     {
         if ( _listBots == null )
@@ -74,11 +79,16 @@ public class BotService
         return _listBots;
     }
 
-    public Bot getBot( String strName )
+    /**
+     * Get a bot by its key
+     * @param strBotKey The bot key
+     * @return The bot
+     */
+    public static Bot getBot( String strBotKey )
     {
         for ( Bot bot : getBots(  ) )
         {
-            if ( bot.getName(  ).equals( strName ) )
+            if ( bot.getKey(  ).equals( strBotKey ) )
             {
                 return bot;
             }

@@ -164,8 +164,11 @@
     
     <!-- Bot -->
     <bean id="easyrulesbot.bot.siteBuilder" class="fr.paris.lutece.plugins.easyrulesbot.business.Bot">
-        <property name="name">
+        <property name="key">
             <value>lutecesitebuilder</value>
+        </property>
+        <property name="name">
+            <value>Lutece Site Builder Bot</value>
         </property>
         <property name="description">
             <value>Bot d'assistance à la création d'un site Lutece</value>

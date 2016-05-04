@@ -1,0 +1,10 @@
+
+<#list bots_list as bot>
+<ul>
+    <li>
+        <a href="jsp/site/Portal.jsp?page=bot&view=bot&bot=${bot.key}" >
+            ${bot.name} - ${bot.description}
+        </a>
+    </li>
+</ul>
+</#list>

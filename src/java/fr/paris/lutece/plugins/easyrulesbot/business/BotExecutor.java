@@ -212,4 +212,13 @@ public class BotExecutor implements Serializable
     {
         return _mapData;
     }
+
+    /**
+     * Returns the bot name
+     * @return the bot name
+     */
+    public String getBotName()
+    {
+        return _bot.getName();
+    }
 }

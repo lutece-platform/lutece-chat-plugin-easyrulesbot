@@ -34,6 +34,7 @@
 package fr.paris.lutece.plugins.easyrulesbot.business;
 
 import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseFilter;
+import java.io.Serializable;
 
 import org.easyrules.api.RulesEngine;
 
@@ -43,12 +44,34 @@ import java.util.List;
 /**
  * Bot
  */
-public class Bot
+public class Bot implements Serializable
 {
+
+    private static final long serialVersionUID = 1L;
+    
+    private String _strKey;
     private String _strName;
     private String _strDescription;
     private RulesEngine _engine;
     private List<ResponseFilter> _listResponseFilters;
+
+    /**
+     * Returns the Key
+     * @return The Key
+     */
+    public String getKey(  )
+    {
+        return _strKey;
+    }
+
+    /**
+     * Sets the Key
+     * @param strKey The Key
+     */
+    public void setKey( String strKey )
+    {
+        _strKey = strKey;
+    }
 
     /**
      * Returns the Name
