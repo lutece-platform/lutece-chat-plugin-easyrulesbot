@@ -31,59 +31,21 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.service;
+package fr.paris.lutece.plugins.easyrulesbot.service.response;
 
-import fr.paris.lutece.plugins.easyrulesbot.business.Bot;
-import fr.paris.lutece.plugins.easyrulesbot.business.BotExecutor;
-import fr.paris.lutece.plugins.easyrulesbot.business.rules.BotRule;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
-
-import org.easyrules.api.RulesEngine;
-
-import java.util.List;
-import java.util.Map;
+import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
 
 
 /**
- * BotService
+ * ResponseFilter
  */
-public class BotService
+public interface ResponseFilter
 {
-    private static final String BEAN_ENGINE_FACTORY = "easyrulesbot.rulesEngine";
-    private static List<Bot> _listBots;
-
     /**
-     * Provides a bot executor
-     * @return The bot executor
+     * Analyzes the response and formats it.
+     * @param strResponse The response
+     * @return The processed response
+     * @throws ResponseProcessingException
      */
-    public static BotExecutor getExecutor(  )
-    {
-        Bot bot = getBots(  ).get( 0 ); // FIXME
-        BotExecutor executor = new BotExecutor( bot );
-
-        return executor;
-    }
-
-    public static List<Bot> getBots(  )
-    {
-        if ( _listBots == null )
-        {
-            _listBots = SpringContextService.getBeansOfType( Bot.class );
-        }
-
-        return _listBots;
-    }
-
-    public Bot getBot( String strName )
-    {
-        for ( Bot bot : getBots(  ) )
-        {
-            if ( bot.getName(  ).equals( strName ) )
-            {
-                return bot;
-            }
-        }
-
-        return null;
-    }
+    String filterResponse( String strResponse ) throws ResponseProcessingException;
 }

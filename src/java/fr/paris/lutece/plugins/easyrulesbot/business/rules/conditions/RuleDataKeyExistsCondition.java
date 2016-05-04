@@ -31,54 +31,19 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.service;
+package fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions;
+
+import java.util.Map;
 
 
 /**
- * Post
+ * RuleDataKeyExistsCondition
  */
-public class Post
+public class RuleDataKeyExistsCondition implements Condition
 {
-    public static final int AUTHOR_BOT = 0;
-    public static final int AUTHOR_USER = 1;
-
-    // Variables declarations 
-    private String _strContent;
-    private int _nAuthor;
-
-    /**
-     * Returns the Content
-     * @return The Content
-     */
-    public String getContent(  )
+    @Override
+    public boolean evaluate( Map<String, String> mapData, String strRuleDataKey )
     {
-        return _strContent;
-    }
-
-    /**
-     * Sets the Content
-     * @param strContent The Content
-     */
-    public void setContent( String strContent )
-    {
-        _strContent = strContent;
-    }
-
-    /**
-     * Returns the Author
-     * @return The Author
-     */
-    public int getAuthor(  )
-    {
-        return _nAuthor;
-    }
-
-    /**
-     * Sets the Author
-     * @param nAuthor The Author
-     */
-    public void setAuthor( int nAuthor )
-    {
-        _nAuthor = nAuthor;
+        return !mapData.containsKey( strRuleDataKey );
     }
 }

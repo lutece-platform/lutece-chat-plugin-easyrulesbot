@@ -33,7 +33,7 @@
  */
 package fr.paris.lutece.plugins.easyrulesbot.web;
 
-import fr.paris.lutece.plugins.easyrulesbot.service.BotExecutor;
+import fr.paris.lutece.plugins.easyrulesbot.business.BotExecutor;
 import fr.paris.lutece.plugins.easyrulesbot.service.BotService;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
@@ -92,9 +92,16 @@ public class EasyRulesBotApp extends MVCApplication
      * @return
      */
     @Action( ACTION_RESPONSE )
-    public XPage doResponse( HttpServletRequest request )
+    public XPage doProcessResponse( HttpServletRequest request )
     {
         String strResponse = request.getParameter( PARAMETER_RESPONSE );
+
+        if ( strResponse.equals( "reset" ) )
+        {
+            _executor = null;
+
+            return redirectView( request, VIEW_HOME );
+        }
 
         try
         {
@@ -102,7 +109,7 @@ public class EasyRulesBotApp extends MVCApplication
         }
         catch ( ResponseProcessingException ex )
         {
-            _executor.addBotPost( ex.getMessage() );
+            _executor.addBotPost( ex.getMessage(  ) );
         }
 
         return redirectView( request, VIEW_HOME );

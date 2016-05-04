@@ -31,10 +31,12 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.service.response;
+package fr.paris.lutece.plugins.easyrulesbot.service.response.processors;
 
+import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseProcessor;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseNotUnderstoodException;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
+
 import java.util.List;
 
 
@@ -45,7 +47,6 @@ public class YesNoResponseProcessor implements ResponseProcessor
 {
     private static final String TRUE = "true";
     private static final String FALSE = "false";
-    
     private List<String> _listYesTerms;
     private List<String> _listNoTerms;
     private String _strInvalideResponseMessage;
@@ -58,7 +59,7 @@ public class YesNoResponseProcessor implements ResponseProcessor
     {
         _listYesTerms = list;
     }
-    
+
     /**
      * Set the No terms list
      * @param list the No terms list
@@ -67,7 +68,7 @@ public class YesNoResponseProcessor implements ResponseProcessor
     {
         _listNoTerms = list;
     }
-    
+
     /**
      * Set the Invalid Response Message
      * @param strMessage The message
@@ -76,8 +77,7 @@ public class YesNoResponseProcessor implements ResponseProcessor
     {
         _strInvalideResponseMessage = strMessage;
     }
-    
-    
+
     /**
      * {@inheritDoc }
      */
@@ -85,17 +85,19 @@ public class YesNoResponseProcessor implements ResponseProcessor
     public String processResponse( String strResponse )
         throws ResponseProcessingException
     {
-        strResponse = strResponse.toLowerCase();
-        for( String term : _listYesTerms )
+        strResponse = strResponse.toLowerCase(  );
+
+        for ( String term : _listYesTerms )
         {
-            if( strResponse.contains( term ))
+            if ( strResponse.contains( term ) )
             {
                 return TRUE;
             }
         }
-        for( String term : _listNoTerms )
+
+        for ( String term : _listNoTerms )
         {
-            if( strResponse.contains( term ))
+            if ( strResponse.contains( term ) )
             {
                 return FALSE;
             }

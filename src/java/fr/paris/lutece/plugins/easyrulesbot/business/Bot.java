@@ -31,66 +31,95 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.service.rules.conditions;
+package fr.paris.lutece.plugins.easyrulesbot.business;
 
-import java.util.Map;
+import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseFilter;
+
+import org.easyrules.api.RulesEngine;
+
+import java.util.List;
 
 
 /**
- * DataValueCondition
+ * Bot
  */
-public class DataValueCondition implements Condition
+public class Bot
 {
-    // Variables declarations 
-    private String _strDataKey;
-    private String _strDataValue;
+    private String _strName;
+    private String _strDescription;
+    private RulesEngine _engine;
+    private List<ResponseFilter> _listResponseFilters;
 
     /**
-     * Returns the DataKey
-     * @return The DataKey
+     * Returns the Name
+     * @return The Name
      */
-    public String getDataKey(  )
+    public String getName(  )
     {
-        return _strDataKey;
+        return _strName;
     }
 
     /**
-     * Sets the DataKey
-     * @param strDataKey The DataKey
+     * Sets the Name
+     * @param strName The Name
      */
-    public void setDataKey( String strDataKey )
+    public void setName( String strName )
     {
-        _strDataKey = strDataKey;
+        _strName = strName;
     }
 
     /**
-     * Returns the DataValue
-     * @return The DataValue
+     * Returns the Description
+     * @return The Description
      */
-    public String getDataValue(  )
+    public String getDescription(  )
     {
-        return _strDataValue;
+        return _strDescription;
     }
 
     /**
-     * Sets the DataValue
-     * @param strDataValue The DataValue
+     * Sets the Description
+     * @param strDescription The Description
      */
-    public void setDataValue( String strDataValue )
+    public void setDescription( String strDescription )
     {
-        _strDataValue = strDataValue;
+        _strDescription = strDescription;
     }
 
-    @Override
-    public boolean evaluate( Map<String, String> mapData, String strRuleDataKey )
+    /**
+     * Returns the RulesEngine
+     * @return The RulesEngine
+     */
+    public RulesEngine getRulesEngine(  )
     {
-        if ( _strDataValue.equalsIgnoreCase( "undefined" ) )
-        {
-            return !mapData.containsKey( _strDataKey );
-        }
+        return _engine;
+    }
 
-        String strValue = mapData.get( _strDataKey );
+    /**
+     * Sets the RulesEngine
+     * @param RulesEngine The RulesEngine
+     */
+    public void setRulesEngine( RulesEngine RulesEngine )
+    {
+        _engine = RulesEngine;
+    }
 
-        return _strDataValue.equals( strValue );
+    /**
+     * Set the list of response filters
+     * @param list The list
+     *
+     */
+    public void setListResponseFilters( List<ResponseFilter> list )
+    {
+        _listResponseFilters = list;
+    }
+
+    /**
+     * The list of response filters
+     * @return The list
+     */
+    List<ResponseFilter> getResponseFilters(  )
+    {
+        return _listResponseFilters;
     }
 }

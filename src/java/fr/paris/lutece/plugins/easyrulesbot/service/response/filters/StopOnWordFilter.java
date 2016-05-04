@@ -31,21 +31,57 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.service.rules.conditions;
+package fr.paris.lutece.plugins.easyrulesbot.service.response.filters;
 
-import java.util.Map;
+import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseFilter;
+import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
+
+import java.util.List;
 
 
 /**
- * Condition
+ * Stop On Word Processor
  */
-public interface Condition
+public class StopOnWordFilter implements ResponseFilter
 {
+    private List<String> _listStopWords;
+    private String _strStopMessage;
+
     /**
-     *
-     * @param mapData
-     * @param strRuleDataKey
-     * @return
+     * Set the list of stop words
+     * @param list The list
      */
-    boolean evaluate( Map<String, String> mapData, String strRuleDataKey );
+    public void setListStopWords( List<String> list )
+    {
+        _listStopWords = list;
+    }
+
+    /**
+     * Set the stop message
+     * @param strMessage The message
+     */
+    public void setMessage( String strMessage )
+    {
+        _strStopMessage = strMessage;
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public String filterResponse( String strResponse )
+        throws ResponseProcessingException
+    {
+        String strCheck = strResponse.toLowerCase(  );
+
+        for ( String strWord : _listStopWords )
+        {
+            if ( strCheck.contains( strWord ) )
+            {
+                throw new ResponseProcessingException( _strStopMessage );
+            }
+        }
+
+        return strResponse;
+    }
 }

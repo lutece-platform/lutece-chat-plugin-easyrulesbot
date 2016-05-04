@@ -31,59 +31,66 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.service;
+package fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions;
 
-import fr.paris.lutece.plugins.easyrulesbot.business.Bot;
-import fr.paris.lutece.plugins.easyrulesbot.business.BotExecutor;
-import fr.paris.lutece.plugins.easyrulesbot.business.rules.BotRule;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
-
-import org.easyrules.api.RulesEngine;
-
-import java.util.List;
 import java.util.Map;
 
 
 /**
- * BotService
+ * DataValueCondition
  */
-public class BotService
+public class DataValueCondition implements Condition
 {
-    private static final String BEAN_ENGINE_FACTORY = "easyrulesbot.rulesEngine";
-    private static List<Bot> _listBots;
+    // Variables declarations 
+    private String _strDataKey;
+    private String _strDataValue;
 
     /**
-     * Provides a bot executor
-     * @return The bot executor
+     * Returns the DataKey
+     * @return The DataKey
      */
-    public static BotExecutor getExecutor(  )
+    public String getDataKey(  )
     {
-        Bot bot = getBots(  ).get( 0 ); // FIXME
-        BotExecutor executor = new BotExecutor( bot );
-
-        return executor;
+        return _strDataKey;
     }
 
-    public static List<Bot> getBots(  )
+    /**
+     * Sets the DataKey
+     * @param strDataKey The DataKey
+     */
+    public void setDataKey( String strDataKey )
     {
-        if ( _listBots == null )
-        {
-            _listBots = SpringContextService.getBeansOfType( Bot.class );
-        }
-
-        return _listBots;
+        _strDataKey = strDataKey;
     }
 
-    public Bot getBot( String strName )
+    /**
+     * Returns the DataValue
+     * @return The DataValue
+     */
+    public String getDataValue(  )
     {
-        for ( Bot bot : getBots(  ) )
+        return _strDataValue;
+    }
+
+    /**
+     * Sets the DataValue
+     * @param strDataValue The DataValue
+     */
+    public void setDataValue( String strDataValue )
+    {
+        _strDataValue = strDataValue;
+    }
+
+    @Override
+    public boolean evaluate( Map<String, String> mapData, String strRuleDataKey )
+    {
+        if ( _strDataValue.equalsIgnoreCase( "undefined" ) )
         {
-            if ( bot.getName(  ).equals( strName ) )
-            {
-                return bot;
-            }
+            return !mapData.containsKey( _strDataKey );
         }
 
-        return null;
+        String strValue = mapData.get( _strDataKey );
+
+        return _strDataValue.equals( strValue );
     }
 }

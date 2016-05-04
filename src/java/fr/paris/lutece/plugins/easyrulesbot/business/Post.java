@@ -31,23 +31,54 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.service.response;
-
-import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
+package fr.paris.lutece.plugins.easyrulesbot.business;
 
 
 /**
- * InputStringResponseProcessor
+ * Post
  */
-public class InputStringResponseProcessor implements ResponseProcessor
+public class Post
 {
+    public static final int AUTHOR_BOT = 0;
+    public static final int AUTHOR_USER = 1;
+
+    // Variables declarations 
+    private String _strContent;
+    private int _nAuthor;
+
     /**
-     * {@inheritDoc }
+     * Returns the Content
+     * @return The Content
      */
-    @Override
-    public String processResponse( String strResponse )
-        throws ResponseProcessingException
+    public String getContent(  )
     {
-        return strResponse;
+        return _strContent;
+    }
+
+    /**
+     * Sets the Content
+     * @param strContent The Content
+     */
+    public void setContent( String strContent )
+    {
+        _strContent = strContent;
+    }
+
+    /**
+     * Returns the Author
+     * @return The Author
+     */
+    public int getAuthor(  )
+    {
+        return _nAuthor;
+    }
+
+    /**
+     * Sets the Author
+     * @param nAuthor The Author
+     */
+    public void setAuthor( int nAuthor )
+    {
+        _nAuthor = nAuthor;
     }
 }

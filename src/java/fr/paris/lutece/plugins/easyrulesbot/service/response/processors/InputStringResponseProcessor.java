@@ -31,19 +31,24 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.service.rules.conditions;
+package fr.paris.lutece.plugins.easyrulesbot.service.response.processors;
 
-import java.util.Map;
+import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseProcessor;
+import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
 
 
 /**
- * RuleDataKeyExistsCondition
+ * InputStringResponseProcessor
  */
-public class RuleDataKeyExistsCondition implements Condition
+public class InputStringResponseProcessor implements ResponseProcessor
 {
+    /**
+     * {@inheritDoc }
+     */
     @Override
-    public boolean evaluate( Map<String, String> mapData, String strRuleDataKey )
+    public String processResponse( String strResponse )
+        throws ResponseProcessingException
     {
-        return !mapData.containsKey( strRuleDataKey );
+        return strResponse;
     }
 }

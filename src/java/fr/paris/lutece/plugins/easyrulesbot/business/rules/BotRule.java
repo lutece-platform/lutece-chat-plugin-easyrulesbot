@@ -31,11 +31,11 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.service.rules;
+package fr.paris.lutece.plugins.easyrulesbot.business.rules;
 
-import fr.paris.lutece.plugins.easyrulesbot.service.BotExecutor;
+import fr.paris.lutece.plugins.easyrulesbot.business.BotExecutor;
+import fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions.Condition;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseProcessor;
-import fr.paris.lutece.plugins.easyrulesbot.service.rules.conditions.Condition;
 
 import org.easyrules.api.Rule;
 
@@ -222,5 +222,4 @@ public class BotRule implements Rule, Comparable
 
         return getPriority(  ) - rule.getPriority(  );
     }
-
 }

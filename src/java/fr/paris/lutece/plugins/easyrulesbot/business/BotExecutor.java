@@ -31,14 +31,17 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.service;
+package fr.paris.lutece.plugins.easyrulesbot.business;
 
+import fr.paris.lutece.plugins.easyrulesbot.business.rules.BotRule;
+import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseFilter;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
-import fr.paris.lutece.plugins.easyrulesbot.service.rules.BotRule;
 import fr.paris.lutece.portal.service.util.AppLogService;
 
 import org.easyrules.api.Rule;
 import org.easyrules.api.RulesEngine;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,12 +52,18 @@ import java.util.Map;
 /**
  * BotExecutor
  */
-public class BotExecutor
+public class BotExecutor implements Serializable
 {
-    private RulesEngine _engine;
+    private static final long serialVersionUID = 1L;
+    private Bot _bot;
     private BotRule _currentRule;
     private Map<String, String> _mapData = new HashMap<String, String>(  );
     private List<Post> _listPosts = new ArrayList<Post>(  );
+
+    public BotExecutor( Bot bot )
+    {
+        _bot = bot;
+    }
 
     /**
      * Gets the question
@@ -95,7 +104,14 @@ public class BotExecutor
     {
         addUserPost( strResponse );
 
-        String strResponseValue = _currentRule.getResponseProcessor(  ).processResponse( strResponse );
+        String strResponseValue = strResponse;
+
+        for ( ResponseFilter filter : _bot.getResponseFilters(  ) )
+        {
+            strResponseValue = filter.filterResponse( strResponseValue );
+        }
+
+        strResponseValue = _currentRule.getResponseProcessor(  ).processResponse( strResponseValue );
         _mapData.put( _currentRule.getDataKey(  ), strResponseValue );
     }
 
@@ -109,29 +125,23 @@ public class BotExecutor
     }
 
     /**
-     * Define the rule engine
-     * @param rulesEngine
+     * Executes rules
      */
-    void setRuleEngine( RulesEngine rulesEngine )
+    public synchronized void fireRules(  )
     {
-        _engine = rulesEngine;
+        _currentRule = null;
 
-        for ( Rule rule : _engine.getRules(  ) )
+        RulesEngine engine = _bot.getRulesEngine(  );
+
+        for ( Rule rule : engine.getRules(  ) )
         {
             if ( rule instanceof BotRule )
             {
                 ( (BotRule) rule ).setExecutor( this );
             }
         }
-    }
 
-    /**
-     * Executes rules
-     */
-    public void fireRules(  )
-    {
-        _currentRule = null;
-        _engine.fireRules(  );
+        engine.fireRules(  );
     }
 
     /**
