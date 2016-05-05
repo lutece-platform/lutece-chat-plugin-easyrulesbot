@@ -36,6 +36,9 @@ package fr.paris.lutece.plugins.easyrulesbot.business.rules;
 import fr.paris.lutece.plugins.easyrulesbot.business.BotExecutor;
 import fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions.Condition;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseProcessor;
+import fr.paris.lutece.portal.service.template.AppTemplateService;
+import fr.paris.lutece.portal.web.l10n.LocaleService;
+import fr.paris.lutece.util.html.HtmlTemplate;
 
 import org.easyrules.api.Rule;
 
@@ -53,10 +56,11 @@ public class BotRule implements Rule, Comparable
     private String _strDescription;
     private String _strDataKey;
     private int _nPriority;
-    private String _strQuestion;
+    private String _strQuestionTemplate;
     private BotExecutor _executor;
     private ResponseProcessor _responseProcessor;
     private List<Condition> _listConditions;
+    private String _strResponseCommentTemplate;
 
     /**
      * {@inheritDoc }
@@ -134,23 +138,23 @@ public class BotRule implements Rule, Comparable
      * Returns the Question
      * @return The Question
      */
-    public String getQuestion(  )
+    public String getQuestion( Map<String, String> mapData )
     {
-        return _strQuestion;
+        return fillTemplate( _strQuestionTemplate, mapData );
     }
 
     /**
      * Sets the Question
      * @param strQuestion The Question
      */
-    public void setQuestion( String strQuestion )
+    public void setQuestionTemplate( String strQuestion )
     {
-        _strQuestion = strQuestion;
+        _strQuestionTemplate = strQuestion;
     }
 
     /**
-     *
-     * @param executor
+     * Define the current executor using the rule
+     * @param executor The executor
      */
     public void setExecutor( BotExecutor executor )
     {
@@ -182,6 +186,30 @@ public class BotRule implements Rule, Comparable
     public void setListConditions( List<Condition> listConditions )
     {
         _listConditions = listConditions;
+    }
+
+    /**
+     * Define the response comment template
+     * @param strResponseCommentTemplate
+     */
+    public void setResponseCommentTemplate( String strResponseCommentTemplate )
+    {
+        _strResponseCommentTemplate = strResponseCommentTemplate;
+    }
+
+    /**
+     * Provides a comment after the user's response
+     * @param mapData The data
+     * @return The response
+     */
+    public String getResponseComment( Map<String, String> mapData )
+    {
+        if ( _strResponseCommentTemplate != null )
+        {
+            return fillTemplate( _strResponseCommentTemplate, mapData );
+        }
+
+        return null;
     }
 
     /**
@@ -221,5 +249,26 @@ public class BotRule implements Rule, Comparable
         Rule rule = (Rule) o;
 
         return getPriority(  ) - rule.getPriority(  );
+    }
+
+    /**
+     * Fill a template with data contained in a model map
+     * @param strTemplateString The template
+     * @param model The model
+     * @return The filled string
+     */
+    private String fillTemplate( String strTemplateString, Map<String, String> model )
+    {
+        if ( !strTemplateString.contains( "{" ) )
+        {
+            // No marker, so nothing to fill up
+            return strTemplateString;
+        }
+
+        String strTemplate = strTemplateString.replace( "{", "${" ); // $ removed in context file
+        HtmlTemplate template = AppTemplateService.getTemplateFromStringFtl( strTemplate, LocaleService.getDefault(  ),
+                model );
+
+        return template.getHtml(  );
     }
 }

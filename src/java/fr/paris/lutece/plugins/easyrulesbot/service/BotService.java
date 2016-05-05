@@ -37,7 +37,6 @@ import fr.paris.lutece.plugins.easyrulesbot.business.Bot;
 import fr.paris.lutece.plugins.easyrulesbot.business.BotExecutor;
 import fr.paris.lutece.portal.service.spring.SpringContextService;
 
-
 import java.util.List;
 
 
@@ -55,11 +54,13 @@ public class BotService
      */
     public static BotExecutor getExecutor( String strBotKey )
     {
-        Bot bot = getBot( strBotKey ); 
-        if( bot == null )
+        Bot bot = getBot( strBotKey );
+
+        if ( bot == null )
         {
             return null;
         }
+
         BotExecutor executor = new BotExecutor( bot );
 
         return executor;

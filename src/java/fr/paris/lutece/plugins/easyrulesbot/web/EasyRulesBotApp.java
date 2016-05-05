@@ -42,8 +42,8 @@ import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.portal.util.mvc.xpage.MVCApplication;
 import fr.paris.lutece.portal.util.mvc.xpage.annotations.Controller;
 import fr.paris.lutece.portal.web.xpages.XPage;
-import java.util.List;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,33 +57,27 @@ public class EasyRulesBotApp extends MVCApplication
 {
     private static final String TEMPLATE_BOT = "/skin/plugins/easyrulesbot/bot.html";
     private static final String TEMPLATE_BOTS_LIST = "/skin/plugins/easyrulesbot/bots_list.html";
-    
     private static final String MARK_BOTS_LIST = "bots_list";
     private static final String MARK_POSTS_LIST = "posts_list";
-    
     private static final String PARAMETER_BOT = "bot";
     private static final String PARAMETER_RESPONSE = "response";
-    
     private static final String VIEW_LIST = "list";
     private static final String VIEW_BOT = "bot";
-    
     private static final String ACTION_RESPONSE = "response";
-    
     private static final long serialVersionUID = 1L;
     private BotExecutor _executor;
 
-    
     @View( value = VIEW_LIST, defaultView = true )
     public XPage viewList( HttpServletRequest request )
     {
-        List<Bot> listBots = BotService.getBots();
-        
-        Map<String,Object> model = getModel();
+        List<Bot> listBots = BotService.getBots(  );
+
+        Map<String, Object> model = getModel(  );
         model.put( MARK_BOTS_LIST, listBots );
+
         return getXPage( TEMPLATE_BOTS_LIST, request.getLocale(  ), model );
-        
     }
-    
+
     /**
      * Returns the content of the page bot.
      * @param request The HTTP request
@@ -95,10 +89,12 @@ public class EasyRulesBotApp extends MVCApplication
         if ( _executor == null )
         {
             String strBotKey = request.getParameter( PARAMETER_BOT );
-            if( strBotKey != null )
-            {    
+
+            if ( strBotKey != null )
+            {
                 _executor = BotService.getExecutor( strBotKey );
-                if(  _executor == null )
+
+                if ( _executor == null )
                 {
                     return redirectView( request, VIEW_LIST );
                 }
@@ -120,8 +116,9 @@ public class EasyRulesBotApp extends MVCApplication
         model.put( MARK_POSTS_LIST, _executor.getPosts(  ) );
 
         XPage xpage = getXPage( TEMPLATE_BOT, request.getLocale(  ), model );
-        xpage.setTitle( _executor.getBotName() );
-        xpage.setPathLabel(_executor.getBotName() );
+        xpage.setTitle( _executor.getBotName(  ) );
+        xpage.setPathLabel( _executor.getBotName(  ) );
+
         return xpage;
     }
 

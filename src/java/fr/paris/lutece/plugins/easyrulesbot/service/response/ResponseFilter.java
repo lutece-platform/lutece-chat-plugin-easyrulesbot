@@ -44,6 +44,7 @@ public interface ResponseFilter
     /**
      * Analyzes the response and formats it.
      * @param strResponse The response
+     * @param mapData The data
      * @return The processed response
      * @throws ResponseProcessingException
      */

@@ -75,7 +75,7 @@ public class BotExecutor implements Serializable
 
         if ( _currentRule != null )
         {
-            strQuestion = _currentRule.getQuestion(  );
+            strQuestion = _currentRule.getQuestion( _mapData );
         }
         else
         {
@@ -104,6 +104,31 @@ public class BotExecutor implements Serializable
     {
         addUserPost( strResponse );
 
+        String strResponseValue = processFilters( strResponse );
+
+        if ( _currentRule != null )
+        {
+            strResponseValue = _currentRule.getResponseProcessor(  ).processResponse( strResponseValue );
+            _mapData.put( _currentRule.getDataKey(  ), strResponseValue );
+
+            String strResponseComment = _currentRule.getResponseComment( _mapData );
+
+            if ( ( strResponseComment != null ) || strResponseComment.trim(  ).equals( "" ) )
+            {
+                addBotPost( strResponseComment );
+            }
+        }
+    }
+
+    /**
+     * Process filters
+     * @param strResponse The response
+     * @return The filterd response
+     * @throws ResponseProcessingException
+     */
+    private String processFilters( String strResponse )
+        throws ResponseProcessingException
+    {
         String strResponseValue = strResponse;
 
         for ( ResponseFilter filter : _bot.getResponseFilters(  ) )
@@ -111,8 +136,7 @@ public class BotExecutor implements Serializable
             strResponseValue = filter.filterResponse( strResponseValue );
         }
 
-        strResponseValue = _currentRule.getResponseProcessor(  ).processResponse( strResponseValue );
-        _mapData.put( _currentRule.getDataKey(  ), strResponseValue );
+        return strResponseValue;
     }
 
     /**
@@ -125,7 +149,8 @@ public class BotExecutor implements Serializable
     }
 
     /**
-     * Executes rules
+     * Executes rules.
+     * NB : Should be thread safe.
      */
     public synchronized void fireRules(  )
     {
@@ -217,8 +242,8 @@ public class BotExecutor implements Serializable
      * Returns the bot name
      * @return the bot name
      */
-    public String getBotName()
+    public String getBotName(  )
     {
-        return _bot.getName();
+        return _bot.getName(  );
     }
 }

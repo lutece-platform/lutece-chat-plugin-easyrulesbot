@@ -38,35 +38,24 @@ import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.Response
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
- * YesNoResponseProcessor
+ * Multiple Values ResponseProcessor
  */
-public class YesNoResponseProcessor implements ResponseProcessor
+public class MultipleValuesResponseProcessor implements ResponseProcessor
 {
-    private static final String TRUE = "true";
-    private static final String FALSE = "false";
-    private List<String> _listYesTerms;
-    private List<String> _listNoTerms;
+    private Map<String, List<String>> _mapMultipleValues;
     private String _strInvalideResponseMessage;
 
     /**
-     * Set the Yes terms list
-     * @param list the Yes terms list
+     * Set the map of values / terms
+     * @param map the map
      */
-    public void setYesTermsList( List<String> list )
+    public void setValueTermsMap( Map<String, List<String>> map )
     {
-        _listYesTerms = list;
-    }
-
-    /**
-     * Set the No terms list
-     * @param list the No terms list
-     */
-    public void setNoTermsList( List<String> list )
-    {
-        _listNoTerms = list;
+        _mapMultipleValues = map;
     }
 
     /**
@@ -87,19 +76,16 @@ public class YesNoResponseProcessor implements ResponseProcessor
     {
         strResponse = strResponse.toLowerCase(  );
 
-        for ( String term : _listYesTerms )
+        for ( String strValue : _mapMultipleValues.keySet(  ) )
         {
-            if ( strResponse.contains( term ) )
-            {
-                return TRUE;
-            }
-        }
+            List<String> listTerms = _mapMultipleValues.get( strValue );
 
-        for ( String term : _listNoTerms )
-        {
-            if ( strResponse.contains( term ) )
+            for ( String strTerm : listTerms )
             {
-                return FALSE;
+                if ( strResponse.contains( strTerm ) )
+                {
+                    return strValue;
+                }
             }
         }
 
