@@ -25,7 +25,7 @@
         <form class="form" action="jsp/site/Portal.jsp" method="post" >
             <input type="hidden" name="page" value="bot" />
             <input type="hidden" name="action" value="response" />
-            <input type="text" name="response">
+            <input id="input" type="text" name="response">
             <button class="btn btn-primary btn-sm" type="submit" >
                 <i class="fa fa-comment"></i>
                 Envoyer
@@ -55,6 +55,8 @@
         $(".reset").click(function(){
             $("#typed").typed('reset');
         });
+        
+        $("#input").focus();
 
     });
     </script>

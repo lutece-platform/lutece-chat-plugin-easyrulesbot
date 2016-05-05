@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2016, Mairie de Paris
+ * Copyright (c) 2002-2015, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -64,9 +64,17 @@ public class EasyRulesBotApp extends MVCApplication
     private static final String VIEW_LIST = "list";
     private static final String VIEW_BOT = "bot";
     private static final String ACTION_RESPONSE = "response";
+    private static final String RESET = "reset";
+    
+    
     private static final long serialVersionUID = 1L;
     private BotExecutor _executor;
 
+    /**
+     * Returns the content of the list of bots page
+     * @param request The HTTP request
+     * @return The page
+     */
     @View( value = VIEW_LIST, defaultView = true )
     public XPage viewList( HttpServletRequest request )
     {
@@ -79,9 +87,9 @@ public class EasyRulesBotApp extends MVCApplication
     }
 
     /**
-     * Returns the content of the page bot.
+     * Returns the content of the bot page.
      * @param request The HTTP request
-     * @return The view
+     * @return The page
      */
     @View( VIEW_BOT )
     public XPage viewBot( HttpServletRequest request )
@@ -123,16 +131,16 @@ public class EasyRulesBotApp extends MVCApplication
     }
 
     /**
-     *
-     * @param request
-     * @return
+     * Process the response
+     * @param request The HTTP request
+     * @return The redirected page
      */
     @Action( ACTION_RESPONSE )
     public XPage doProcessResponse( HttpServletRequest request )
     {
         String strResponse = request.getParameter( PARAMETER_RESPONSE );
 
-        if ( strResponse.equals( "reset" ) )
+        if ( RESET.equals( strResponse ) )
         {
             _executor = null;
 

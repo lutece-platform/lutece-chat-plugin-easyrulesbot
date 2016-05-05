@@ -33,14 +33,17 @@
  */
 package fr.paris.lutece.plugins.easyrulesbot.business;
 
+import java.io.Serializable;
+
 
 /**
  * Post
  */
-public class Post
+public class Post implements Serializable
 {
     public static final int AUTHOR_BOT = 0;
     public static final int AUTHOR_USER = 1;
+    private static final long serialVersionUID = 1L;
 
     // Variables declarations 
     private String _strContent;

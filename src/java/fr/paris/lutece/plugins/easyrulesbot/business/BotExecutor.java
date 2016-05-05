@@ -44,9 +44,9 @@ import org.easyrules.api.RulesEngine;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -57,9 +57,13 @@ public class BotExecutor implements Serializable
     private static final long serialVersionUID = 1L;
     private Bot _bot;
     private BotRule _currentRule;
-    private Map<String, String> _mapData = new HashMap<String, String>(  );
+    private Map<String, String> _mapData = new ConcurrentHashMap<String, String>(  );
     private List<Post> _listPosts = new ArrayList<Post>(  );
 
+    /**
+     * Constructor
+     * @param bot The bot to execute
+     */
     public BotExecutor( Bot bot )
     {
         _bot = bot;
@@ -80,16 +84,16 @@ public class BotExecutor implements Serializable
         else
         {
             // FIXME
-            StringBuilder sb = new StringBuilder(  );
-            sb.append( "Je n'ai plus de question. Voici les éléments collectés :<br><ul>" );
+            StringBuilder sbLastMessage = new StringBuilder(  );
+            sbLastMessage.append( "Je n'ai plus de question. Voici les éléments collectés :<br><ul>" );
 
             for ( String strKey : _mapData.keySet(  ) )
             {
-                sb.append( "<li>" ).append( strKey ).append( " : " ).append( _mapData.get( strKey ) ).append( "</li>" );
+                sbLastMessage.append( "<li>" ).append( strKey ).append( " : " ).append( _mapData.get( strKey ) ).append( "</li>" );
             }
 
-            sb.append( "</ul>" );
-            strQuestion = sb.toString(  );
+            sbLastMessage.append( "</ul>" );
+            strQuestion = sbLastMessage.toString(  );
         }
 
         return strQuestion;
@@ -98,7 +102,7 @@ public class BotExecutor implements Serializable
     /**
      * Process the response
      * @param strResponse The user response
-     * @throws ResponseProcessingException
+     * @throws ResponseProcessingException if an exception occurs during processing
      */
     public void processResponse( String strResponse ) throws ResponseProcessingException
     {
@@ -113,7 +117,7 @@ public class BotExecutor implements Serializable
 
             String strResponseComment = _currentRule.getResponseComment( _mapData );
 
-            if ( ( strResponseComment != null ) || strResponseComment.trim(  ).equals( "" ) )
+            if ( ( strResponseComment != null ) && ! strResponseComment.trim(  ).equals( "" ) )
             {
                 addBotPost( strResponseComment );
             }
@@ -124,7 +128,7 @@ public class BotExecutor implements Serializable
      * Process filters
      * @param strResponse The response
      * @return The filterd response
-     * @throws ResponseProcessingException
+     * @throws ResponseProcessingException if an exception occurs during processing
      */
     private String processFilters( String strResponse )
         throws ResponseProcessingException
@@ -211,7 +215,7 @@ public class BotExecutor implements Serializable
 
     /**
      * The post list
-     * @return
+     * @return The list of all posts
      */
     public List<Post> getPosts(  )
     {

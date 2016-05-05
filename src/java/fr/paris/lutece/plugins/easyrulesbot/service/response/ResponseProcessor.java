@@ -45,7 +45,7 @@ public interface ResponseProcessor
      * Analyzes the response and formats it.
      * @param strResponse The response
      * @return The processed response
-     * @throws ResponseProcessingException
+     * @throws ResponseProcessingException if an exception occurs during processing
      */
     String processResponse( String strResponse ) throws ResponseProcessingException;
 }

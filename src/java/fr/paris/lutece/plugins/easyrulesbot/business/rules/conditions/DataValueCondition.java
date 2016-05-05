@@ -41,6 +41,7 @@ import java.util.Map;
  */
 public class DataValueCondition implements Condition
 {
+    private static final String UNDEFINED = "undefined";
     // Variables declarations 
     private String _strDataKey;
     private String _strDataValue;
@@ -84,7 +85,7 @@ public class DataValueCondition implements Condition
     @Override
     public boolean evaluate( Map<String, String> mapData, String strRuleDataKey )
     {
-        if ( _strDataValue.equalsIgnoreCase( "undefined" ) )
+        if ( UNDEFINED.equalsIgnoreCase( _strDataValue ) )
         {
             return !mapData.containsKey( _strDataKey );
         }

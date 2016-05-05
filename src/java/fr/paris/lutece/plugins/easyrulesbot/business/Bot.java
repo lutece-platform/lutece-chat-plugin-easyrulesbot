@@ -119,11 +119,11 @@ public class Bot implements Serializable
 
     /**
      * Sets the RulesEngine
-     * @param RulesEngine The RulesEngine
+     * @param rulesEngine The RulesEngine
      */
-    public void setRulesEngine( RulesEngine RulesEngine )
+    public void setRulesEngine( RulesEngine rulesEngine )
     {
-        _engine = RulesEngine;
+        _engine = rulesEngine;
     }
 
     /**
@@ -140,7 +140,7 @@ public class Bot implements Serializable
      * The list of response filters
      * @return The list
      */
-    List<ResponseFilter> getResponseFilters(  )
+    public List<ResponseFilter> getResponseFilters(  )
     {
         return _listResponseFilters;
     }

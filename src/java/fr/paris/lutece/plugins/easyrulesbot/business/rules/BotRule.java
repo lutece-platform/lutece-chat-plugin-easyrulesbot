@@ -39,6 +39,7 @@ import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseProcessor;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.web.l10n.LocaleService;
 import fr.paris.lutece.util.html.HtmlTemplate;
+import java.io.Serializable;
 
 import org.easyrules.api.Rule;
 
@@ -49,8 +50,10 @@ import java.util.Map;
 /**
  * BotRule
  */
-public class BotRule implements Rule, Comparable
+public class BotRule implements Rule, Comparable, Serializable
 {
+
+    private static final long serialVersionUID = 1L;
     // Variables declarations 
     private String _strName;
     private String _strDescription;
@@ -136,6 +139,7 @@ public class BotRule implements Rule, Comparable
 
     /**
      * Returns the Question
+     * @param mapData The map of data
      * @return The Question
      */
     public String getQuestion( Map<String, String> mapData )
@@ -190,7 +194,7 @@ public class BotRule implements Rule, Comparable
 
     /**
      * Define the response comment template
-     * @param strResponseCommentTemplate
+     * @param strResponseCommentTemplate The template
      */
     public void setResponseCommentTemplate( String strResponseCommentTemplate )
     {
@@ -244,9 +248,9 @@ public class BotRule implements Rule, Comparable
      * {@inheritDoc }
      */
     @Override
-    public int compareTo( Object o )
+    public int compareTo( Object object )
     {
-        Rule rule = (Rule) o;
+        Rule rule = (Rule) object;
 
         return getPriority(  ) - rule.getPriority(  );
     }

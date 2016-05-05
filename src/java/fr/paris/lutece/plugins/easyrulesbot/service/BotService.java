@@ -43,16 +43,22 @@ import java.util.List;
 /**
  * BotService
  */
-public class BotService
+public final class BotService
 {
     private static List<Bot> _listBots;
+    
+    /** Private constructor */
+    private BotService()
+    {
+    }
+    
 
     /**
      * Provides a bot executor
      * @param strBotKey The bot key
      * @return The bot executor
      */
-    public static BotExecutor getExecutor( String strBotKey )
+    public static synchronized BotExecutor getExecutor( String strBotKey )
     {
         Bot bot = getBot( strBotKey );
 

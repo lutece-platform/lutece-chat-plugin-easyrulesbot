@@ -74,7 +74,7 @@ public class MultipleValuesResponseProcessor implements ResponseProcessor
     public String processResponse( String strResponse )
         throws ResponseProcessingException
     {
-        strResponse = strResponse.toLowerCase(  );
+        String strResponseToCheck = strResponse.toLowerCase(  );
 
         for ( String strValue : _mapMultipleValues.keySet(  ) )
         {
@@ -82,7 +82,7 @@ public class MultipleValuesResponseProcessor implements ResponseProcessor
 
             for ( String strTerm : listTerms )
             {
-                if ( strResponse.contains( strTerm ) )
+                if ( strResponseToCheck.contains( strTerm ) )
                 {
                     return strValue;
                 }
