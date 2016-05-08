@@ -39,7 +39,7 @@
             <artifactId>easyrules-spring</artifactId>
             <version>2.2.0</version>
         </dependency>
-  </dependencies>
+    </dependencies>
 
     <properties>
         <componentName>easyrulesbot</componentName>
@@ -47,4 +47,10 @@
         <jiraComponentId>13250</jiraComponentId>
     </properties>
     
+    <scm>
+        <connection>scm:git:https://github.com/lutece-platform/lutece-tech-plugin-easyrulesbot.git</connection>
+        <developerConnection>scm:git:https://github.com/lutece-platform/lutece-tech-plugin-easyrulesbot.git</developerConnection>
+        <url>https://github.com/lutece-platform/lutece-tech-plugin-easyrulesbot.git</url>
+    </scm>
+ 
 </project>
