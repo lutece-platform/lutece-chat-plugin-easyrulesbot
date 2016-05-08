@@ -34,12 +34,15 @@
 package fr.paris.lutece.plugins.easyrulesbot.business;
 
 import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseFilter;
+import fr.paris.lutece.portal.service.i18n.I18nService;
 
 import org.easyrules.api.RulesEngine;
 
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 
 /**
@@ -47,12 +50,17 @@ import java.util.List;
  */
 public class Bot implements Serializable
 {
+    private static final String PROPERTY_LAST_MESSAGE = "easyrulesbot.bot.lastMessage";
+    
     private static final long serialVersionUID = 1L;
     private String _strKey;
     private String _strName;
     private String _strDescription;
+    private String _strNameI18nKey;
+    private String _strDescriptionI18nKey;
     private RulesEngine _engine;
     private List<ResponseFilter> _listResponseFilters;
+    private List<String> _listAvailableLanguages;
 
     /**
      * Returns the Key
@@ -74,11 +82,23 @@ public class Bot implements Serializable
 
     /**
      * Returns the Name
+     * @param locale The locale
      * @return The Name
      */
-    public String getName(  )
+    public String getName( Locale locale )
     {
-        return _strName;
+        String strName;
+
+        if ( _strNameI18nKey != null )
+        {
+            strName = I18nService.getLocalizedString( _strNameI18nKey, locale );
+        }
+        else
+        {
+            strName = _strName;
+        }
+
+        return strName;
     }
 
     /**
@@ -92,11 +112,23 @@ public class Bot implements Serializable
 
     /**
      * Returns the Description
+     * @param locale The locale
      * @return The Description
      */
-    public String getDescription(  )
+    public String getDescription( Locale locale )
     {
-        return _strDescription;
+        String strDescription;
+
+        if ( _strDescriptionI18nKey != null )
+        {
+            strDescription = I18nService.getLocalizedString( _strDescriptionI18nKey, locale );
+        }
+        else
+        {
+            strDescription = _strDescription;
+        }
+
+        return strDescription;
     }
 
     /**
@@ -106,6 +138,42 @@ public class Bot implements Serializable
     public void setDescription( String strDescription )
     {
         _strDescription = strDescription;
+    }
+
+    /**
+     * Returns the NameI18nKey
+     * @return The NameI18nKey
+     */
+    public String getNameI18nKey(  )
+    {
+        return _strNameI18nKey;
+    }
+
+    /**
+     * Sets the NameI18nKey
+     * @param strNameI18nKey The NameI18nKey
+     */
+    public void setNameI18nKey( String strNameI18nKey )
+    {
+        _strNameI18nKey = strNameI18nKey;
+    }
+
+    /**
+     * Returns the DescriptionI18nKey
+     * @return The DescriptionI18nKey
+     */
+    public String getDescriptionI18nKey(  )
+    {
+        return _strDescriptionI18nKey;
+    }
+
+    /**
+     * Sets the DescriptionI18nKey
+     * @param strDescriptionI18nKey The DescriptionI18nKey
+     */
+    public void setDescriptionI18nKey( String strDescriptionI18nKey )
+    {
+        _strDescriptionI18nKey = strDescriptionI18nKey;
     }
 
     /**
@@ -144,4 +212,48 @@ public class Bot implements Serializable
     {
         return _listResponseFilters;
     }
+
+    /**
+     * Set available languages list
+     * @param listAvailableLanguages available languages list
+     */
+    public void setListAvailableLanguages( List<String> listAvailableLanguages )
+    {
+        _listAvailableLanguages = listAvailableLanguages;
+    }
+
+    /**
+     * Return available languages list
+     * @return available languages list
+     */
+    public List<String> getAvailableLanguages(  )
+    {
+        return _listAvailableLanguages;
+    }
+
+    /**
+     * Last bot post build with data collected.
+     * Default implementation. Should be override
+     * @param mapData The data
+     * @param locale The locale
+     * @return The last message
+     */
+    public String processData(Map<String, String> mapData, Locale locale)
+    {
+                    
+        String strLastMessage = I18nService.getLocalizedString( PROPERTY_LAST_MESSAGE , locale);
+        System.out.println( locale.getDisplayLanguage() );
+        StringBuilder sbLastMessage = new StringBuilder( strLastMessage );
+        sbLastMessage.append( "<ul>" );
+
+        for ( String strKey : mapData.keySet(  ) )
+        {
+            sbLastMessage.append( "<li>" ).append( strKey ).append( " : " ).append( mapData.get( strKey ) )
+                         .append( "</li>" );
+        }
+
+        sbLastMessage.append( "</ul>" );
+        return sbLastMessage.toString(  );
+    }
+
 }

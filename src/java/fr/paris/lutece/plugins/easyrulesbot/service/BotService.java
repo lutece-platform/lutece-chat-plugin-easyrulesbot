@@ -46,12 +46,11 @@ import java.util.List;
 public final class BotService
 {
     private static List<Bot> _listBots;
-    
+
     /** Private constructor */
-    private BotService()
+    private BotService(  )
     {
     }
-    
 
     /**
      * Provides a bot executor

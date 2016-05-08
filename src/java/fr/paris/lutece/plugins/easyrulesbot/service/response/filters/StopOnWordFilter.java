@@ -35,8 +35,11 @@ package fr.paris.lutece.plugins.easyrulesbot.service.response.filters;
 
 import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseFilter;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
+import fr.paris.lutece.portal.service.i18n.I18nService;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 
 /**
@@ -46,6 +49,7 @@ public class StopOnWordFilter implements ResponseFilter
 {
     private List<String> _listStopWords;
     private String _strStopMessage;
+    private String _strStopMessageI18nKey;
 
     /**
      * Set the list of stop words
@@ -66,10 +70,19 @@ public class StopOnWordFilter implements ResponseFilter
     }
 
     /**
+     * Set the stop message
+     * @param strMessage The message
+     */
+    public void setMessageI18nKey( String strMessage )
+    {
+        _strStopMessageI18nKey = strMessage;
+    }
+
+    /**
      * {@inheritDoc }
      */
     @Override
-    public String filterResponse( String strResponse )
+    public String filterResponse( String strResponse, Locale locale, Map mapData )
         throws ResponseProcessingException
     {
         String strCheck = strResponse.toLowerCase(  );
@@ -78,10 +91,31 @@ public class StopOnWordFilter implements ResponseFilter
         {
             if ( strCheck.contains( strWord ) )
             {
-                throw new ResponseProcessingException( _strStopMessage );
+                throw new ResponseProcessingException( getStopMessage( locale ) );
             }
         }
 
         return strResponse;
+    }
+
+    /**
+     * Gets the stop message
+     * @param locale The locale
+     * @return The message
+     */
+    private String getStopMessage( Locale locale )
+    {
+        String strMessage;
+
+        if ( _strStopMessageI18nKey != null )
+        {
+            strMessage = I18nService.getLocalizedString( _strStopMessageI18nKey, locale );
+        }
+        else
+        {
+            strMessage = _strStopMessage;
+        }
+
+        return strMessage;
     }
 }

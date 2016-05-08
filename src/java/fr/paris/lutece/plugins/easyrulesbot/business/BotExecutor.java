@@ -45,6 +45,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -56,6 +57,7 @@ public class BotExecutor implements Serializable
 {
     private static final long serialVersionUID = 1L;
     private Bot _bot;
+    private Locale _locale;
     private BotRule _currentRule;
     private Map<String, String> _mapData = new ConcurrentHashMap<String, String>(  );
     private List<Post> _listPosts = new ArrayList<Post>(  );
@@ -70,6 +72,24 @@ public class BotExecutor implements Serializable
     }
 
     /**
+     * Returns the Locale
+     * @return The Locale
+     */
+    public Locale getLocale(  )
+    {
+        return _locale;
+    }
+
+    /**
+     * Sets the Locale
+     * @param locale The Locale
+     */
+    public void setLocale( Locale locale )
+    {
+        _locale = locale;
+    }
+
+    /**
      * Gets the question
      * @return The question
      */
@@ -79,21 +99,12 @@ public class BotExecutor implements Serializable
 
         if ( _currentRule != null )
         {
-            strQuestion = _currentRule.getQuestion( _mapData );
+            strQuestion = _currentRule.getQuestion( _mapData, _locale );
         }
         else
         {
-            // FIXME
-            StringBuilder sbLastMessage = new StringBuilder(  );
-            sbLastMessage.append( "Je n'ai plus de question. Voici les éléments collectés :<br><ul>" );
-
-            for ( String strKey : _mapData.keySet(  ) )
-            {
-                sbLastMessage.append( "<li>" ).append( strKey ).append( " : " ).append( _mapData.get( strKey ) ).append( "</li>" );
-            }
-
-            sbLastMessage.append( "</ul>" );
-            strQuestion = sbLastMessage.toString(  );
+            // All rules has been triggered
+            strQuestion = _bot.processData( _mapData , _locale );
         }
 
         return strQuestion;
@@ -112,12 +123,13 @@ public class BotExecutor implements Serializable
 
         if ( _currentRule != null )
         {
-            strResponseValue = _currentRule.getResponseProcessor(  ).processResponse( strResponseValue );
+            strResponseValue = _currentRule.getResponseProcessor(  ).processResponse( strResponseValue, _locale,
+                    _mapData );
             _mapData.put( _currentRule.getDataKey(  ), strResponseValue );
 
-            String strResponseComment = _currentRule.getResponseComment( _mapData );
+            String strResponseComment = _currentRule.getResponseComment( _mapData, _locale );
 
-            if ( ( strResponseComment != null ) && ! strResponseComment.trim(  ).equals( "" ) )
+            if ( ( strResponseComment != null ) && !strResponseComment.trim(  ).equals( "" ) )
             {
                 addBotPost( strResponseComment );
             }
@@ -137,7 +149,7 @@ public class BotExecutor implements Serializable
 
         for ( ResponseFilter filter : _bot.getResponseFilters(  ) )
         {
-            strResponseValue = filter.filterResponse( strResponseValue );
+            strResponseValue = filter.filterResponse( strResponseValue, _locale, _mapData );
         }
 
         return strResponseValue;
@@ -248,6 +260,6 @@ public class BotExecutor implements Serializable
      */
     public String getBotName(  )
     {
-        return _bot.getName(  );
+        return _bot.getName( _locale );
     }
 }

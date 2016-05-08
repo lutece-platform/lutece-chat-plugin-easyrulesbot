@@ -34,6 +34,7 @@
 package fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions;
 
 import java.io.Serializable;
+
 import java.util.Map;
 
 

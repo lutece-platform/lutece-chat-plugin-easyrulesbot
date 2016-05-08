@@ -36,8 +36,10 @@ package fr.paris.lutece.plugins.easyrulesbot.service.response.processors;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseProcessor;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseNotUnderstoodException;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
+import fr.paris.lutece.portal.service.i18n.I18nService;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -47,7 +49,8 @@ import java.util.Map;
 public class MultipleValuesResponseProcessor implements ResponseProcessor
 {
     private Map<String, List<String>> _mapMultipleValues;
-    private String _strInvalideResponseMessage;
+    private String _strInvalidResponseMessage;
+    private String _strInvalidResponseMessageI18nKey;
 
     /**
      * Set the map of values / terms
@@ -64,14 +67,23 @@ public class MultipleValuesResponseProcessor implements ResponseProcessor
      */
     public void setInvalidResponseMessage( String strMessage )
     {
-        _strInvalideResponseMessage = strMessage;
+        _strInvalidResponseMessage = strMessage;
+    }
+
+    /**
+     * Set the Invalid Response Message
+     * @param strMessage The message
+     */
+    public void setInvalidResponseMessageI18nKey( String strMessage )
+    {
+        _strInvalidResponseMessageI18nKey = strMessage;
     }
 
     /**
      * {@inheritDoc }
      */
     @Override
-    public String processResponse( String strResponse )
+    public String processResponse( String strResponse, Locale locale, Map mapData )
         throws ResponseProcessingException
     {
         String strResponseToCheck = strResponse.toLowerCase(  );
@@ -89,6 +101,27 @@ public class MultipleValuesResponseProcessor implements ResponseProcessor
             }
         }
 
-        throw new ResponseNotUnderstoodException( _strInvalideResponseMessage );
+        throw new ResponseNotUnderstoodException( getInvalidResponse( locale ) );
+    }
+
+    /**
+     * Returns invalid response message
+     * @param locale The locale
+     * @return The message
+     */
+    private String getInvalidResponse( Locale locale )
+    {
+        String strResponse;
+
+        if ( _strInvalidResponseMessageI18nKey != null )
+        {
+            strResponse = I18nService.getLocalizedString( _strInvalidResponseMessageI18nKey, locale );
+        }
+        else
+        {
+            strResponse = _strInvalidResponseMessage;
+        }
+
+        return strResponse;
     }
 }

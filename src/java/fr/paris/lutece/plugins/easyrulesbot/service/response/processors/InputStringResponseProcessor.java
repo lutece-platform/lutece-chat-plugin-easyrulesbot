@@ -36,6 +36,9 @@ package fr.paris.lutece.plugins.easyrulesbot.service.response.processors;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseProcessor;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
 
+import java.util.Locale;
+import java.util.Map;
+
 
 /**
  * InputStringResponseProcessor
@@ -46,7 +49,7 @@ public class InputStringResponseProcessor implements ResponseProcessor
      * {@inheritDoc }
      */
     @Override
-    public String processResponse( String strResponse )
+    public String processResponse( String strResponse, Locale locale, Map mapData )
         throws ResponseProcessingException
     {
         return strResponse;

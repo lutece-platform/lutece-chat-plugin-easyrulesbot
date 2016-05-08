@@ -36,14 +36,17 @@ package fr.paris.lutece.plugins.easyrulesbot.business.rules;
 import fr.paris.lutece.plugins.easyrulesbot.business.BotExecutor;
 import fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions.Condition;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseProcessor;
+import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.web.l10n.LocaleService;
 import fr.paris.lutece.util.html.HtmlTemplate;
-import java.io.Serializable;
 
 import org.easyrules.api.Rule;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -52,18 +55,21 @@ import java.util.Map;
  */
 public class BotRule implements Rule, Comparable, Serializable
 {
-
     private static final long serialVersionUID = 1L;
+
     // Variables declarations 
     private String _strName;
     private String _strDescription;
+    private String _strQuestionTemplate;
+    private String _strResponseCommentTemplate;
+    private String _strDescriptionI18nKey;
+    private String _strQuestionTemplateI18nKey;
+    private String _strResponseCommentTemplateI18nKey;
     private String _strDataKey;
     private int _nPriority;
-    private String _strQuestionTemplate;
     private BotExecutor _executor;
     private ResponseProcessor _responseProcessor;
     private List<Condition> _listConditions;
-    private String _strResponseCommentTemplate;
 
     /**
      * {@inheritDoc }
@@ -99,6 +105,60 @@ public class BotRule implements Rule, Comparable, Serializable
     public void setDescription( String strDescription )
     {
         _strDescription = strDescription;
+    }
+
+    /**
+     * Returns the DescriptionI18nKey
+     * @return The DescriptionI18nKey
+     */
+    public String getDescriptionI18nKey(  )
+    {
+        return _strDescriptionI18nKey;
+    }
+
+    /**
+     * Sets the DescriptionI18nKey
+     * @param strDescriptionI18nKey The DescriptionI18nKey
+     */
+    public void setDescriptionI18nKey( String strDescriptionI18nKey )
+    {
+        _strDescriptionI18nKey = strDescriptionI18nKey;
+    }
+
+    /**
+     * Returns the QuestionTemplateI18nKey
+     * @return The QuestionTemplateI18nKey
+     */
+    public String getQuestionTemplateI18nKey(  )
+    {
+        return _strQuestionTemplateI18nKey;
+    }
+
+    /**
+     * Sets the QuestionTemplateI18nKey
+     * @param strQuestionTemplateI18nKey The QuestionTemplateI18nKey
+     */
+    public void setQuestionTemplateI18nKey( String strQuestionTemplateI18nKey )
+    {
+        _strQuestionTemplateI18nKey = strQuestionTemplateI18nKey;
+    }
+
+    /**
+     * Returns the ResponseCommentTemplateI18nKey
+     * @return The ResponseCommentTemplateI18nKey
+     */
+    public String getResponseCommentTemplateI18nKey(  )
+    {
+        return _strResponseCommentTemplateI18nKey;
+    }
+
+    /**
+     * Sets the ResponseCommentTemplateI18nKey
+     * @param strResponseCommentTemplateI18nKey The ResponseCommentTemplateI18nKey
+     */
+    public void setResponseCommentTemplateI18nKey( String strResponseCommentTemplateI18nKey )
+    {
+        _strResponseCommentTemplateI18nKey = strResponseCommentTemplateI18nKey;
     }
 
     /**
@@ -140,11 +200,23 @@ public class BotRule implements Rule, Comparable, Serializable
     /**
      * Returns the Question
      * @param mapData The map of data
+     * @param locale The locale
      * @return The Question
      */
-    public String getQuestion( Map<String, String> mapData )
+    public String getQuestion( Map<String, String> mapData, Locale locale )
     {
-        return fillTemplate( _strQuestionTemplate, mapData );
+        String strQuestion;
+
+        if ( _strQuestionTemplateI18nKey != null )
+        {
+            strQuestion = I18nService.getLocalizedString( _strQuestionTemplateI18nKey, locale );
+        }
+        else
+        {
+            strQuestion = _strQuestionTemplate;
+        }
+
+        return fillTemplate( strQuestion, mapData );
     }
 
     /**
@@ -204,13 +276,25 @@ public class BotRule implements Rule, Comparable, Serializable
     /**
      * Provides a comment after the user's response
      * @param mapData The data
+     * @param locale The locale
      * @return The response
      */
-    public String getResponseComment( Map<String, String> mapData )
+    public String getResponseComment( Map<String, String> mapData, Locale locale )
     {
-        if ( _strResponseCommentTemplate != null )
+        String strTemplate;
+
+        if ( _strResponseCommentTemplateI18nKey != null )
         {
-            return fillTemplate( _strResponseCommentTemplate, mapData );
+            strTemplate = I18nService.getLocalizedString( _strResponseCommentTemplateI18nKey, locale );
+        }
+        else
+        {
+            strTemplate = _strResponseCommentTemplate;
+        }
+
+        if ( strTemplate != null )
+        {
+            return fillTemplate( strTemplate, mapData );
         }
 
         return null;
@@ -263,9 +347,9 @@ public class BotRule implements Rule, Comparable, Serializable
      */
     private String fillTemplate( String strTemplateString, Map<String, String> model )
     {
-        if ( !strTemplateString.contains( "{" ) )
+        if ( !strTemplateString.contains( "{" ) && !strTemplateString.contains( "<#" ))
         {
-            // No marker, so nothing to fill up
+            // No marker and no freemarker tag so nothing to transform
             return strTemplateString;
         }
 

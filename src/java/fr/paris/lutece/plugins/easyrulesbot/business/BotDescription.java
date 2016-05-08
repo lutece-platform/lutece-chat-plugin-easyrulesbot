@@ -31,27 +31,89 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.service.response;
-
-import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
-
-import java.util.Locale;
-import java.util.Map;
+package fr.paris.lutece.plugins.easyrulesbot.business;
 
 
 /**
- * ResponseFilter
+ * BotDescription
  */
-public interface ResponseFilter
+public class BotDescription
 {
+    // Variables declarations 
+    private String _strName;
+    private String _strDescription;
+    private String _strLanguage;
+    private String _strUrl;
+
     /**
-     * Analyzes the response and formats it.
-     * @param strResponse The response
-     * @param locale The locale
-     * @param mapData The map of data
-     * @return The processed response
-     * @throws ResponseProcessingException if an exception occurs during processing
+     * Returns the Name
+     * @return The Name
      */
-    String filterResponse( String strResponse, Locale locale, Map mapData )
-        throws ResponseProcessingException;
+    public String getName(  )
+    {
+        return _strName;
+    }
+
+    /**
+     * Sets the Name
+     * @param strName The Name
+     */
+    public void setName( String strName )
+    {
+        _strName = strName;
+    }
+
+    /**
+     * Returns the Description
+     * @return The Description
+     */
+    public String getDescription(  )
+    {
+        return _strDescription;
+    }
+
+    /**
+     * Sets the Description
+     * @param strDescription The Description
+     */
+    public void setDescription( String strDescription )
+    {
+        _strDescription = strDescription;
+    }
+
+    /**
+     * Returns the Language
+     * @return The Language
+     */
+    public String getLanguage(  )
+    {
+        return _strLanguage;
+    }
+
+    /**
+     * Sets the Language
+     * @param strLanguage The Language
+     */
+    public void setLanguage( String strLanguage )
+    {
+        _strLanguage = strLanguage;
+    }
+
+    /**
+     * Returns the Url
+     * @return The Url
+     */
+    public String getUrl(  )
+    {
+        return _strUrl;
+    }
+
+    /**
+     * Sets the Url
+     * @param strUrl The Url
+     */
+    public void setUrl( String strUrl )
+    {
+        _strUrl = strUrl;
+    }
 }

@@ -34,16 +34,22 @@
 package fr.paris.lutece.plugins.easyrulesbot.web;
 
 import fr.paris.lutece.plugins.easyrulesbot.business.Bot;
+import fr.paris.lutece.plugins.easyrulesbot.business.BotDescription;
 import fr.paris.lutece.plugins.easyrulesbot.business.BotExecutor;
 import fr.paris.lutece.plugins.easyrulesbot.service.BotService;
+import static fr.paris.lutece.plugins.easyrulesbot.service.BotService.getBots;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.portal.util.mvc.xpage.MVCApplication;
 import fr.paris.lutece.portal.util.mvc.xpage.annotations.Controller;
+import fr.paris.lutece.portal.web.l10n.LocaleService;
 import fr.paris.lutece.portal.web.xpages.XPage;
+import fr.paris.lutece.util.url.UrlItem;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,12 +67,12 @@ public class EasyRulesBotApp extends MVCApplication
     private static final String MARK_POSTS_LIST = "posts_list";
     private static final String PARAMETER_BOT = "bot";
     private static final String PARAMETER_RESPONSE = "response";
+    private static final String PARAMETER_LANGUAGE = "lang";
     private static final String VIEW_LIST = "list";
     private static final String VIEW_BOT = "bot";
     private static final String ACTION_RESPONSE = "response";
     private static final String RESET = "reset";
-    
-    
+    private static final String URL_BOT = "jsp/site/Portal.jsp?page=bot&view=bot";
     private static final long serialVersionUID = 1L;
     private BotExecutor _executor;
 
@@ -78,7 +84,7 @@ public class EasyRulesBotApp extends MVCApplication
     @View( value = VIEW_LIST, defaultView = true )
     public XPage viewList( HttpServletRequest request )
     {
-        List<Bot> listBots = BotService.getBots(  );
+        List<BotDescription> listBots = getBotsDescription(  );
 
         Map<String, Object> model = getModel(  );
         model.put( MARK_BOTS_LIST, listBots );
@@ -101,6 +107,7 @@ public class EasyRulesBotApp extends MVCApplication
             if ( strBotKey != null )
             {
                 _executor = BotService.getExecutor( strBotKey );
+                _executor.setLocale( getBotLocale( request ) );
 
                 if ( _executor == null )
                 {
@@ -157,5 +164,65 @@ public class EasyRulesBotApp extends MVCApplication
         }
 
         return redirectView( request, VIEW_BOT );
+    }
+
+    /**
+     * Get request information for the bot language
+     * @param request The request
+     * @return The locale
+     */
+    private Locale getBotLocale( HttpServletRequest request )
+    {
+        String strLanguage = request.getParameter( PARAMETER_LANGUAGE );
+
+        if ( strLanguage != null )
+        {
+            return new Locale( strLanguage );
+        }
+
+        return LocaleService.getDefault(  );
+    }
+
+    /**
+     * Gets the list of bots
+     * @return The list of bots
+     */
+    private List<BotDescription> getBotsDescription(  )
+    {
+        List<BotDescription> list = new ArrayList<BotDescription>(  );
+
+        for ( Bot bot : getBots(  ) )
+        {
+            List<String> listLanguages = bot.getAvailableLanguages(  );
+
+            if ( listLanguages != null )
+            {
+                for ( String strLanguage : listLanguages )
+                {
+                    BotDescription botDescription = new BotDescription(  );
+                    Locale locale = new Locale( strLanguage );
+                    botDescription.setName( bot.getName( locale ) );
+                    botDescription.setDescription( bot.getDescription( locale ) );
+                    botDescription.setLanguage( locale.getDisplayLanguage(  ) );
+
+                    UrlItem url = new UrlItem( URL_BOT );
+                    url.addParameter( PARAMETER_BOT, bot.getKey(  ) );
+                    url.addParameter( PARAMETER_LANGUAGE, strLanguage );
+                    botDescription.setUrl( url.getUrl(  ) );
+                    list.add( botDescription );
+                }
+            }
+            else
+            {
+                BotDescription botDescription = new BotDescription(  );
+                Locale locale = LocaleService.getDefault(  );
+                botDescription.setName( bot.getName( locale ) );
+                botDescription.setDescription( bot.getDescription( locale ) );
+                botDescription.setLanguage( locale.getDisplayLanguage(  ) );
+                list.add( botDescription );
+            }
+        }
+
+        return list;
     }
 }

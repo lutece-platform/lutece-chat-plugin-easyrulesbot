@@ -5,11 +5,12 @@
 </div> 
 <div class="row">
     <#list bots_list as bot>
-    <a href="jsp/site/Portal.jsp?page=bot&view=bot&bot=${bot.key}" >
+    <a href="${bot.url!'bot url missing'}" >
         <div class="col-md-8 col-md-offset-2">
             <div class="jumbotron">
-                <h3>${bot.name}</h3>
-                <p>${bot.description}</p>
+                <h3>${bot.name!'bot name missing'}</h3>
+                <p>${bot.description!'bot description missing'}</p>
+                <p><small>${bot.language!'bot language missing'}</small><p>
             </div> 
         </div>
     </a>
