@@ -242,7 +242,6 @@ public class Bot implements Serializable
     {
                     
         String strLastMessage = I18nService.getLocalizedString( PROPERTY_LAST_MESSAGE , locale);
-        System.out.println( locale.getDisplayLanguage() );
         StringBuilder sbLastMessage = new StringBuilder( strLastMessage );
         sbLastMessage.append( "<ul>" );
 
