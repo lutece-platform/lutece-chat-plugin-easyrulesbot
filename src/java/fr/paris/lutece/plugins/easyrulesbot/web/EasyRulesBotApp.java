@@ -122,7 +122,7 @@ public class EasyRulesBotApp extends MVCApplication
 
         _executor.fireRules(  );
 
-        String strQuestion = _executor.getQuestion(  );
+        String strQuestion = _executor.getQuestion( request );
         _executor.addBotPost( strQuestion );
 
         _executor.traceData(  );

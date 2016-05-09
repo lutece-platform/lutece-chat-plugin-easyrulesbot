@@ -48,6 +48,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -91,9 +92,10 @@ public class BotExecutor implements Serializable
 
     /**
      * Gets the question
+     * @param request The HTTP request
      * @return The question
      */
-    public String getQuestion(  )
+    public String getQuestion( HttpServletRequest request )
     {
         String strQuestion;
 
@@ -104,7 +106,7 @@ public class BotExecutor implements Serializable
         else
         {
             // All rules has been triggered
-            strQuestion = _bot.processData( _mapData , _locale );
+            strQuestion = _bot.processData( request, _mapData , _locale );
         }
 
         return strQuestion;

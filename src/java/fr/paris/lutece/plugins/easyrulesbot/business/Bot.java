@@ -43,6 +43,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -234,11 +235,12 @@ public class Bot implements Serializable
     /**
      * Last bot post build with data collected.
      * Default implementation. Should be override
+     * @param request The HTTP request
      * @param mapData The data
      * @param locale The locale
      * @return The last message
      */
-    public String processData(Map<String, String> mapData, Locale locale)
+    public String processData( HttpServletRequest request , Map<String, String> mapData, Locale locale)
     {
                     
         String strLastMessage = I18nService.getLocalizedString( PROPERTY_LAST_MESSAGE , locale);
