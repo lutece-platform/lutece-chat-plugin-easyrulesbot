@@ -5,20 +5,67 @@
     </properties>
     <body>
         <section name="Plugin easyrulesbot">
-            <!--
             <p>
-                <img src="images/easyrulesbot.png" />
+                <img src="images/easyrulesbot.jpg" />
             </p>
-            -->
             <subsection name="Introduction">
-                <p></p>
+                <p>
+                    This plugin provides a chat bot engine based on the rules engine 
+                    <a href="https://github.com/EasyRules/easyrules" target="_blank" >EasyRules</a>.
+                </p>
+                <p>
+                    Bots can be made by simply configure rules into a separate Lutece module :
+                    <code>module-easyrulesbot-mybot</code>.
+                </p>
+                <p>
+                    See the <a href="http://dev.lutece.paris.fr/incubator/jsp/site/Portal.jsp?page=bot">
+                    online demo </a> of a bot that helps you to create a pom.xml
+                    in order to build a Lutece web site.
+                     
+                </p>
             </subsection>
-            <subsection name="Configuration">
-                <p></p>
+        </section>
+        <section name="Configuration">
+            <p>
+                All the rules configuration should be defined into the Spring context file of 
+                the bot module. 
+            </p>
+            <p>
+                Bot rules are specialized EasyRules rules.
+            </p>
+            <p>
+                They inherit fields such as ( name, description, priority ) but have
+                also additional fields such as ( question, response processor, response comment, conditions list, ...). 
+                Each rule has also one datakey associated that is being valuated by a response processor. 
+            </p>
+            <p>
+                All messages can be defined either in the Spring context file or in the localized messages_*.properties 
+                using i18n keys. The second way is recommended. 
+            </p>
+            <subsection name="Response Processors">
+                <p>
+                    Some standard processors are available for commun response handling :
+                    <ul>
+                        <li>
+                            <b>InputStringResponseProcessor</b> : accept String to define the datakey of the rule. 
+                        </li>
+                        <li>
+                            <b>MultipleValuesResponseProcessor</b> : define the datakey of the rule among several values associated each to a list of terms. 
+                        </li>
+                    </ul>
+                </p>
+                
             </subsection>
-            <subsection name="Usage">
-                <p></p>
-            </subsection>
+        </section>
+        <section name="Usage">
+            <p>
+                For Front office bots :
+            </p>
+            <p>
+                <pre>
+  http://domain.com/context/jsp/site/Portal.jsp?page=bot
+                </pre>
+            </p>
         </section>
     </body>
 </document>
