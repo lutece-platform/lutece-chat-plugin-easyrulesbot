@@ -48,6 +48,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -106,7 +107,7 @@ public class BotExecutor implements Serializable
         else
         {
             // All rules has been triggered
-            strQuestion = _bot.processData( request, _mapData , _locale );
+            strQuestion = _bot.processData( request, _mapData, _locale );
         }
 
         return strQuestion;

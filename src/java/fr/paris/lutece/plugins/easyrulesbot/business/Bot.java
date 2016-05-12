@@ -43,6 +43,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -52,7 +53,6 @@ import javax.servlet.http.HttpServletRequest;
 public class Bot implements Serializable
 {
     private static final String PROPERTY_LAST_MESSAGE = "easyrulesbot.bot.lastMessage";
-    
     private static final long serialVersionUID = 1L;
     private String _strKey;
     private String _strName;
@@ -240,10 +240,9 @@ public class Bot implements Serializable
      * @param locale The locale
      * @return The last message
      */
-    public String processData( HttpServletRequest request , Map<String, String> mapData, Locale locale)
+    public String processData( HttpServletRequest request, Map<String, String> mapData, Locale locale )
     {
-                    
-        String strLastMessage = I18nService.getLocalizedString( PROPERTY_LAST_MESSAGE , locale);
+        String strLastMessage = I18nService.getLocalizedString( PROPERTY_LAST_MESSAGE, locale );
         StringBuilder sbLastMessage = new StringBuilder( strLastMessage );
         sbLastMessage.append( "<ul>" );
 
@@ -254,7 +253,7 @@ public class Bot implements Serializable
         }
 
         sbLastMessage.append( "</ul>" );
+
         return sbLastMessage.toString(  );
     }
-
 }

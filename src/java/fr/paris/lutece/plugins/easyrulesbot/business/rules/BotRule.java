@@ -347,7 +347,7 @@ public class BotRule implements Rule, Comparable, Serializable
      */
     private String fillTemplate( String strTemplateString, Map<String, String> model )
     {
-        if ( !strTemplateString.contains( "{" ) && !strTemplateString.contains( "<#" ))
+        if ( !strTemplateString.contains( "{" ) && !strTemplateString.contains( "<#" ) )
         {
             // No marker and no freemarker tag so nothing to transform
             return strTemplateString;
