@@ -36,10 +36,11 @@ package fr.paris.lutece.plugins.easyrulesbot.service.response.filters;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseFilter;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
 import fr.paris.lutece.portal.service.i18n.I18nService;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 
 /**
@@ -48,9 +49,20 @@ import java.util.Map;
 public class StopOnWordFilter implements ResponseFilter
 {
     private List<String> _listStopWords;
-    private String _strStopMessage;
-    private String _strStopMessageI18nKey;
+    private String _defaultStopMessage;
+    private List<String> _listStopMessageI18nKey;
 
+    /**
+     * Get the list of stop words
+     * @return The list
+     */
+    public List<String> getListStopWords(  )
+    {
+        return _listStopWords;
+    }
+    
+    
+    
     /**
      * Set the list of stop words
      * @param list The list
@@ -64,18 +76,18 @@ public class StopOnWordFilter implements ResponseFilter
      * Set the stop message
      * @param strMessage The message
      */
-    public void setMessage( String strMessage )
+    public void setDefaultMessage( String strMessage )
     {
-        _strStopMessage = strMessage;
+        _defaultStopMessage = strMessage;
     }
 
     /**
-     * Set the stop message
-     * @param strMessage The message
+     * Set the stop messageI18nKey
+     * @param list The list
      */
-    public void setMessageI18nKey( String strMessage )
+    public void setMessageI18nKey( List<String> list )
     {
-        _strStopMessageI18nKey = strMessage;
+        _listStopMessageI18nKey = list;
     }
 
     /**
@@ -99,21 +111,27 @@ public class StopOnWordFilter implements ResponseFilter
     }
 
     /**
-     * Gets the stop message
+     * Gets the stop message list
      * @param locale The locale
-     * @return The message
+     * @return A random message on the list
      */
     private String getStopMessage( Locale locale )
     {
         String strMessage;
-
-        if ( _strStopMessageI18nKey != null )
+        
+        if ( _listStopMessageI18nKey != null )
         {
-            strMessage = I18nService.getLocalizedString( _strStopMessageI18nKey, locale );
+            List<String> strMessageList = new ArrayList<String>();
+            for (String key : _listStopMessageI18nKey)
+            {
+                strMessageList.add(I18nService.getLocalizedString( key , locale ));
+            }
+            Random randomizer = new Random(  );
+            strMessage = strMessageList.get( randomizer.nextInt( strMessageList.size(  ) ) );
         }
         else
         {
-            strMessage = _strStopMessage;
+            strMessage = _defaultStopMessage;
         }
 
         return strMessage;
