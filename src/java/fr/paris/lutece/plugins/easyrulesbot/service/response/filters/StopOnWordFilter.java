@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.easyrulesbot.service.response.filters;
 
 import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseFilter;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
+import fr.paris.lutece.plugins.easyrulesbot.util.Utils;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,8 @@ import java.util.Random;
 public class StopOnWordFilter implements ResponseFilter
 {
     private List<String> _listStopWords;
+    private List<String> _listWords;
+    private String _strStopWordsFile;
     private String _defaultStopMessage;
     private List<String> _listStopMessageI18nKey;
 
@@ -72,6 +75,24 @@ public class StopOnWordFilter implements ResponseFilter
         _listStopWords = list;
     }
 
+    /**
+     * Returns the StopWordsFile
+     * @return The StopWordsFile
+     */ 
+    public String getStopWordsFile()
+    {
+        return _strStopWordsFile;
+    }
+    
+    /**
+     * Sets the StopWordsFile
+     * @param strStopWordsFile The StopWordsFile
+     */ 
+    public void setStopWordsFile( String strStopWordsFile )
+    {
+        _strStopWordsFile = strStopWordsFile;
+    }
+    
     /**
      * Set the stop message
      * @param strMessage The message
@@ -99,7 +120,7 @@ public class StopOnWordFilter implements ResponseFilter
     {
         String strCheck = strResponse.toLowerCase(  );
 
-        for ( String strWord : _listStopWords )
+        for ( String strWord : getWords() )
         {
             if ( strCheck.contains( strWord ) )
             {
@@ -136,4 +157,31 @@ public class StopOnWordFilter implements ResponseFilter
 
         return strMessage;
     }
+    
+    /**
+     * Gets the list of words 
+     * @return The list
+     */
+    private List<String> getWords()
+    {
+        if( _listWords == null )
+        {
+            _listWords = new ArrayList<String>();
+            if( _listStopWords != null  && !_listStopWords.isEmpty() )
+            {
+                _listWords.addAll( _listStopWords );
+            }
+            if( _strStopWordsFile != null )
+            {
+                _listWords.addAll( Utils.loadTermsFromFile( _strStopWordsFile ) );
+            }
+            for( String strWord : _listWords )
+            {
+                System.out.println( strWord );
+            }
+        }
+        return _listWords;
+    }
+
+    
 }
