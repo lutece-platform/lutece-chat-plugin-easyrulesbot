@@ -108,6 +108,7 @@ public class EasyRulesBotApp extends MVCApplication
             {
                 _executor = BotService.getExecutor( strBotKey );
                 _executor.setLocale( getBotLocale( request ) );
+                _executor.setLuteceUser( request );
 
                 if ( _executor == null )
                 {

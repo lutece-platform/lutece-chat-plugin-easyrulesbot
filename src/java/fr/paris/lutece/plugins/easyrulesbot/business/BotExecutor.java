@@ -36,6 +36,8 @@ package fr.paris.lutece.plugins.easyrulesbot.business;
 import fr.paris.lutece.plugins.easyrulesbot.business.rules.BotRule;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseFilter;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
+import fr.paris.lutece.portal.service.security.LuteceUser;
+import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 
 import org.easyrules.api.Rule;
@@ -57,6 +59,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class BotExecutor implements Serializable
 {
+    public static final String DATA_USER_FIRSTNAME = "user_firstname";
+    public static final String DATA_USER_LASTNAME = "user_lastname";
+    public static final String DATA_USER_EMAIL = "user_email";
+    
     private static final long serialVersionUID = 1L;
     private Bot _bot;
     private Locale _locale;
@@ -264,5 +270,23 @@ public class BotExecutor implements Serializable
     public String getBotName(  )
     {
         return _bot.getName( _locale );
+    }
+
+    /**
+     * Add MyLutece user's info to data map 
+     * @param request 
+     */
+    public void setLuteceUser(HttpServletRequest request)
+    {
+        if( SecurityService.isAuthenticationEnable() )
+        {
+            LuteceUser user = SecurityService.getInstance().getRegisteredUser( request );
+            if( user != null )
+            {
+                _mapData.put( DATA_USER_FIRSTNAME , user.getUserInfo( LuteceUser.NAME_GIVEN ) );
+                _mapData.put( DATA_USER_LASTNAME , user.getUserInfo( LuteceUser.NAME_FAMILY ) );
+                _mapData.put( DATA_USER_EMAIL , user.getEmail() );
+            }
+        }
     }
 }
