@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2015, Mairie de Paris
+ * Copyright (c) 2002-2016, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -117,25 +117,22 @@ public class BotDescription
     {
         _strUrl = strUrl;
     }
-    
-    
-       /**
-        * Returns the AvatarUrl
-        * @return The AvatarUrl
-        */ 
-    public String getAvatarUrl()
+
+    /**
+     * Returns the AvatarUrl
+     * @return The AvatarUrl
+     */
+    public String getAvatarUrl(  )
     {
         return _strAvatarUrl;
     }
-    
-       /**
-        * Sets the AvatarUrl
-        * @param strAvatarUrl The AvatarUrl
-        */ 
+
+    /**
+     * Sets the AvatarUrl
+     * @param strAvatarUrl The AvatarUrl
+     */
     public void setAvatarUrl( String strAvatarUrl )
     {
         _strAvatarUrl = strAvatarUrl;
     }
-    
-    
 }

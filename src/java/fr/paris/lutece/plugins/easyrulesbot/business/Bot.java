@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2015, Mairie de Paris
+ * Copyright (c) 2002-2016, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -54,8 +54,6 @@ public class Bot implements Serializable
 {
     private static final String PROPERTY_LAST_MESSAGE = "easyrulesbot.bot.lastMessage";
     private static final String URL_DEFAULT_BOT_AVATAR = "images/skin/plugins/easyrulesbot/bot-avatar.png";
-    
-    
     private static final long serialVersionUID = 1L;
     private String _strKey;
     private String _strName;
@@ -181,23 +179,24 @@ public class Bot implements Serializable
         _strDescriptionI18nKey = strDescriptionI18nKey;
     }
 
-       /**
-        * Returns the BotAvatarUrl
-        * @return The BotAvatarUrl
-        */ 
-    public String getAvatarUrl()
+    /**
+     * Returns the BotAvatarUrl
+     * @return The BotAvatarUrl
+     */
+    public String getAvatarUrl(  )
     {
-        if( _strBotAvatarUrl == null )
+        if ( _strBotAvatarUrl == null )
         {
             _strBotAvatarUrl = URL_DEFAULT_BOT_AVATAR;
         }
+
         return _strBotAvatarUrl;
     }
-    
-       /**
-        * Sets the BotAvatarUrl
-        * @param strBotAvatarUrl The BotAvatarUrl
-        */ 
+
+    /**
+     * Sets the BotAvatarUrl
+     * @param strBotAvatarUrl The BotAvatarUrl
+     */
     public void setAvatarUrl( String strBotAvatarUrl )
     {
         _strBotAvatarUrl = strBotAvatarUrl;

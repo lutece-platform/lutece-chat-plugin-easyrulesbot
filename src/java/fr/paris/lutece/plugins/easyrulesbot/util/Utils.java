@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2015, Mairie de Paris
+ * Copyright (c) 2002-2016, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,68 +35,74 @@ package fr.paris.lutece.plugins.easyrulesbot.util;
 
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPathService;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Utils
  */
 public class Utils
 {
-
     /**
      * Load Terms from a file. Each term is separated by a comma or new line
      * @param strRelativeFilePath The file path
-     * @return The list of terms 
+     * @return The list of terms
      */
     public static List<String> loadTermsFromFile( String strRelativeFilePath )
     {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<String>(  );
 
         BufferedReader br = null;
+
         try
         {
             String strFilePath = AppPathService.getAbsolutePathFromRelativePath( strRelativeFilePath );
             br = new BufferedReader( new FileReader( strFilePath ) );
 
-            String strLine = br.readLine();
+            String strLine = br.readLine(  );
 
-            while( strLine != null )
+            while ( strLine != null )
             {
                 String[] terms = strLine.split( "," );
-                for( String strTerm : terms )
+
+                for ( String strTerm : terms )
                 {
-                    String strCleanTerm = strTerm.trim().toLowerCase();
-                    if( strCleanTerm.length() > 2 )
+                    String strCleanTerm = strTerm.trim(  ).toLowerCase(  );
+
+                    if ( strCleanTerm.length(  ) > 2 )
                     {
                         list.add( strCleanTerm );
                     }
                 }
-                strLine = br.readLine();
+
+                strLine = br.readLine(  );
             }
-            
         }
-        catch( IOException ex )
+        catch ( IOException ex )
         {
-            AppLogService.error( "Error loading list of terms file : " + ex.getMessage() , ex);
+            AppLogService.error( "Error loading list of terms file : " + ex.getMessage(  ), ex );
         }
         finally
         {
             try
             {
-                if( br != null )
+                if ( br != null )
                 {
-                    br.close();
+                    br.close(  );
                 }
             }
-            catch( IOException ex )
+            catch ( IOException ex )
             {
-                AppLogService.error( "Error loading list of terms file : " + ex.getMessage() , ex);
+                AppLogService.error( "Error loading list of terms file : " + ex.getMessage(  ), ex );
             }
         }
+
         return list;
     }
 }

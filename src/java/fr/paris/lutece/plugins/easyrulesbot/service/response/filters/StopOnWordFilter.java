@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2015, Mairie de Paris
+ * Copyright (c) 2002-2016, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,6 +37,7 @@ import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseFilter;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
 import fr.paris.lutece.plugins.easyrulesbot.util.Utils;
 import fr.paris.lutece.portal.service.i18n.I18nService;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -63,9 +64,7 @@ public class StopOnWordFilter implements ResponseFilter
     {
         return _listStopWords;
     }
-    
-    
-    
+
     /**
      * Set the list of stop words
      * @param list The list
@@ -78,21 +77,21 @@ public class StopOnWordFilter implements ResponseFilter
     /**
      * Returns the StopWordsFile
      * @return The StopWordsFile
-     */ 
-    public String getStopWordsFile()
+     */
+    public String getStopWordsFile(  )
     {
         return _strStopWordsFile;
     }
-    
+
     /**
      * Sets the StopWordsFile
      * @param strStopWordsFile The StopWordsFile
-     */ 
+     */
     public void setStopWordsFile( String strStopWordsFile )
     {
         _strStopWordsFile = strStopWordsFile;
     }
-    
+
     /**
      * Set the stop message
      * @param strMessage The message
@@ -120,7 +119,7 @@ public class StopOnWordFilter implements ResponseFilter
     {
         String strCheck = strResponse.toLowerCase(  );
 
-        for ( String strWord : getWords() )
+        for ( String strWord : getWords(  ) )
         {
             if ( strCheck.contains( strWord ) )
             {
@@ -139,14 +138,16 @@ public class StopOnWordFilter implements ResponseFilter
     private String getStopMessage( Locale locale )
     {
         String strMessage;
-        
+
         if ( _listStopMessageI18nKey != null )
         {
-            List<String> strMessageList = new ArrayList<String>();
-            for (String key : _listStopMessageI18nKey)
+            List<String> strMessageList = new ArrayList<String>(  );
+
+            for ( String key : _listStopMessageI18nKey )
             {
-                strMessageList.add(I18nService.getLocalizedString( key , locale ));
+                strMessageList.add( I18nService.getLocalizedString( key, locale ) );
             }
+
             Random randomizer = new Random(  );
             strMessage = strMessageList.get( randomizer.nextInt( strMessageList.size(  ) ) );
         }
@@ -157,31 +158,29 @@ public class StopOnWordFilter implements ResponseFilter
 
         return strMessage;
     }
-    
+
     /**
-     * Gets the list of words 
+     * Gets the list of words
      * @return The list
      */
-    private List<String> getWords()
+    private List<String> getWords(  )
     {
-        if( _listWords == null )
+        if ( _listWords == null )
         {
-            _listWords = new ArrayList<String>();
-            if( _listStopWords != null  && !_listStopWords.isEmpty() )
+            _listWords = new ArrayList<String>(  );
+
+            if ( ( _listStopWords != null ) && !_listStopWords.isEmpty(  ) )
             {
                 _listWords.addAll( _listStopWords );
             }
-            if( _strStopWordsFile != null )
+
+            if ( _strStopWordsFile != null )
             {
                 _listWords.addAll( Utils.loadTermsFromFile( _strStopWordsFile ) );
             }
-            for( String strWord : _listWords )
-            {
-                System.out.println( strWord );
-            }
+
         }
+
         return _listWords;
     }
-
-    
 }

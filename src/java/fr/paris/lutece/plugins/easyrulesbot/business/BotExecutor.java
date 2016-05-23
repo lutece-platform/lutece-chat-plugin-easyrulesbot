@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2015, Mairie de Paris
+ * Copyright (c) 2002-2016, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -62,7 +62,6 @@ public class BotExecutor implements Serializable
     public static final String DATA_USER_FIRSTNAME = "user_firstname";
     public static final String DATA_USER_LASTNAME = "user_lastname";
     public static final String DATA_USER_EMAIL = "user_email";
-    
     private static final long serialVersionUID = 1L;
     private Bot _bot;
     private Locale _locale;
@@ -273,19 +272,20 @@ public class BotExecutor implements Serializable
     }
 
     /**
-     * Add MyLutece user's info to data map 
-     * @param request 
+     * Add MyLutece user's info to data map
+     * @param request
      */
-    public void setLuteceUser(HttpServletRequest request)
+    public void setLuteceUser( HttpServletRequest request )
     {
-        if( SecurityService.isAuthenticationEnable() )
+        if ( SecurityService.isAuthenticationEnable(  ) )
         {
-            LuteceUser user = SecurityService.getInstance().getRegisteredUser( request );
-            if( user != null )
+            LuteceUser user = SecurityService.getInstance(  ).getRegisteredUser( request );
+
+            if ( user != null )
             {
-                _mapData.put( DATA_USER_FIRSTNAME , user.getUserInfo( LuteceUser.NAME_GIVEN ) );
-                _mapData.put( DATA_USER_LASTNAME , user.getUserInfo( LuteceUser.NAME_FAMILY ) );
-                _mapData.put( DATA_USER_EMAIL , user.getEmail() );
+                _mapData.put( DATA_USER_FIRSTNAME, user.getUserInfo( LuteceUser.NAME_GIVEN ) );
+                _mapData.put( DATA_USER_LASTNAME, user.getUserInfo( LuteceUser.NAME_FAMILY ) );
+                _mapData.put( DATA_USER_EMAIL, user.getEmail(  ) );
             }
         }
     }
@@ -294,8 +294,8 @@ public class BotExecutor implements Serializable
      * Returns bot avatar URL
      * @return The avatar URL
      */
-    public Object getBotAvatarUrl()
+    public Object getBotAvatarUrl(  )
     {
-        return _bot.getAvatarUrl();
+        return _bot.getAvatarUrl(  );
     }
 }

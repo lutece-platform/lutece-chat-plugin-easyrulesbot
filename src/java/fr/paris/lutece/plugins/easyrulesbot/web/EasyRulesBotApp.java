@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2015, Mairie de Paris
+ * Copyright (c) 2002-2016, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -207,7 +207,7 @@ public class EasyRulesBotApp extends MVCApplication
                     botDescription.setName( bot.getName( locale ) );
                     botDescription.setDescription( bot.getDescription( locale ) );
                     botDescription.setLanguage( locale.getDisplayLanguage(  ) );
-                    botDescription.setAvatarUrl( bot.getAvatarUrl() );
+                    botDescription.setAvatarUrl( bot.getAvatarUrl(  ) );
 
                     UrlItem url = new UrlItem( URL_BOT );
                     url.addParameter( PARAMETER_BOT, bot.getKey(  ) );
