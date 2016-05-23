@@ -7,7 +7,7 @@
         <div class="direct-chat-messages">
             <#list posts_list as post >
 			<div class="chatBox">
-            <#if post.author!=1><img src="images/admin/skin/plugins/easyrulesbot/easyrulesbot.png" class="botAvatar" alt="avatar" title=""></#if>
+            <#if post.author!=1><img src="${bot_avatar}" class="botAvatar" alt="avatar" title=""></#if>
             <div class="bubble <#if post.author==1>bubble-alt</#if>">
                 <#if (post_index+1) == posts_list?size>
                 <span id="typed"></span>

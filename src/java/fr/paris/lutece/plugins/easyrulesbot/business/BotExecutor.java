@@ -289,4 +289,13 @@ public class BotExecutor implements Serializable
             }
         }
     }
+
+    /**
+     * Returns bot avatar URL
+     * @return The avatar URL
+     */
+    public Object getBotAvatarUrl()
+    {
+        return _bot.getAvatarUrl();
+    }
 }

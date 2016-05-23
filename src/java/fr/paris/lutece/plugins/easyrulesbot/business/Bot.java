@@ -53,12 +53,16 @@ import javax.servlet.http.HttpServletRequest;
 public class Bot implements Serializable
 {
     private static final String PROPERTY_LAST_MESSAGE = "easyrulesbot.bot.lastMessage";
+    private static final String URL_DEFAULT_BOT_AVATAR = "images/skin/plugins/easyrulesbot/bot-avatar.png";
+    
+    
     private static final long serialVersionUID = 1L;
     private String _strKey;
     private String _strName;
     private String _strDescription;
     private String _strNameI18nKey;
     private String _strDescriptionI18nKey;
+    private String _strBotAvatarUrl;
     private RulesEngine _engine;
     private List<ResponseFilter> _listResponseFilters;
     private List<String> _listAvailableLanguages;
@@ -175,6 +179,28 @@ public class Bot implements Serializable
     public void setDescriptionI18nKey( String strDescriptionI18nKey )
     {
         _strDescriptionI18nKey = strDescriptionI18nKey;
+    }
+
+       /**
+        * Returns the BotAvatarUrl
+        * @return The BotAvatarUrl
+        */ 
+    public String getAvatarUrl()
+    {
+        if( _strBotAvatarUrl == null )
+        {
+            _strBotAvatarUrl = URL_DEFAULT_BOT_AVATAR;
+        }
+        return _strBotAvatarUrl;
+    }
+    
+       /**
+        * Sets the BotAvatarUrl
+        * @param strBotAvatarUrl The BotAvatarUrl
+        */ 
+    public void setAvatarUrl( String strBotAvatarUrl )
+    {
+        _strBotAvatarUrl = strBotAvatarUrl;
     }
 
     /**

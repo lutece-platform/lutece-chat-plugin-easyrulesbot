@@ -65,6 +65,7 @@ public class EasyRulesBotApp extends MVCApplication
     private static final String TEMPLATE_BOTS_LIST = "/skin/plugins/easyrulesbot/bots_list.html";
     private static final String MARK_BOTS_LIST = "bots_list";
     private static final String MARK_POSTS_LIST = "posts_list";
+    private static final String MARK_BOT_AVATAR = "bot_avatar";
     private static final String PARAMETER_BOT = "bot";
     private static final String PARAMETER_RESPONSE = "response";
     private static final String PARAMETER_LANGUAGE = "lang";
@@ -130,6 +131,7 @@ public class EasyRulesBotApp extends MVCApplication
 
         Map<String, Object> model = getModel(  );
         model.put( MARK_POSTS_LIST, _executor.getPosts(  ) );
+        model.put( MARK_BOT_AVATAR, _executor.getBotAvatarUrl(  ) );
 
         XPage xpage = getXPage( TEMPLATE_BOT, request.getLocale(  ), model );
         xpage.setTitle( _executor.getBotName(  ) );
@@ -205,6 +207,7 @@ public class EasyRulesBotApp extends MVCApplication
                     botDescription.setName( bot.getName( locale ) );
                     botDescription.setDescription( bot.getDescription( locale ) );
                     botDescription.setLanguage( locale.getDisplayLanguage(  ) );
+                    botDescription.setAvatarUrl( bot.getAvatarUrl() );
 
                     UrlItem url = new UrlItem( URL_BOT );
                     url.addParameter( PARAMETER_BOT, bot.getKey(  ) );

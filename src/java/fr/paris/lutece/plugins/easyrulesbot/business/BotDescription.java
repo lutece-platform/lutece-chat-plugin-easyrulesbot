@@ -44,6 +44,7 @@ public class BotDescription
     private String _strDescription;
     private String _strLanguage;
     private String _strUrl;
+    private String _strAvatarUrl;
 
     /**
      * Returns the Name
@@ -116,4 +117,25 @@ public class BotDescription
     {
         _strUrl = strUrl;
     }
+    
+    
+       /**
+        * Returns the AvatarUrl
+        * @return The AvatarUrl
+        */ 
+    public String getAvatarUrl()
+    {
+        return _strAvatarUrl;
+    }
+    
+       /**
+        * Sets the AvatarUrl
+        * @param strAvatarUrl The AvatarUrl
+        */ 
+    public void setAvatarUrl( String strAvatarUrl )
+    {
+        _strAvatarUrl = strAvatarUrl;
+    }
+    
+    
 }
