@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions;
 
 import java.util.Map;
 
-
 /**
  * DataValueCondition
  */
@@ -43,22 +42,25 @@ public class DataValueCondition implements Condition
 {
     private static final String UNDEFINED = "undefined";
 
-    // Variables declarations 
+    // Variables declarations
     private String _strDataKey;
     private String _strDataValue;
 
     /**
      * Returns the DataKey
+     * 
      * @return The DataKey
      */
-    public String getDataKey(  )
+    public String getDataKey( )
     {
         return _strDataKey;
     }
 
     /**
      * Sets the DataKey
-     * @param strDataKey The DataKey
+     * 
+     * @param strDataKey
+     *            The DataKey
      */
     public void setDataKey( String strDataKey )
     {
@@ -67,16 +69,19 @@ public class DataValueCondition implements Condition
 
     /**
      * Returns the DataValue
+     * 
      * @return The DataValue
      */
-    public String getDataValue(  )
+    public String getDataValue( )
     {
         return _strDataValue;
     }
 
     /**
      * Sets the DataValue
-     * @param strDataValue The DataValue
+     * 
+     * @param strDataValue
+     *            The DataValue
      */
     public void setDataValue( String strDataValue )
     {

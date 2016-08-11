@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions;
 
-
 /**
  * ResponseNotUnderstoodException
  */
@@ -41,7 +40,9 @@ public class ResponseNotUnderstoodException extends ResponseProcessingException
 {
     /**
      * Constructor
-     * @param strMessage The message
+     * 
+     * @param strMessage
+     *            The message
      */
     public ResponseNotUnderstoodException( String strMessage )
     {

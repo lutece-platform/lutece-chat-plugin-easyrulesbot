@@ -53,7 +53,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  * BotExecutor
  */
@@ -66,12 +65,14 @@ public class BotExecutor implements Serializable
     private Bot _bot;
     private Locale _locale;
     private BotRule _currentRule;
-    private Map<String, String> _mapData = new ConcurrentHashMap<String, String>(  );
-    private List<Post> _listPosts = new ArrayList<Post>(  );
+    private Map<String, String> _mapData = new ConcurrentHashMap<String, String>( );
+    private List<Post> _listPosts = new ArrayList<Post>( );
 
     /**
      * Constructor
-     * @param bot The bot to execute
+     * 
+     * @param bot
+     *            The bot to execute
      */
     public BotExecutor( Bot bot )
     {
@@ -80,16 +81,19 @@ public class BotExecutor implements Serializable
 
     /**
      * Returns the Locale
+     * 
      * @return The Locale
      */
-    public Locale getLocale(  )
+    public Locale getLocale( )
     {
         return _locale;
     }
 
     /**
      * Sets the Locale
-     * @param locale The Locale
+     * 
+     * @param locale
+     *            The Locale
      */
     public void setLocale( Locale locale )
     {
@@ -98,7 +102,9 @@ public class BotExecutor implements Serializable
 
     /**
      * Gets the question
-     * @param request The HTTP request
+     * 
+     * @param request
+     *            The HTTP request
      * @return The question
      */
     public String getQuestion( HttpServletRequest request )
@@ -120,8 +126,11 @@ public class BotExecutor implements Serializable
 
     /**
      * Process the response
-     * @param strResponse The user response
-     * @throws ResponseProcessingException if an exception occurs during processing
+     * 
+     * @param strResponse
+     *            The user response
+     * @throws ResponseProcessingException
+     *             if an exception occurs during processing
      */
     public void processResponse( String strResponse ) throws ResponseProcessingException
     {
@@ -131,13 +140,12 @@ public class BotExecutor implements Serializable
 
         if ( _currentRule != null )
         {
-            strResponseValue = _currentRule.getResponseProcessor(  ).processResponse( strResponseValue, _locale,
-                    _mapData );
-            _mapData.put( _currentRule.getDataKey(  ), strResponseValue );
+            strResponseValue = _currentRule.getResponseProcessor( ).processResponse( strResponseValue, _locale, _mapData );
+            _mapData.put( _currentRule.getDataKey( ), strResponseValue );
 
             String strResponseComment = _currentRule.getResponseComment( _mapData, _locale );
 
-            if ( ( strResponseComment != null ) && !strResponseComment.trim(  ).equals( "" ) )
+            if ( ( strResponseComment != null ) && !strResponseComment.trim( ).equals( "" ) )
             {
                 addBotPost( strResponseComment );
             }
@@ -146,16 +154,18 @@ public class BotExecutor implements Serializable
 
     /**
      * Process filters
-     * @param strResponse The response
+     * 
+     * @param strResponse
+     *            The response
      * @return The filterd response
-     * @throws ResponseProcessingException if an exception occurs during processing
+     * @throws ResponseProcessingException
+     *             if an exception occurs during processing
      */
-    private String processFilters( String strResponse )
-        throws ResponseProcessingException
+    private String processFilters( String strResponse ) throws ResponseProcessingException
     {
         String strResponseValue = strResponse;
 
-        for ( ResponseFilter filter : _bot.getResponseFilters(  ) )
+        for ( ResponseFilter filter : _bot.getResponseFilters( ) )
         {
             strResponseValue = filter.filterResponse( strResponseValue, _locale, _mapData );
         }
@@ -165,7 +175,9 @@ public class BotExecutor implements Serializable
 
     /**
      * Sets the current rule
-     * @param rule The rule
+     * 
+     * @param rule
+     *            The rule
      */
     public void setCurrentRule( BotRule rule )
     {
@@ -173,16 +185,15 @@ public class BotExecutor implements Serializable
     }
 
     /**
-     * Executes rules.
-     * NB : Should be thread safe.
+     * Executes rules. NB : Should be thread safe.
      */
-    public synchronized void fireRules(  )
+    public synchronized void fireRules( )
     {
         _currentRule = null;
 
-        RulesEngine engine = _bot.getRulesEngine(  );
+        RulesEngine engine = _bot.getRulesEngine( );
 
-        for ( Rule rule : engine.getRules(  ) )
+        for ( Rule rule : engine.getRules( ) )
         {
             if ( rule instanceof BotRule )
             {
@@ -190,12 +201,14 @@ public class BotExecutor implements Serializable
             }
         }
 
-        engine.fireRules(  );
+        engine.fireRules( );
     }
 
     /**
      * Add a post
-     * @param post The post
+     * 
+     * @param post
+     *            The post
      */
     public void addPost( Post post )
     {
@@ -204,7 +217,9 @@ public class BotExecutor implements Serializable
 
     /**
      * Add a post
-     * @param strContent The content
+     * 
+     * @param strContent
+     *            The content
      */
     public void addBotPost( String strContent )
     {
@@ -213,7 +228,9 @@ public class BotExecutor implements Serializable
 
     /**
      * Add a post
-     * @param strContent The content
+     * 
+     * @param strContent
+     *            The content
      */
     public void addUserPost( String strContent )
     {
@@ -222,12 +239,15 @@ public class BotExecutor implements Serializable
 
     /**
      * Add a post
-     * @param strContent The content
-     * @param nAuthor The author
+     * 
+     * @param strContent
+     *            The content
+     * @param nAuthor
+     *            The author
      */
     private void addPost( String strContent, int nAuthor )
     {
-        Post post = new Post(  );
+        Post post = new Post( );
         post.setContent( strContent );
         post.setAuthor( nAuthor );
         _listPosts.add( post );
@@ -235,9 +255,10 @@ public class BotExecutor implements Serializable
 
     /**
      * The post list
+     * 
      * @return The list of all posts
      */
-    public List<Post> getPosts(  )
+    public List<Post> getPosts( )
     {
         return _listPosts;
     }
@@ -245,9 +266,9 @@ public class BotExecutor implements Serializable
     /**
      * Trace utils
      */
-    public void traceData(  )
+    public void traceData( )
     {
-        for ( String strKey : _mapData.keySet(  ) )
+        for ( String strKey : _mapData.keySet( ) )
         {
             AppLogService.info( strKey + " : " + _mapData.get( strKey ) );
         }
@@ -255,47 +276,51 @@ public class BotExecutor implements Serializable
 
     /**
      * Gets all the data map
+     * 
      * @return The data map
      */
-    public Map<String, String> getDataMap(  )
+    public Map<String, String> getDataMap( )
     {
         return _mapData;
     }
 
     /**
      * Returns the bot name
+     * 
      * @return the bot name
      */
-    public String getBotName(  )
+    public String getBotName( )
     {
         return _bot.getName( _locale );
     }
 
     /**
      * Add MyLutece user's info to data map
+     * 
      * @param request
      */
     public void setLuteceUser( HttpServletRequest request )
     {
-        if ( SecurityService.isAuthenticationEnable(  ) )
+        if ( SecurityService.isAuthenticationEnable( ) )
         {
-            LuteceUser user = SecurityService.getInstance(  ).getRegisteredUser( request );
+            LuteceUser user = SecurityService.getInstance( ).getRegisteredUser( request );
 
             if ( user != null )
             {
                 _mapData.put( DATA_USER_FIRSTNAME, user.getUserInfo( LuteceUser.NAME_GIVEN ) );
                 _mapData.put( DATA_USER_LASTNAME, user.getUserInfo( LuteceUser.NAME_FAMILY ) );
-                _mapData.put( DATA_USER_EMAIL, user.getEmail(  ) );
+                _mapData.put( DATA_USER_EMAIL, user.getEmail( ) );
             }
         }
     }
 
     /**
      * Returns bot avatar URL
+     * 
      * @return The avatar URL
      */
-    public Object getBotAvatarUrl(  )
+    public Object getBotAvatarUrl( )
     {
-        return _bot.getAvatarUrl(  );
+        return _bot.getAvatarUrl( );
     }
 }

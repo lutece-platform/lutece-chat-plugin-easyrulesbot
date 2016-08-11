@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions;
 
-
 /**
  * ResponseProcessingException
  */
@@ -43,7 +42,9 @@ public class ResponseProcessingException extends Exception
 
     /**
      * Constructor
-     * @param strMessage The message
+     * 
+     * @param strMessage
+     *            The message
      */
     public ResponseProcessingException( String strMessage )
     {

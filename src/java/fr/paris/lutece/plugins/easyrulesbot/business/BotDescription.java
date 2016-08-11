@@ -33,13 +33,12 @@
  */
 package fr.paris.lutece.plugins.easyrulesbot.business;
 
-
 /**
  * BotDescription
  */
 public class BotDescription
 {
-    // Variables declarations 
+    // Variables declarations
     private String _strName;
     private String _strDescription;
     private String _strLanguage;
@@ -48,16 +47,19 @@ public class BotDescription
 
     /**
      * Returns the Name
+     * 
      * @return The Name
      */
-    public String getName(  )
+    public String getName( )
     {
         return _strName;
     }
 
     /**
      * Sets the Name
-     * @param strName The Name
+     * 
+     * @param strName
+     *            The Name
      */
     public void setName( String strName )
     {
@@ -66,16 +68,19 @@ public class BotDescription
 
     /**
      * Returns the Description
+     * 
      * @return The Description
      */
-    public String getDescription(  )
+    public String getDescription( )
     {
         return _strDescription;
     }
 
     /**
      * Sets the Description
-     * @param strDescription The Description
+     * 
+     * @param strDescription
+     *            The Description
      */
     public void setDescription( String strDescription )
     {
@@ -84,16 +89,19 @@ public class BotDescription
 
     /**
      * Returns the Language
+     * 
      * @return The Language
      */
-    public String getLanguage(  )
+    public String getLanguage( )
     {
         return _strLanguage;
     }
 
     /**
      * Sets the Language
-     * @param strLanguage The Language
+     * 
+     * @param strLanguage
+     *            The Language
      */
     public void setLanguage( String strLanguage )
     {
@@ -102,16 +110,19 @@ public class BotDescription
 
     /**
      * Returns the Url
+     * 
      * @return The Url
      */
-    public String getUrl(  )
+    public String getUrl( )
     {
         return _strUrl;
     }
 
     /**
      * Sets the Url
-     * @param strUrl The Url
+     * 
+     * @param strUrl
+     *            The Url
      */
     public void setUrl( String strUrl )
     {
@@ -120,16 +131,19 @@ public class BotDescription
 
     /**
      * Returns the AvatarUrl
+     * 
      * @return The AvatarUrl
      */
-    public String getAvatarUrl(  )
+    public String getAvatarUrl( )
     {
         return _strAvatarUrl;
     }
 
     /**
      * Sets the AvatarUrl
-     * @param strAvatarUrl The AvatarUrl
+     * 
+     * @param strAvatarUrl
+     *            The AvatarUrl
      */
     public void setAvatarUrl( String strAvatarUrl )
     {

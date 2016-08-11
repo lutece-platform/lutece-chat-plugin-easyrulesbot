@@ -49,7 +49,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-
 /**
  * BotRule
  */
@@ -57,7 +56,7 @@ public class BotRule implements Rule, Comparable, Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    // Variables declarations 
+    // Variables declarations
     private String _strName;
     private String _strDescription;
     private String _strQuestionTemplate;
@@ -75,14 +74,16 @@ public class BotRule implements Rule, Comparable, Serializable
      * {@inheritDoc }
      */
     @Override
-    public String getName(  )
+    public String getName( )
     {
         return _strName;
     }
 
     /**
      * Sets the Name
-     * @param strName The Name
+     * 
+     * @param strName
+     *            The Name
      */
     public void setName( String strName )
     {
@@ -93,14 +94,16 @@ public class BotRule implements Rule, Comparable, Serializable
      * {@inheritDoc }
      */
     @Override
-    public String getDescription(  )
+    public String getDescription( )
     {
         return _strDescription;
     }
 
     /**
      * Sets the Description
-     * @param strDescription The Description
+     * 
+     * @param strDescription
+     *            The Description
      */
     public void setDescription( String strDescription )
     {
@@ -109,16 +112,19 @@ public class BotRule implements Rule, Comparable, Serializable
 
     /**
      * Returns the DescriptionI18nKey
+     * 
      * @return The DescriptionI18nKey
      */
-    public String getDescriptionI18nKey(  )
+    public String getDescriptionI18nKey( )
     {
         return _strDescriptionI18nKey;
     }
 
     /**
      * Sets the DescriptionI18nKey
-     * @param strDescriptionI18nKey The DescriptionI18nKey
+     * 
+     * @param strDescriptionI18nKey
+     *            The DescriptionI18nKey
      */
     public void setDescriptionI18nKey( String strDescriptionI18nKey )
     {
@@ -127,16 +133,19 @@ public class BotRule implements Rule, Comparable, Serializable
 
     /**
      * Returns the QuestionTemplateI18nKey
+     * 
      * @return The QuestionTemplateI18nKey
      */
-    public String getQuestionTemplateI18nKey(  )
+    public String getQuestionTemplateI18nKey( )
     {
         return _strQuestionTemplateI18nKey;
     }
 
     /**
      * Sets the QuestionTemplateI18nKey
-     * @param strQuestionTemplateI18nKey The QuestionTemplateI18nKey
+     * 
+     * @param strQuestionTemplateI18nKey
+     *            The QuestionTemplateI18nKey
      */
     public void setQuestionTemplateI18nKey( String strQuestionTemplateI18nKey )
     {
@@ -145,16 +154,19 @@ public class BotRule implements Rule, Comparable, Serializable
 
     /**
      * Returns the ResponseCommentTemplateI18nKey
+     * 
      * @return The ResponseCommentTemplateI18nKey
      */
-    public String getResponseCommentTemplateI18nKey(  )
+    public String getResponseCommentTemplateI18nKey( )
     {
         return _strResponseCommentTemplateI18nKey;
     }
 
     /**
      * Sets the ResponseCommentTemplateI18nKey
-     * @param strResponseCommentTemplateI18nKey The ResponseCommentTemplateI18nKey
+     * 
+     * @param strResponseCommentTemplateI18nKey
+     *            The ResponseCommentTemplateI18nKey
      */
     public void setResponseCommentTemplateI18nKey( String strResponseCommentTemplateI18nKey )
     {
@@ -165,14 +177,16 @@ public class BotRule implements Rule, Comparable, Serializable
      * {@inheritDoc }
      */
     @Override
-    public int getPriority(  )
+    public int getPriority( )
     {
         return _nPriority;
     }
 
     /**
      * Sets the Priority
-     * @param nPriority The Priority
+     * 
+     * @param nPriority
+     *            The Priority
      */
     public void setPriority( int nPriority )
     {
@@ -181,16 +195,19 @@ public class BotRule implements Rule, Comparable, Serializable
 
     /**
      * Returns the DataKey
+     * 
      * @return The DataKey
      */
-    public String getDataKey(  )
+    public String getDataKey( )
     {
         return _strDataKey;
     }
 
     /**
      * Sets the DataKey
-     * @param strDataKey The DataKey
+     * 
+     * @param strDataKey
+     *            The DataKey
      */
     public void setDataKey( String strDataKey )
     {
@@ -199,8 +216,11 @@ public class BotRule implements Rule, Comparable, Serializable
 
     /**
      * Returns the Question
-     * @param mapData The map of data
-     * @param locale The locale
+     * 
+     * @param mapData
+     *            The map of data
+     * @param locale
+     *            The locale
      * @return The Question
      */
     public String getQuestion( Map<String, String> mapData, Locale locale )
@@ -221,7 +241,9 @@ public class BotRule implements Rule, Comparable, Serializable
 
     /**
      * Sets the Question
-     * @param strQuestion The Question
+     * 
+     * @param strQuestion
+     *            The Question
      */
     public void setQuestionTemplate( String strQuestion )
     {
@@ -230,7 +252,9 @@ public class BotRule implements Rule, Comparable, Serializable
 
     /**
      * Define the current executor using the rule
-     * @param executor The executor
+     * 
+     * @param executor
+     *            The executor
      */
     public void setExecutor( BotExecutor executor )
     {
@@ -239,7 +263,9 @@ public class BotRule implements Rule, Comparable, Serializable
 
     /**
      * Sets the response processor
-     * @param responseProcessor the response processor
+     * 
+     * @param responseProcessor
+     *            the response processor
      */
     public void setResponseProcessor( ResponseProcessor responseProcessor )
     {
@@ -248,16 +274,19 @@ public class BotRule implements Rule, Comparable, Serializable
 
     /**
      * Gets the response processor
+     * 
      * @return the response processor
      */
-    public ResponseProcessor getResponseProcessor(  )
+    public ResponseProcessor getResponseProcessor( )
     {
         return _responseProcessor;
     }
 
     /**
      * Sets the conditions list
-     * @param listConditions The list of condition
+     * 
+     * @param listConditions
+     *            The list of condition
      */
     public void setListConditions( List<Condition> listConditions )
     {
@@ -266,7 +295,9 @@ public class BotRule implements Rule, Comparable, Serializable
 
     /**
      * Define the response comment template
-     * @param strResponseCommentTemplate The template
+     * 
+     * @param strResponseCommentTemplate
+     *            The template
      */
     public void setResponseCommentTemplate( String strResponseCommentTemplate )
     {
@@ -275,8 +306,11 @@ public class BotRule implements Rule, Comparable, Serializable
 
     /**
      * Provides a comment after the user's response
-     * @param mapData The data
-     * @param locale The locale
+     * 
+     * @param mapData
+     *            The data
+     * @param locale
+     *            The locale
      * @return The response
      */
     public String getResponseComment( Map<String, String> mapData, Locale locale )
@@ -304,9 +338,9 @@ public class BotRule implements Rule, Comparable, Serializable
      * {@inheritDoc }
      */
     @Override
-    public boolean evaluate(  )
+    public boolean evaluate( )
     {
-        Map<String, String> mapData = _executor.getDataMap(  );
+        Map<String, String> mapData = _executor.getDataMap( );
 
         for ( Condition condition : _listConditions )
         {
@@ -323,7 +357,7 @@ public class BotRule implements Rule, Comparable, Serializable
      * {@inheritDoc }
      */
     @Override
-    public void execute(  ) throws Exception
+    public void execute( ) throws Exception
     {
         _executor.setCurrentRule( this );
     }
@@ -336,13 +370,16 @@ public class BotRule implements Rule, Comparable, Serializable
     {
         Rule rule = (Rule) object;
 
-        return getPriority(  ) - rule.getPriority(  );
+        return getPriority( ) - rule.getPriority( );
     }
 
     /**
      * Fill a template with data contained in a model map
-     * @param strTemplateString The template
-     * @param model The model
+     * 
+     * @param strTemplateString
+     *            The template
+     * @param model
+     *            The model
      * @return The filled string
      */
     private String fillTemplate( String strTemplateString, Map<String, String> model )
@@ -354,9 +391,8 @@ public class BotRule implements Rule, Comparable, Serializable
         }
 
         String strTemplate = strTemplateString.replace( "{", "${" ); // $ removed in context file
-        HtmlTemplate template = AppTemplateService.getTemplateFromStringFtl( strTemplate, LocaleService.getDefault(  ),
-                model );
+        HtmlTemplate template = AppTemplateService.getTemplateFromStringFtl( strTemplate, LocaleService.getDefault( ), model );
 
-        return template.getHtml(  );
+        return template.getHtml( );
     }
 }

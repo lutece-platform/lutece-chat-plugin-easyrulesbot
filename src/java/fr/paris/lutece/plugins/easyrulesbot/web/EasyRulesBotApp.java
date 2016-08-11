@@ -54,7 +54,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  * This class provides a simple implementation of an XPage
  */
@@ -79,23 +78,27 @@ public class EasyRulesBotApp extends MVCApplication
 
     /**
      * Returns the content of the list of bots page
-     * @param request The HTTP request
+     * 
+     * @param request
+     *            The HTTP request
      * @return The page
      */
     @View( value = VIEW_LIST, defaultView = true )
     public XPage viewList( HttpServletRequest request )
     {
-        List<BotDescription> listBots = getBotsDescription(  );
+        List<BotDescription> listBots = getBotsDescription( );
 
-        Map<String, Object> model = getModel(  );
+        Map<String, Object> model = getModel( );
         model.put( MARK_BOTS_LIST, listBots );
 
-        return getXPage( TEMPLATE_BOTS_LIST, request.getLocale(  ), model );
+        return getXPage( TEMPLATE_BOTS_LIST, request.getLocale( ), model );
     }
 
     /**
      * Returns the content of the bot page.
-     * @param request The HTTP request
+     * 
+     * @param request
+     *            The HTTP request
      * @return The page
      */
     @View( VIEW_BOT )
@@ -122,27 +125,29 @@ public class EasyRulesBotApp extends MVCApplication
             }
         }
 
-        _executor.fireRules(  );
+        _executor.fireRules( );
 
         String strQuestion = _executor.getQuestion( request );
         _executor.addBotPost( strQuestion );
 
-        _executor.traceData(  );
+        _executor.traceData( );
 
-        Map<String, Object> model = getModel(  );
-        model.put( MARK_POSTS_LIST, _executor.getPosts(  ) );
-        model.put( MARK_BOT_AVATAR, _executor.getBotAvatarUrl(  ) );
+        Map<String, Object> model = getModel( );
+        model.put( MARK_POSTS_LIST, _executor.getPosts( ) );
+        model.put( MARK_BOT_AVATAR, _executor.getBotAvatarUrl( ) );
 
-        XPage xpage = getXPage( TEMPLATE_BOT, request.getLocale(  ), model );
-        xpage.setTitle( _executor.getBotName(  ) );
-        xpage.setPathLabel( _executor.getBotName(  ) );
+        XPage xpage = getXPage( TEMPLATE_BOT, request.getLocale( ), model );
+        xpage.setTitle( _executor.getBotName( ) );
+        xpage.setPathLabel( _executor.getBotName( ) );
 
         return xpage;
     }
 
     /**
      * Process the response
-     * @param request The HTTP request
+     * 
+     * @param request
+     *            The HTTP request
      * @return The redirected page
      */
     @Action( ACTION_RESPONSE )
@@ -161,9 +166,9 @@ public class EasyRulesBotApp extends MVCApplication
         {
             _executor.processResponse( strResponse );
         }
-        catch ( ResponseProcessingException ex )
+        catch( ResponseProcessingException ex )
         {
-            _executor.addBotPost( ex.getMessage(  ) );
+            _executor.addBotPost( ex.getMessage( ) );
         }
 
         return redirectView( request, VIEW_BOT );
@@ -171,7 +176,9 @@ public class EasyRulesBotApp extends MVCApplication
 
     /**
      * Get request information for the bot language
-     * @param request The request
+     * 
+     * @param request
+     *            The request
      * @return The locale
      */
     private Locale getBotLocale( HttpServletRequest request )
@@ -183,46 +190,47 @@ public class EasyRulesBotApp extends MVCApplication
             return new Locale( strLanguage );
         }
 
-        return LocaleService.getDefault(  );
+        return LocaleService.getDefault( );
     }
 
     /**
      * Gets the list of bots
+     * 
      * @return The list of bots
      */
-    private List<BotDescription> getBotsDescription(  )
+    private List<BotDescription> getBotsDescription( )
     {
-        List<BotDescription> list = new ArrayList<BotDescription>(  );
+        List<BotDescription> list = new ArrayList<BotDescription>( );
 
-        for ( Bot bot : getBots(  ) )
+        for ( Bot bot : getBots( ) )
         {
-            List<String> listLanguages = bot.getAvailableLanguages(  );
+            List<String> listLanguages = bot.getAvailableLanguages( );
 
             if ( listLanguages != null )
             {
                 for ( String strLanguage : listLanguages )
                 {
-                    BotDescription botDescription = new BotDescription(  );
+                    BotDescription botDescription = new BotDescription( );
                     Locale locale = new Locale( strLanguage );
                     botDescription.setName( bot.getName( locale ) );
                     botDescription.setDescription( bot.getDescription( locale ) );
-                    botDescription.setLanguage( locale.getDisplayLanguage(  ) );
-                    botDescription.setAvatarUrl( bot.getAvatarUrl(  ) );
+                    botDescription.setLanguage( locale.getDisplayLanguage( ) );
+                    botDescription.setAvatarUrl( bot.getAvatarUrl( ) );
 
                     UrlItem url = new UrlItem( URL_BOT );
-                    url.addParameter( PARAMETER_BOT, bot.getKey(  ) );
+                    url.addParameter( PARAMETER_BOT, bot.getKey( ) );
                     url.addParameter( PARAMETER_LANGUAGE, strLanguage );
-                    botDescription.setUrl( url.getUrl(  ) );
+                    botDescription.setUrl( url.getUrl( ) );
                     list.add( botDescription );
                 }
             }
             else
             {
-                BotDescription botDescription = new BotDescription(  );
-                Locale locale = LocaleService.getDefault(  );
+                BotDescription botDescription = new BotDescription( );
+                Locale locale = LocaleService.getDefault( );
                 botDescription.setName( bot.getName( locale ) );
                 botDescription.setDescription( bot.getDescription( locale ) );
-                botDescription.setLanguage( locale.getDisplayLanguage(  ) );
+                botDescription.setLanguage( locale.getDisplayLanguage( ) );
                 list.add( botDescription );
             }
         }

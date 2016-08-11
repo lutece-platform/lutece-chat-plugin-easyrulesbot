@@ -1,0 +1,9 @@
+[key1]
+entry1
+entry2
+entry3
+
+[key2]
+entry1
+entry2
+entry3

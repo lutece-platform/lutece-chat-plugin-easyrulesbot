@@ -38,7 +38,6 @@ import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.Response
 import java.util.Locale;
 import java.util.Map;
 
-
 /**
  * ResponseProcessor
  */
@@ -46,12 +45,16 @@ public interface ResponseProcessor
 {
     /**
      * Analyzes the response and formats it.
-     * @param strResponse The response
-     * @param locale The locale
-     * @param mapData The map of data
+     * 
+     * @param strResponse
+     *            The response
+     * @param locale
+     *            The locale
+     * @param mapData
+     *            The map of data
      * @return The processed response
-     * @throws ResponseProcessingException if an exception occurs during processing
+     * @throws ResponseProcessingException
+     *             if an exception occurs during processing
      */
-    String processResponse( String strResponse, Locale locale, Map mapData )
-        throws ResponseProcessingException;
+    String processResponse( String strResponse, Locale locale, Map mapData ) throws ResponseProcessingException;
 }

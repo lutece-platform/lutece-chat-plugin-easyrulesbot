@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.easyrulesbot.business;
 
 import java.io.Serializable;
 
-
 /**
  * Post
  */
@@ -45,22 +44,25 @@ public class Post implements Serializable
     public static final int AUTHOR_USER = 1;
     private static final long serialVersionUID = 1L;
 
-    // Variables declarations 
+    // Variables declarations
     private String _strContent;
     private int _nAuthor;
 
     /**
      * Returns the Content
+     * 
      * @return The Content
      */
-    public String getContent(  )
+    public String getContent( )
     {
         return _strContent;
     }
 
     /**
      * Sets the Content
-     * @param strContent The Content
+     * 
+     * @param strContent
+     *            The Content
      */
     public void setContent( String strContent )
     {
@@ -69,16 +71,19 @@ public class Post implements Serializable
 
     /**
      * Returns the Author
+     * 
      * @return The Author
      */
-    public int getAuthor(  )
+    public int getAuthor( )
     {
         return _nAuthor;
     }
 
     /**
      * Sets the Author
-     * @param nAuthor The Author
+     * 
+     * @param nAuthor
+     *            The Author
      */
     public void setAuthor( int nAuthor )
     {

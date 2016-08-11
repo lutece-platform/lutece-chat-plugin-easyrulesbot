@@ -1,0 +1,27 @@
+[true]
+oui
+yes
+yeah
+ok
+ouai
+evidemment
+évidemment
+bien sur
+bien sûr
+of course
+affirmatif
+avec plaisir
+ouais
+oki
+
+[false]
+non
+sans façon
+négatif
+negatif
+pas la peine
+no way
+nope
+no
+
+

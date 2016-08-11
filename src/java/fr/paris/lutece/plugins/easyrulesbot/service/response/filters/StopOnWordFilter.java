@@ -35,39 +35,55 @@ package fr.paris.lutece.plugins.easyrulesbot.service.response.filters;
 
 import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseFilter;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
-import fr.paris.lutece.plugins.easyrulesbot.util.Utils;
-import fr.paris.lutece.portal.service.i18n.I18nService;
-
+import fr.paris.lutece.plugins.easyrulesbot.util.FileUtils;
+import fr.paris.lutece.portal.service.util.AppLogService;
+import fr.paris.lutece.portal.web.l10n.LocaleService;
 import java.util.ArrayList;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-
 
 /**
  * Stop On Word Processor
  */
 public class StopOnWordFilter implements ResponseFilter
 {
+
     private List<String> _listStopWords;
-    private List<String> _listWords;
-    private String _strStopWordsFile;
-    private String _defaultStopMessage;
-    private List<String> _listStopMessageI18nKey;
+    private Map<String, String> _mapLocaleStopWordsFile;
+    private Map<String, List<String>> _mapLocaleStopWordsList = new HashMap<>( );
+    private Map<String, String> _mapLocaleResponseMessageFile;
+    private Map<String, List<String>> _mapLocaleResponseMessageList = new HashMap<>( );
 
     /**
      * Get the list of stop words
+     *
      * @return The list
      */
-    public List<String> getListStopWords(  )
+    public List<String> getListStopWords( )
     {
         return _listStopWords;
     }
 
     /**
+     * Set Map Locale / Stop Words File
+     *
+     * @param map
+     *            The map
+     */
+    public void setMapLocaleStopWordsFile( Map<String, String> map )
+    {
+        _mapLocaleStopWordsFile = map;
+    }
+
+    /**
      * Set the list of stop words
-     * @param list The list
+     *
+     * @param list
+     *            The list
      */
     public void setListStopWords( List<String> list )
     {
@@ -75,55 +91,29 @@ public class StopOnWordFilter implements ResponseFilter
     }
 
     /**
-     * Returns the StopWordsFile
-     * @return The StopWordsFile
+     * Set Map Locale / Messages File
+     *
+     * @param map
+     *            The map
      */
-    public String getStopWordsFile(  )
+    public void setMapLocaleResponseMessageFile( Map<String, String> map )
     {
-        return _strStopWordsFile;
-    }
-
-    /**
-     * Sets the StopWordsFile
-     * @param strStopWordsFile The StopWordsFile
-     */
-    public void setStopWordsFile( String strStopWordsFile )
-    {
-        _strStopWordsFile = strStopWordsFile;
-    }
-
-    /**
-     * Set the stop message
-     * @param strMessage The message
-     */
-    public void setDefaultMessage( String strMessage )
-    {
-        _defaultStopMessage = strMessage;
-    }
-
-    /**
-     * Set the stop messageI18nKey
-     * @param list The list
-     */
-    public void setMessageI18nKey( List<String> list )
-    {
-        _listStopMessageI18nKey = list;
+        _mapLocaleResponseMessageFile = map;
     }
 
     /**
      * {@inheritDoc }
      */
     @Override
-    public String filterResponse( String strResponse, Locale locale, Map mapData )
-        throws ResponseProcessingException
+    public String filterResponse( String strResponse, Locale locale, Map mapData ) throws ResponseProcessingException
     {
-        String strCheck = strResponse.toLowerCase(  );
+        String strCheck = strResponse.toLowerCase( );
 
-        for ( String strWord : getWords(  ) )
+        for ( String strWord : getWords( locale ) )
         {
             if ( strCheck.contains( strWord ) )
             {
-                throw new ResponseProcessingException( getStopMessage( locale ) );
+                throw new ResponseProcessingException( getStopResponseMessage( locale ) );
             }
         }
 
@@ -132,55 +122,71 @@ public class StopOnWordFilter implements ResponseFilter
 
     /**
      * Gets the stop message list
-     * @param locale The locale
+     *
+     * @param locale
+     *            The locale
      * @return A random message on the list
      */
-    private String getStopMessage( Locale locale )
+    private String getStopResponseMessage( Locale locale )
     {
-        String strMessage;
+        String strMessage = "";
 
-        if ( _listStopMessageI18nKey != null )
+        if ( locale == null )
         {
-            List<String> strMessageList = new ArrayList<String>(  );
+            AppLogService.error( "Locale is NULL" );
+            locale = LocaleService.getDefault( ); // FIXME
+        }
 
-            for ( String key : _listStopMessageI18nKey )
+        String strLanguage = locale.getLanguage( );
+        List<String> listMessages = _mapLocaleResponseMessageList.get( strLanguage );
+        if ( listMessages == null )
+        {
+            String strMessageFile = _mapLocaleResponseMessageFile.get( strLanguage );
+            if ( strMessageFile != null )
             {
-                strMessageList.add( I18nService.getLocalizedString( key, locale ) );
-            }
+                listMessages = FileUtils.loadTermsFromFile( strMessageFile );
 
-            Random randomizer = new Random(  );
-            strMessage = strMessageList.get( randomizer.nextInt( strMessageList.size(  ) ) );
+                _mapLocaleResponseMessageList.put( strLanguage, listMessages );
+            }
+            else
+            {
+                AppLogService.error( "EasyRuleBot : StopOnWordFilter : No Response Message file available for the language : " + strLanguage );
+                return "";
+            }
         }
-        else
-        {
-            strMessage = _defaultStopMessage;
-        }
+        Random randomizer = new Random( );
+        strMessage = listMessages.get( randomizer.nextInt( listMessages.size( ) ) );
 
         return strMessage;
     }
 
     /**
      * Gets the list of words
+     *
      * @return The list
      */
-    private List<String> getWords(  )
+    private List<String> getWords( Locale locale )
     {
-        if ( _listWords == null )
+        String strLanguage = locale.getLanguage( );
+        List<String> listStopWords = _mapLocaleStopWordsList.get( strLanguage );
+        if ( listStopWords == null )
         {
-            _listWords = new ArrayList<String>(  );
-
-            if ( ( _listStopWords != null ) && !_listStopWords.isEmpty(  ) )
+            listStopWords = new ArrayList<String>( );
+            if ( _mapLocaleStopWordsFile != null )
             {
-                _listWords.addAll( _listStopWords );
+                String strMessageFile = _mapLocaleStopWordsFile.get( strLanguage );
+                if ( strMessageFile != null )
+                {
+                    listStopWords.addAll( FileUtils.loadTermsFromFile( strMessageFile ) );
+                }
             }
-
-            if ( _strStopWordsFile != null )
+            if ( _listStopWords != null )
             {
-                _listWords.addAll( Utils.loadTermsFromFile( _strStopWordsFile ) );
+                listStopWords.addAll( _listStopWords );
             }
-
+            _mapLocaleStopWordsList.put( strLanguage, listStopWords );
         }
 
-        return _listWords;
+        return listStopWords;
     }
 }

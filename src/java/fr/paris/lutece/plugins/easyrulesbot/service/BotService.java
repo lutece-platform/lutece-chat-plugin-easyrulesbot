@@ -39,7 +39,6 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 
 import java.util.List;
 
-
 /**
  * BotService
  */
@@ -48,13 +47,15 @@ public final class BotService
     private static List<Bot> _listBots;
 
     /** Private constructor */
-    private BotService(  )
+    private BotService( )
     {
     }
 
     /**
      * Provides a bot executor
-     * @param strBotKey The bot key
+     * 
+     * @param strBotKey
+     *            The bot key
      * @return The bot executor
      */
     public static synchronized BotExecutor getExecutor( String strBotKey )
@@ -73,9 +74,10 @@ public final class BotService
 
     /**
      * Get all bots
+     * 
      * @return The bots list
      */
-    public static List<Bot> getBots(  )
+    public static List<Bot> getBots( )
     {
         if ( _listBots == null )
         {
@@ -87,14 +89,16 @@ public final class BotService
 
     /**
      * Get a bot by its key
-     * @param strBotKey The bot key
+     * 
+     * @param strBotKey
+     *            The bot key
      * @return The bot
      */
     public static Bot getBot( String strBotKey )
     {
-        for ( Bot bot : getBots(  ) )
+        for ( Bot bot : getBots( ) )
         {
-            if ( bot.getKey(  ).equals( strBotKey ) )
+            if ( bot.getKey( ).equals( strBotKey ) )
             {
                 return bot;
             }

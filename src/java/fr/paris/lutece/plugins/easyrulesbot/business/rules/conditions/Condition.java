@@ -37,7 +37,6 @@ import java.io.Serializable;
 
 import java.util.Map;
 
-
 /**
  * Condition
  */
@@ -45,8 +44,11 @@ public interface Condition extends Serializable
 {
     /**
      * Evaluate athe condition
-     * @param mapData The data
-     * @param strRuleDataKey The current rule data key
+     * 
+     * @param mapData
+     *            The data
+     * @param strRuleDataKey
+     *            The current rule data key
      * @return true if the condition is validated, otherwise false
      */
     boolean evaluate( Map<String, String> mapData, String strRuleDataKey );

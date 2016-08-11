@@ -31,18 +31,35 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions;
+package fr.paris.lutece.plugins.easyrulesbot.util;
 
+import fr.paris.lutece.test.LuteceTestCase;
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+import org.junit.Test;
 
 /**
- * RuleDataKeyExistsCondition
+ * FileUtilsTest
  */
-public class RuleDataKeyExistsCondition implements Condition
+public class FileUtilsTest extends LuteceTestCase
 {
-    @Override
-    public boolean evaluate( Map<String, String> mapData, String strRuleDataKey )
+    private static final String FILE_TEST = "/mapfile.txt";
+
+    /**
+     * Test of loadTermsFromFile method, of class FileUtils.
+     * 
+     * @throws java.io.IOException
+     *             If an error occurs
+     */
+    @Test
+    public void testLoadTermsMapFromFile( ) throws IOException
     {
-        return !mapData.containsKey( strRuleDataKey );
+        System.out.println( "loadMapFromFile" );
+        Map<String, List<String>> map = FileUtils.loadMapFromFile( getClass( ).getResourceAsStream( FILE_TEST ) );
+        assertTrue( map.size( ) == 2 );
+        assertTrue( map.get( "key1" ).size( ) == 3 );
+        assertTrue( map.get( "key2" ).size( ) == 3 );
     }
+
 }

@@ -46,7 +46,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  * Bot
  */
@@ -67,16 +66,19 @@ public class Bot implements Serializable
 
     /**
      * Returns the Key
+     * 
      * @return The Key
      */
-    public String getKey(  )
+    public String getKey( )
     {
         return _strKey;
     }
 
     /**
      * Sets the Key
-     * @param strKey The Key
+     * 
+     * @param strKey
+     *            The Key
      */
     public void setKey( String strKey )
     {
@@ -85,7 +87,9 @@ public class Bot implements Serializable
 
     /**
      * Returns the Name
-     * @param locale The locale
+     * 
+     * @param locale
+     *            The locale
      * @return The Name
      */
     public String getName( Locale locale )
@@ -106,7 +110,9 @@ public class Bot implements Serializable
 
     /**
      * Sets the Name
-     * @param strName The Name
+     * 
+     * @param strName
+     *            The Name
      */
     public void setName( String strName )
     {
@@ -115,7 +121,9 @@ public class Bot implements Serializable
 
     /**
      * Returns the Description
-     * @param locale The locale
+     * 
+     * @param locale
+     *            The locale
      * @return The Description
      */
     public String getDescription( Locale locale )
@@ -136,7 +144,9 @@ public class Bot implements Serializable
 
     /**
      * Sets the Description
-     * @param strDescription The Description
+     * 
+     * @param strDescription
+     *            The Description
      */
     public void setDescription( String strDescription )
     {
@@ -145,16 +155,19 @@ public class Bot implements Serializable
 
     /**
      * Returns the NameI18nKey
+     * 
      * @return The NameI18nKey
      */
-    public String getNameI18nKey(  )
+    public String getNameI18nKey( )
     {
         return _strNameI18nKey;
     }
 
     /**
      * Sets the NameI18nKey
-     * @param strNameI18nKey The NameI18nKey
+     * 
+     * @param strNameI18nKey
+     *            The NameI18nKey
      */
     public void setNameI18nKey( String strNameI18nKey )
     {
@@ -163,16 +176,19 @@ public class Bot implements Serializable
 
     /**
      * Returns the DescriptionI18nKey
+     * 
      * @return The DescriptionI18nKey
      */
-    public String getDescriptionI18nKey(  )
+    public String getDescriptionI18nKey( )
     {
         return _strDescriptionI18nKey;
     }
 
     /**
      * Sets the DescriptionI18nKey
-     * @param strDescriptionI18nKey The DescriptionI18nKey
+     * 
+     * @param strDescriptionI18nKey
+     *            The DescriptionI18nKey
      */
     public void setDescriptionI18nKey( String strDescriptionI18nKey )
     {
@@ -181,9 +197,10 @@ public class Bot implements Serializable
 
     /**
      * Returns the BotAvatarUrl
+     * 
      * @return The BotAvatarUrl
      */
-    public String getAvatarUrl(  )
+    public String getAvatarUrl( )
     {
         if ( _strBotAvatarUrl == null )
         {
@@ -195,7 +212,9 @@ public class Bot implements Serializable
 
     /**
      * Sets the BotAvatarUrl
-     * @param strBotAvatarUrl The BotAvatarUrl
+     * 
+     * @param strBotAvatarUrl
+     *            The BotAvatarUrl
      */
     public void setAvatarUrl( String strBotAvatarUrl )
     {
@@ -204,16 +223,19 @@ public class Bot implements Serializable
 
     /**
      * Returns the RulesEngine
+     * 
      * @return The RulesEngine
      */
-    public RulesEngine getRulesEngine(  )
+    public RulesEngine getRulesEngine( )
     {
         return _engine;
     }
 
     /**
      * Sets the RulesEngine
-     * @param rulesEngine The RulesEngine
+     * 
+     * @param rulesEngine
+     *            The RulesEngine
      */
     public void setRulesEngine( RulesEngine rulesEngine )
     {
@@ -222,7 +244,9 @@ public class Bot implements Serializable
 
     /**
      * Set the list of response filters
-     * @param list The list
+     * 
+     * @param list
+     *            The list
      *
      */
     public void setListResponseFilters( List<ResponseFilter> list )
@@ -232,16 +256,19 @@ public class Bot implements Serializable
 
     /**
      * The list of response filters
+     * 
      * @return The list
      */
-    public List<ResponseFilter> getResponseFilters(  )
+    public List<ResponseFilter> getResponseFilters( )
     {
         return _listResponseFilters;
     }
 
     /**
      * Set available languages list
-     * @param listAvailableLanguages available languages list
+     * 
+     * @param listAvailableLanguages
+     *            available languages list
      */
     public void setListAvailableLanguages( List<String> listAvailableLanguages )
     {
@@ -250,19 +277,23 @@ public class Bot implements Serializable
 
     /**
      * Return available languages list
+     * 
      * @return available languages list
      */
-    public List<String> getAvailableLanguages(  )
+    public List<String> getAvailableLanguages( )
     {
         return _listAvailableLanguages;
     }
 
     /**
-     * Last bot post build with data collected.
-     * Default implementation. Should be override
-     * @param request The HTTP request
-     * @param mapData The data
-     * @param locale The locale
+     * Last bot post build with data collected. Default implementation. Should be override
+     * 
+     * @param request
+     *            The HTTP request
+     * @param mapData
+     *            The data
+     * @param locale
+     *            The locale
      * @return The last message
      */
     public String processData( HttpServletRequest request, Map<String, String> mapData, Locale locale )
@@ -271,14 +302,13 @@ public class Bot implements Serializable
         StringBuilder sbLastMessage = new StringBuilder( strLastMessage );
         sbLastMessage.append( "<ul>" );
 
-        for ( String strKey : mapData.keySet(  ) )
+        for ( String strKey : mapData.keySet( ) )
         {
-            sbLastMessage.append( "<li>" ).append( strKey ).append( " : " ).append( mapData.get( strKey ) )
-                         .append( "</li>" );
+            sbLastMessage.append( "<li>" ).append( strKey ).append( " : " ).append( mapData.get( strKey ) ).append( "</li>" );
         }
 
         sbLastMessage.append( "</ul>" );
 
-        return sbLastMessage.toString(  );
+        return sbLastMessage.toString( );
     }
 }

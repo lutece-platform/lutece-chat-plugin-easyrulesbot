@@ -36,25 +36,38 @@ package fr.paris.lutece.plugins.easyrulesbot.service.response.processors;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseProcessor;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseNotUnderstoodException;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
+import fr.paris.lutece.plugins.easyrulesbot.util.FileUtils;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-
 /**
  * Multiple Values ResponseProcessor
  */
 public class MultipleValuesResponseProcessor implements ResponseProcessor
 {
+    private String _strMutipleValuesMapFile;
     private Map<String, List<String>> _mapMultipleValues;
     private String _strInvalidResponseMessage;
     private String _strInvalidResponseMessageI18nKey;
 
     /**
+     * Set the map file path
+     * 
+     * @param strMapFile
+     */
+    public void setMutipleValuesMapFile( String strMapFile )
+    {
+        _strMutipleValuesMapFile = strMapFile;
+    }
+
+    /**
      * Set the map of values / terms
-     * @param map the map
+     * 
+     * @param map
+     *            the map
      */
     public void setValueTermsMap( Map<String, List<String>> map )
     {
@@ -63,7 +76,9 @@ public class MultipleValuesResponseProcessor implements ResponseProcessor
 
     /**
      * Set the Invalid Response Message
-     * @param strMessage The message
+     * 
+     * @param strMessage
+     *            The message
      */
     public void setInvalidResponseMessage( String strMessage )
     {
@@ -72,7 +87,9 @@ public class MultipleValuesResponseProcessor implements ResponseProcessor
 
     /**
      * Set the Invalid Response Message
-     * @param strMessage The message
+     * 
+     * @param strMessage
+     *            The message
      */
     public void setInvalidResponseMessageI18nKey( String strMessage )
     {
@@ -83,14 +100,14 @@ public class MultipleValuesResponseProcessor implements ResponseProcessor
      * {@inheritDoc }
      */
     @Override
-    public String processResponse( String strResponse, Locale locale, Map mapData )
-        throws ResponseProcessingException
+    public String processResponse( String strResponse, Locale locale, Map mapData ) throws ResponseProcessingException
     {
-        String strResponseToCheck = strResponse.toLowerCase(  );
+        String strResponseToCheck = strResponse.toLowerCase( );
+        Map<String, List<String>> map = getMultipleValuesMap( );
 
-        for ( String strValue : _mapMultipleValues.keySet(  ) )
+        for ( String strValue : map.keySet( ) )
         {
-            List<String> listTerms = _mapMultipleValues.get( strValue );
+            List<String> listTerms = map.get( strValue );
 
             for ( String strTerm : listTerms )
             {
@@ -105,8 +122,24 @@ public class MultipleValuesResponseProcessor implements ResponseProcessor
     }
 
     /**
+     * Return Map loaded from a file
+     * 
+     * @return The map
+     */
+    private Map<String, List<String>> getMultipleValuesMap( )
+    {
+        if ( _mapMultipleValues == null && _strMutipleValuesMapFile != null )
+        {
+            _mapMultipleValues = FileUtils.loadMapFromFile( _strMutipleValuesMapFile );
+        }
+        return _mapMultipleValues;
+    }
+
+    /**
      * Returns invalid response message
-     * @param locale The locale
+     * 
+     * @param locale
+     *            The locale
      * @return The message
      */
     private String getInvalidResponse( Locale locale )
@@ -124,4 +157,5 @@ public class MultipleValuesResponseProcessor implements ResponseProcessor
 
         return strResponse;
     }
+
 }
