@@ -35,10 +35,12 @@ package fr.paris.lutece.plugins.easyrulesbot.web;
 
 import fr.paris.lutece.plugins.easyrulesbot.business.Bot;
 import fr.paris.lutece.plugins.easyrulesbot.business.BotDescription;
-import fr.paris.lutece.plugins.easyrulesbot.business.BotExecutor;
+import fr.paris.lutece.plugins.easyrulesbot.business.Post;
 import fr.paris.lutece.plugins.easyrulesbot.service.BotService;
 import static fr.paris.lutece.plugins.easyrulesbot.service.BotService.getBots;
-import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
+import fr.paris.lutece.plugins.easyrulesbot.service.ChatService;
+import fr.paris.lutece.portal.service.security.LuteceUser;
+import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.Action;
 import fr.paris.lutece.portal.util.mvc.commons.annotations.View;
 import fr.paris.lutece.portal.util.mvc.xpage.MVCApplication;
@@ -51,6 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -74,8 +77,12 @@ public class EasyRulesBotApp extends MVCApplication
     private static final String RESET = "reset";
     private static final String URL_BOT = "jsp/site/Portal.jsp?page=bot&view=bot";
     private static final long serialVersionUID = 1L;
-    private BotExecutor _executor;
-
+    
+    private String _strBotKey;
+    private Locale _locale;
+    private String _strUserId;
+    private Bot _bot;
+    
     /**
      * Returns the content of the list of bots page
      * 
@@ -104,41 +111,21 @@ public class EasyRulesBotApp extends MVCApplication
     @View( VIEW_BOT )
     public XPage viewBot( HttpServletRequest request )
     {
-        if ( _executor == null )
+        _locale = getBotLocale( request );
+        _strUserId = getUserId( request );
+        if ( _strBotKey == null )
         {
-            String strBotKey = request.getParameter( PARAMETER_BOT );
-
-            if ( strBotKey != null )
-            {
-                _executor = BotService.getExecutor( strBotKey );
-                _executor.setLocale( getBotLocale( request ) );
-                _executor.setLuteceUser( request );
-
-                if ( _executor == null )
-                {
-                    return redirectView( request, VIEW_LIST );
-                }
-            }
-            else
-            {
-                return redirectView( request, VIEW_LIST );
-            }
-        }
-
-        _executor.fireRules( );
-
-        String strQuestion = _executor.getQuestion( request );
-        _executor.addBotPost( strQuestion );
-
-        _executor.traceData( );
-
+            _strBotKey = request.getParameter( PARAMETER_BOT );
+            _bot = BotService.getBot( _strBotKey );
+        }    
+        List<Post> listPosts = ChatService.getConversation( _strUserId );
         Map<String, Object> model = getModel( );
-        model.put( MARK_POSTS_LIST, _executor.getPosts( ) );
-        model.put( MARK_BOT_AVATAR, _executor.getBotAvatarUrl( ) );
+        model.put( MARK_POSTS_LIST, listPosts );
+        model.put( MARK_BOT_AVATAR, _bot.getAvatarUrl() );
 
         XPage xpage = getXPage( TEMPLATE_BOT, request.getLocale( ), model );
-        xpage.setTitle( _executor.getBotName( ) );
-        xpage.setPathLabel( _executor.getBotName( ) );
+        xpage.setTitle( _bot.getName( _locale ) );
+        xpage.setPathLabel( _bot.getName( _locale ) );
 
         return xpage;
     }
@@ -151,25 +138,11 @@ public class EasyRulesBotApp extends MVCApplication
      * @return The redirected page
      */
     @Action( ACTION_RESPONSE )
-    public XPage doProcessResponse( HttpServletRequest request )
+    public XPage doProcessMessage( HttpServletRequest request )
     {
-        String strResponse = request.getParameter( PARAMETER_RESPONSE );
-
-        if ( RESET.equals( strResponse ) )
-        {
-            _executor = null;
-
-            return redirectView( request, VIEW_BOT );
-        }
-
-        try
-        {
-            _executor.processResponse( strResponse );
-        }
-        catch( ResponseProcessingException ex )
-        {
-            _executor.addBotPost( ex.getMessage( ) );
-        }
+        String strMessage = request.getParameter( PARAMETER_RESPONSE );
+        
+        ChatService.processMessage( request, _strUserId , strMessage, _strBotKey, _locale );
 
         return redirectView( request, VIEW_BOT );
     }
@@ -236,5 +209,24 @@ public class EasyRulesBotApp extends MVCApplication
         }
 
         return list;
+    }
+
+    private String getUserId( HttpServletRequest request )
+    {
+        if( _strUserId == null )
+        {
+            if( SecurityService.isAuthenticationEnable() )
+            {
+                LuteceUser user = SecurityService.getInstance().getRegisteredUser( request );
+                _strUserId = user.getName();
+            }
+            else
+            {
+                _strUserId = UUID.randomUUID().toString();
+            }
+        }    
+        
+        return _strUserId;
+        
     }
 }

@@ -107,7 +107,7 @@ public class BotExecutor implements Serializable
      *            The HTTP request
      * @return The question
      */
-    public String getQuestion( HttpServletRequest request )
+    public String getBotMessage( HttpServletRequest request )
     {
         String strQuestion;
 
@@ -127,16 +127,16 @@ public class BotExecutor implements Serializable
     /**
      * Process the response
      * 
-     * @param strResponse
+     * @param strUserMessage
      *            The user response
      * @throws ResponseProcessingException
      *             if an exception occurs during processing
      */
-    public void processResponse( String strResponse ) throws ResponseProcessingException
+    public String processUserMessage( String strUserMessage ) throws ResponseProcessingException
     {
-        addUserPost( strResponse );
+        String strBotComment = null;
 
-        String strResponseValue = processFilters( strResponse );
+        String strResponseValue = processFilters( strUserMessage );
 
         if ( _currentRule != null )
         {
@@ -147,9 +147,10 @@ public class BotExecutor implements Serializable
 
             if ( ( strResponseComment != null ) && !strResponseComment.trim( ).equals( "" ) )
             {
-                addBotPost( strResponseComment );
+                strBotComment = strResponseComment;
             }
         }
+        return strBotComment;
     }
 
     /**
@@ -204,64 +205,6 @@ public class BotExecutor implements Serializable
         engine.fireRules( );
     }
 
-    /**
-     * Add a post
-     * 
-     * @param post
-     *            The post
-     */
-    public void addPost( Post post )
-    {
-        _listPosts.add( post );
-    }
-
-    /**
-     * Add a post
-     * 
-     * @param strContent
-     *            The content
-     */
-    public void addBotPost( String strContent )
-    {
-        addPost( strContent, Post.AUTHOR_BOT );
-    }
-
-    /**
-     * Add a post
-     * 
-     * @param strContent
-     *            The content
-     */
-    public void addUserPost( String strContent )
-    {
-        addPost( strContent, Post.AUTHOR_USER );
-    }
-
-    /**
-     * Add a post
-     * 
-     * @param strContent
-     *            The content
-     * @param nAuthor
-     *            The author
-     */
-    private void addPost( String strContent, int nAuthor )
-    {
-        Post post = new Post( );
-        post.setContent( strContent );
-        post.setAuthor( nAuthor );
-        _listPosts.add( post );
-    }
-
-    /**
-     * The post list
-     * 
-     * @return The list of all posts
-     */
-    public List<Post> getPosts( )
-    {
-        return _listPosts;
-    }
 
     /**
      * Trace utils
