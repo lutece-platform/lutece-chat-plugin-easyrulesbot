@@ -44,7 +44,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 import org.easyrules.api.RulesEngine;
 
 /**
@@ -54,7 +53,7 @@ public class EasyRulesBot extends AbstractChatBot
 {
     private static final String PROPERTY_LAST_MESSAGE = "easyrulesbot.bot.lastMessage";
 
-    private static Map<String, BotExecutor> _mapBotExecutor = new HashMap<>();
+    private static Map<String, BotExecutor> _mapBotExecutor = new HashMap<>( );
     private RulesEngine _engine;
     private List<ResponseFilter> _listResponseFilters;
 
@@ -66,9 +65,9 @@ public class EasyRulesBot extends AbstractChatBot
     {
         List<BotPost> listBotPost;
         BotExecutor executor = _mapBotExecutor.get( strConversationId );
-        if( executor == null )
+        if ( executor == null )
         {
-            executor = new BotExecutor( this );
+            executor = new BotExecutor( this, locale );
             _mapBotExecutor.put( strConversationId, executor );
         }
 
@@ -78,9 +77,17 @@ public class EasyRulesBot extends AbstractChatBot
         }
         catch( ResponseProcessingException ex )
         {
-            listBotPost = new ArrayList<>();
-            listBotPost.add( new BotPost( ex.getMessage() , BotPost.CONTENT_TYPE_TEXT ));
+            listBotPost = new ArrayList<>( );
+            listBotPost.add( new BotPost( ex.getMessage( ), BotPost.CONTENT_TYPE_TEXT ) );
         }
+
+        executor.fireRules( );
+
+        String strQuestion = executor.getQuestion( );
+        listBotPost.add( new BotPost( strQuestion, BotPost.CONTENT_TYPE_TEXT ) );
+
+        executor.traceData( );
+
         return listBotPost;
     }
 
@@ -89,7 +96,7 @@ public class EasyRulesBot extends AbstractChatBot
      *
      * @return The RulesEngine
      */
-    public RulesEngine getRulesEngine()
+    public RulesEngine getRulesEngine( )
     {
         return _engine;
     }
@@ -97,7 +104,8 @@ public class EasyRulesBot extends AbstractChatBot
     /**
      * Sets the RulesEngine
      *
-     * @param rulesEngine The RulesEngine
+     * @param rulesEngine
+     *            The RulesEngine
      */
     public void setRulesEngine( RulesEngine rulesEngine )
     {
@@ -107,7 +115,8 @@ public class EasyRulesBot extends AbstractChatBot
     /**
      * Set the list of response filters
      *
-     * @param list The list
+     * @param list
+     *            The list
      *
      */
     public void setListResponseFilters( List<ResponseFilter> list )
@@ -120,16 +129,14 @@ public class EasyRulesBot extends AbstractChatBot
      *
      * @return The list
      */
-    public List<ResponseFilter> getResponseFilters()
+    public List<ResponseFilter> getResponseFilters( )
     {
         return _listResponseFilters;
     }
-    
- /**
+
+    /**
      * Last bot post build with data collected. Default implementation. Should be override
      * 
-     * @param request
-     *            The HTTP request
      * @param mapData
      *            The data
      * @param locale
@@ -137,7 +144,7 @@ public class EasyRulesBot extends AbstractChatBot
      * @return The last message
      */
     @Override
-    public String processData( HttpServletRequest request, Map<String, String> mapData, Locale locale )
+    public String processData( Map<String, String> mapData, Locale locale )
     {
         String strLastMessage = I18nService.getLocalizedString( PROPERTY_LAST_MESSAGE, locale );
         StringBuilder sbLastMessage = new StringBuilder( strLastMessage );
@@ -153,4 +160,3 @@ public class EasyRulesBot extends AbstractChatBot
         return sbLastMessage.toString( );
     }
 }
-

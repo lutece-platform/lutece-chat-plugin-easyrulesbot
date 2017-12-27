@@ -75,9 +75,10 @@ public class BotExecutor implements Serializable
      * @param bot
      *            The bot to execute
      */
-    public BotExecutor( EasyRulesBot bot )
+    public BotExecutor( EasyRulesBot bot, Locale locale )
     {
         _bot = bot;
+        _locale = locale;
     }
 
     /**
@@ -91,24 +92,11 @@ public class BotExecutor implements Serializable
     }
 
     /**
-     * Sets the Locale
-     * 
-     * @param locale
-     *            The Locale
-     */
-    public void setLocale( Locale locale )
-    {
-        _locale = locale;
-    }
-
-    /**
      * Gets the question
      * 
-     * @param request
-     *            The HTTP request
      * @return The question
      */
-    public String getQuestion( HttpServletRequest request )
+    public String getQuestion( )
     {
         String strQuestion;
 
@@ -119,7 +107,7 @@ public class BotExecutor implements Serializable
         else
         {
             // All rules has been triggered
-            strQuestion = _bot.processData( request, _mapData, _locale );
+            strQuestion = _bot.processData( _mapData, _locale );
         }
 
         return strQuestion;
@@ -136,9 +124,8 @@ public class BotExecutor implements Serializable
      */
     public List<BotPost> processResponse( String strResponse ) throws ResponseProcessingException
     {
-        List<BotPost> listBotPost = new ArrayList<>();
+        List<BotPost> listBotPost = new ArrayList<>( );
         String strResponseValue = processFilters( strResponse );
-        
 
         if ( _currentRule != null )
         {
@@ -149,7 +136,7 @@ public class BotExecutor implements Serializable
 
             if ( ( strResponseComment != null ) && !strResponseComment.trim( ).equals( "" ) )
             {
-                BotPost post = new BotPost( strResponseComment , BotPost.CONTENT_TYPE_TEXT );
+                BotPost post = new BotPost( strResponseComment, BotPost.CONTENT_TYPE_TEXT );
                 listBotPost.add( post );
             }
         }
