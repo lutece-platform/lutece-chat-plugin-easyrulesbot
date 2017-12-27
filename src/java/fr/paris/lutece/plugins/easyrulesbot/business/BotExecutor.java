@@ -33,7 +33,9 @@
  */
 package fr.paris.lutece.plugins.easyrulesbot.business;
 
+import fr.paris.lutece.plugins.chatbot.business.BotPost;
 import fr.paris.lutece.plugins.easyrulesbot.business.rules.BotRule;
+import fr.paris.lutece.plugins.easyrulesbot.service.EasyRulesBot;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseFilter;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
 import fr.paris.lutece.portal.service.security.LuteceUser;
@@ -62,11 +64,10 @@ public class BotExecutor implements Serializable
     public static final String DATA_USER_LASTNAME = "user_lastname";
     public static final String DATA_USER_EMAIL = "user_email";
     private static final long serialVersionUID = 1L;
-    private Bot _bot;
+    private EasyRulesBot _bot;
     private Locale _locale;
     private BotRule _currentRule;
     private Map<String, String> _mapData = new ConcurrentHashMap<String, String>( );
-    private List<Post> _listPosts = new ArrayList<Post>( );
 
     /**
      * Constructor
@@ -74,7 +75,7 @@ public class BotExecutor implements Serializable
      * @param bot
      *            The bot to execute
      */
-    public BotExecutor( Bot bot )
+    public BotExecutor( EasyRulesBot bot )
     {
         _bot = bot;
     }
@@ -129,14 +130,15 @@ public class BotExecutor implements Serializable
      * 
      * @param strResponse
      *            The user response
+     * @return The list of post
      * @throws ResponseProcessingException
      *             if an exception occurs during processing
      */
-    public void processResponse( String strResponse ) throws ResponseProcessingException
+    public List<BotPost> processResponse( String strResponse ) throws ResponseProcessingException
     {
-        addUserPost( strResponse );
-
+        List<BotPost> listBotPost = new ArrayList<>();
         String strResponseValue = processFilters( strResponse );
+        
 
         if ( _currentRule != null )
         {
@@ -147,9 +149,11 @@ public class BotExecutor implements Serializable
 
             if ( ( strResponseComment != null ) && !strResponseComment.trim( ).equals( "" ) )
             {
-                addBotPost( strResponseComment );
+                BotPost post = new BotPost( strResponseComment , BotPost.CONTENT_TYPE_TEXT );
+                listBotPost.add( post );
             }
         }
+        return listBotPost;
     }
 
     /**
@@ -202,65 +206,6 @@ public class BotExecutor implements Serializable
         }
 
         engine.fireRules( );
-    }
-
-    /**
-     * Add a post
-     * 
-     * @param post
-     *            The post
-     */
-    public void addPost( Post post )
-    {
-        _listPosts.add( post );
-    }
-
-    /**
-     * Add a post
-     * 
-     * @param strContent
-     *            The content
-     */
-    public void addBotPost( String strContent )
-    {
-        addPost( strContent, Post.AUTHOR_BOT );
-    }
-
-    /**
-     * Add a post
-     * 
-     * @param strContent
-     *            The content
-     */
-    public void addUserPost( String strContent )
-    {
-        addPost( strContent, Post.AUTHOR_USER );
-    }
-
-    /**
-     * Add a post
-     * 
-     * @param strContent
-     *            The content
-     * @param nAuthor
-     *            The author
-     */
-    private void addPost( String strContent, int nAuthor )
-    {
-        Post post = new Post( );
-        post.setContent( strContent );
-        post.setAuthor( nAuthor );
-        _listPosts.add( post );
-    }
-
-    /**
-     * The post list
-     * 
-     * @return The list of all posts
-     */
-    public List<Post> getPosts( )
-    {
-        return _listPosts;
     }
 
     /**
