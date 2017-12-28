@@ -66,9 +66,9 @@
     </properties>
     
     <scm>
-        <connection>scm:git:https://github.com/lutece-platform/lutece-tech-plugin-easyrulesbot.git</connection>
-        <developerConnection>scm:git:https://github.com/lutece-platform/lutece-tech-plugin-easyrulesbot.git</developerConnection>
-        <url>https://github.com/lutece-platform/lutece-tech-plugin-easyrulesbot.git</url>
+        <connection>scm:git:https://github.com/lutece-platform/lutece-chat-plugin-easyrulesbot.git</connection>
+        <developerConnection>scm:git:https://github.com/lutece-platform/lutece-chat-plugin-easyrulesbot.git</developerConnection>
+        <url>https://github.com/lutece-platform/lutece-chat-plugin-easyrulesbot.git</url>
       <tag>HEAD</tag>
   </scm>
  
