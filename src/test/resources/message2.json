@@ -1,0 +1,23 @@
+{
+    "content":
+            {
+                "message": "Voici les choix possibles : ",
+                "buttons": [
+                    {
+                        "title": "Base de données",
+                        "value": "1",
+                        "type": "postback"
+                    },
+                    {
+                        "title": "OpenAM",
+                        "value": "2",
+                        "type": "postback"
+                    },
+                    {
+                        "title": "CAS",
+                        "value": "3",
+                        "type": "postback"
+                    }        
+                ]
+            }
+}

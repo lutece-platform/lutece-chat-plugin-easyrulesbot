@@ -102,7 +102,7 @@ public class BotExecutor implements Serializable
 
         if ( _currentRule != null )
         {
-            strQuestion = _currentRule.getQuestion( _mapData, _locale );
+            strQuestion = _currentRule.getMessage( _mapData, _locale );
         }
         else
         {

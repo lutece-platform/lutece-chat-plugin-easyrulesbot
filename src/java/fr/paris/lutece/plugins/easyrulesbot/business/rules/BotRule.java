@@ -35,6 +35,8 @@ package fr.paris.lutece.plugins.easyrulesbot.business.rules;
 
 import fr.paris.lutece.plugins.easyrulesbot.business.BotExecutor;
 import fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions.Condition;
+import fr.paris.lutece.plugins.easyrulesbot.service.MessageRendererService;
+import fr.paris.lutece.plugins.easyrulesbot.service.message.MessageRenderer;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseProcessor;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
@@ -54,15 +56,17 @@ import java.util.Map;
  */
 public class BotRule implements Rule, Comparable, Serializable
 {
+    private static final String DEFAULT_MESSAGE_TYPE = "text";
     private static final long serialVersionUID = 1L;
 
     // Variables declarations
     private String _strName;
     private String _strDescription;
-    private String _strQuestionTemplate;
+    private String _strMessageTemplate;
+    private String _strMessageTemplateI18nKey;
+    private String _strMessageType = DEFAULT_MESSAGE_TYPE;
     private String _strResponseCommentTemplate;
     private String _strDescriptionI18nKey;
-    private String _strQuestionTemplateI18nKey;
     private String _strResponseCommentTemplateI18nKey;
     private String _strDataKey;
     private int _nPriority;
@@ -136,9 +140,9 @@ public class BotRule implements Rule, Comparable, Serializable
      * 
      * @return The QuestionTemplateI18nKey
      */
-    public String getQuestionTemplateI18nKey( )
+    public String getMessageTemplateI18nKey( )
     {
-        return _strQuestionTemplateI18nKey;
+        return _strMessageTemplateI18nKey;
     }
 
     /**
@@ -147,9 +151,30 @@ public class BotRule implements Rule, Comparable, Serializable
      * @param strQuestionTemplateI18nKey
      *            The QuestionTemplateI18nKey
      */
-    public void setQuestionTemplateI18nKey( String strQuestionTemplateI18nKey )
+    public void setMessageTemplateI18nKey( String strQuestionTemplateI18nKey )
     {
-        _strQuestionTemplateI18nKey = strQuestionTemplateI18nKey;
+        _strMessageTemplateI18nKey = strQuestionTemplateI18nKey;
+    }
+
+    /**
+     * Returns the MessageType
+     * 
+     * @return The MessageType
+     */
+    public String getMessageType( )
+    {
+        return _strMessageType;
+    }
+
+    /**
+     * Sets the MessageType
+     * 
+     * @param strMessageType
+     *            The MessageType
+     */
+    public void setMessageType( String strMessageType )
+    {
+        _strMessageType = strMessageType;
     }
 
     /**
@@ -223,20 +248,22 @@ public class BotRule implements Rule, Comparable, Serializable
      *            The locale
      * @return The Question
      */
-    public String getQuestion( Map<String, String> mapData, Locale locale )
+    public String getMessage( Map<String, String> mapData, Locale locale )
     {
-        String strQuestion;
+        String strMessage;
 
-        if ( _strQuestionTemplateI18nKey != null )
+        if ( _strMessageTemplateI18nKey != null )
         {
-            strQuestion = I18nService.getLocalizedString( _strQuestionTemplateI18nKey, locale );
+            strMessage = I18nService.getLocalizedString( _strMessageTemplateI18nKey, locale );
         }
         else
         {
-            strQuestion = _strQuestionTemplate;
+            strMessage = _strMessageTemplate;
         }
+        MessageRenderer renderer = MessageRendererService.getRenderer( getMessageType() );
+        strMessage = renderer.render( strMessage );
 
-        return fillTemplate( strQuestion, mapData );
+        return fillTemplate( strMessage, mapData );
     }
 
     /**
@@ -247,7 +274,7 @@ public class BotRule implements Rule, Comparable, Serializable
      */
     public void setQuestionTemplate( String strQuestion )
     {
-        _strQuestionTemplate = strQuestion;
+        _strMessageTemplate = strQuestion;
     }
 
     /**

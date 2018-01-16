@@ -1,0 +1,28 @@
+
+<#if content.imageUrl??>
+    <img src="${content.imageUrl}" class="img-responsive" >
+</#if>
+<br>
+${content.message} <br>
+
+<form action="jsp/site/Portal.jsp" method="post" >
+    <input type="hidden" name="page" value="chatbot" />
+    <input type="hidden" name="action" value="button_click" />
+    <#list content.buttons as button >
+        <#switch button.type>
+            <#case "web_url">
+                <a href="${button.value}" class="btn btn-primary" target="_blank">
+                    <i class="fa fa-link"> </i>
+                    ${button.title}
+                </a>
+                <#break>
+            <#case "phonenumber">
+                <a href="tel:${button.value}" class="btn btn-primary"><i class="fa fa-phone"></i> ${button.title}</a>
+                <#break>
+            <#case "postback">
+                <button class="btn btn-primary" name="button_value" value="${button.title}|${button.value}" type="submit">
+                        ${button.title}  
+                </button>
+        </#switch>
+    </#list>
+</form>

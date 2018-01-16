@@ -4,6 +4,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" >
 
-
+    <!-- Renderers -->
+    <bean id="easyrulesbot.rendererTextMessage" class="fr.paris.lutece.plugins.easyrulesbot.service.message.TextRenderer" />
+    <bean id="easyrulesbot.rendererButtonsMessage" class="fr.paris.lutece.plugins.easyrulesbot.service.message.ButtonsRenderer" />
 
 </beans>
