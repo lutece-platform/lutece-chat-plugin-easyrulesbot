@@ -32,20 +32,22 @@
  * License 1.0
  */
 
-
 package fr.paris.lutece.plugins.easyrulesbot.service;
 
 /**
  * YamlBotLoadingException
  */
-public class YamlBotLoadingException extends Exception 
+public class YamlBotLoadingException extends Exception
 {
-    /** Constructor
-     * @param strMessage The message
+    /**
+     * Constructor
+     * 
+     * @param strMessage
+     *            The message
      */
     public YamlBotLoadingException( String strMessage )
     {
         super( strMessage );
     }
-    
+
 }

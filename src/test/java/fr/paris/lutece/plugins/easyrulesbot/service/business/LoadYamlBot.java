@@ -45,19 +45,20 @@ import org.junit.Test;
 public class LoadYamlBot
 {
 
-    
     private static final String YAML_FILE = "bot.yml";
+
     /**
      * Test of render method, of class ButtonsRenderer.
+     * 
      * @throws java.io.IOException
      */
     @Test
-    public void testLoadBot() throws IOException
+    public void testLoadBot( ) throws IOException
     {
         System.out.println( "YAML Loader" );
         String strYAML = Utils.getFileContent( YAML_FILE );
         YamlBot bot = YamlBotLoader.loadYamlBot( strYAML );
-        System.out.println( bot.getName() );
+        System.out.println( bot.getName( ) );
     }
-    
+
 }

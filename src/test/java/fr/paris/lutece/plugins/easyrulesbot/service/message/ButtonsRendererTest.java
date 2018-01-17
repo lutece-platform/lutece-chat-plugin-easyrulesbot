@@ -46,18 +46,20 @@ import org.junit.Test;
 public class ButtonsRendererTest extends LuteceTestCase
 {
     private static final String JSON_FILE = "message.json";
+
     /**
      * Test of render method, of class ButtonsRenderer.
+     * 
      * @throws java.io.IOException
      */
     @Test
-    public void testRender() throws IOException
+    public void testRender( ) throws IOException
     {
         System.out.println( "render" );
         String strJsonInput = Utils.getFileContent( JSON_FILE );
-        ButtonsRenderer instance = new ButtonsRenderer();
+        ButtonsRenderer instance = new ButtonsRenderer( );
         String strResult = instance.render( strJsonInput );
         System.out.println( strResult );
     }
-    
+
 }

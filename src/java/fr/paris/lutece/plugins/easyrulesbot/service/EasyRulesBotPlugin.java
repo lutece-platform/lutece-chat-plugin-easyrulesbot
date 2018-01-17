@@ -32,7 +32,6 @@
  * License 1.0
  */
 
-
 package fr.paris.lutece.plugins.easyrulesbot.service;
 
 import fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation;
@@ -44,12 +43,12 @@ public class EasyRulesBotPlugin extends PluginDefaultImplementation
 {
 
     @Override
-    public void init()
+    public void init( )
     {
-        super.init(); 
-        
+        super.init( );
+
         // Load and register YAML bots
-        YamlBotLoader.loadBots();
+        YamlBotLoader.loadBots( );
     }
 
 }

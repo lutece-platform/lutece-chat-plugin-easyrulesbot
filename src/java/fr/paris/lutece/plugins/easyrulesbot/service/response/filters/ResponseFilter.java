@@ -45,10 +45,11 @@ public interface ResponseFilter
 {
     /**
      * Gets the filter's name
+     * 
      * @return The name;
      */
-    String getName();
-    
+    String getName( );
+
     /**
      * Analyzes the response and formats it.
      * 

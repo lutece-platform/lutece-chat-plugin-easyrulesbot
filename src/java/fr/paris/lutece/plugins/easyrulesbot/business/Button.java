@@ -32,71 +32,78 @@
  * License 1.0
  */
 
-
 package fr.paris.lutece.plugins.easyrulesbot.business;
 
 /**
  * Button
  */
-public class Button 
+public class Button
 {
-        // Variables declarations 
-        private String _strIcon;
-        private String _strTitle;
-        private String _strValue;
-    
-    
-       /**
-        * Returns the Icon
-        * @return The Icon
-        */ 
-        public String getIcon()
-        {
-            return _strIcon;
-        }
-    
-       /**
-        * Sets the Icon
-        * @param strIcon The Icon
-        */ 
-        public void setIcon( String strIcon )
-        {
-            _strIcon = strIcon;
-        }
-    
-       /**
-        * Returns the Title
-        * @return The Title
-        */ 
-        public String getTitle()
-        {
-            return _strTitle;
-        }
-    
-       /**
-        * Sets the Title
-        * @param strTitle The Title
-        */ 
-        public void setTitle( String strTitle )
-        {
-            _strTitle = strTitle;
-        }
-    
-       /**
-        * Returns the Value
-        * @return The Value
-        */ 
-        public String getValue()
-        {
-            return _strValue;
-        }
-    
-       /**
-        * Sets the Value
-        * @param strValue The Value
-        */ 
-        public void setValue( String strValue )
-        {
-            _strValue = strValue;
-        }
+    // Variables declarations
+    private String _strIcon;
+    private String _strTitle;
+    private String _strValue;
+
+    /**
+     * Returns the Icon
+     * 
+     * @return The Icon
+     */
+    public String getIcon( )
+    {
+        return _strIcon;
+    }
+
+    /**
+     * Sets the Icon
+     * 
+     * @param strIcon
+     *            The Icon
+     */
+    public void setIcon( String strIcon )
+    {
+        _strIcon = strIcon;
+    }
+
+    /**
+     * Returns the Title
+     * 
+     * @return The Title
+     */
+    public String getTitle( )
+    {
+        return _strTitle;
+    }
+
+    /**
+     * Sets the Title
+     * 
+     * @param strTitle
+     *            The Title
+     */
+    public void setTitle( String strTitle )
+    {
+        _strTitle = strTitle;
+    }
+
+    /**
+     * Returns the Value
+     * 
+     * @return The Value
+     */
+    public String getValue( )
+    {
+        return _strValue;
+    }
+
+    /**
+     * Sets the Value
+     * 
+     * @param strValue
+     *            The Value
+     */
+    public void setValue( String strValue )
+    {
+        _strValue = strValue;
+    }
 }

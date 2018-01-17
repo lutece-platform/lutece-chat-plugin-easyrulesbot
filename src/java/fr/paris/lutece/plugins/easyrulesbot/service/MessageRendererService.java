@@ -32,7 +32,6 @@
  * License 1.0
  */
 
-
 package fr.paris.lutece.plugins.easyrulesbot.service;
 
 import fr.paris.lutece.plugins.easyrulesbot.service.message.MessageRenderer;
@@ -44,28 +43,27 @@ import java.util.Map;
 /**
  * MessageRendererService
  */
-public class MessageRendererService 
+public class MessageRendererService
 {
     private static Map<String, MessageRenderer> _mapRenderers;
-    
-    
+
     public static MessageRenderer getRenderer( String strMessageType )
     {
-        if( _mapRenderers == null )
+        if ( _mapRenderers == null )
         {
-            _mapRenderers = getRenderers();
+            _mapRenderers = getRenderers( );
         }
         return _mapRenderers.get( strMessageType );
-        
+
     }
 
-    private static Map<String, MessageRenderer> getRenderers()
+    private static Map<String, MessageRenderer> getRenderers( )
     {
-        Map<String, MessageRenderer> mapRenderers  = new HashMap<>();
-        List<MessageRenderer> listRenderers =  SpringContextService.getBeansOfType(  MessageRenderer.class );
-        for( MessageRenderer renderer : listRenderers )
+        Map<String, MessageRenderer> mapRenderers = new HashMap<>( );
+        List<MessageRenderer> listRenderers = SpringContextService.getBeansOfType( MessageRenderer.class );
+        for ( MessageRenderer renderer : listRenderers )
         {
-            mapRenderers.put( renderer.getMessageType() , renderer );
+            mapRenderers.put( renderer.getMessageType( ), renderer );
         }
         return mapRenderers;
     }

@@ -32,7 +32,6 @@
  * License 1.0
  */
 
-
 package fr.paris.lutece.plugins.easyrulesbot.service.message;
 
 /**
@@ -41,12 +40,12 @@ package fr.paris.lutece.plugins.easyrulesbot.service.message;
 public class TextRenderer implements MessageRenderer
 {
     private static final String MESSAGE_TYPE = "text";
-    
+
     /**
      * {@inheritDoc }
      */
     @Override
-    public String getMessageType()
+    public String getMessageType( )
     {
         return MESSAGE_TYPE;
     }

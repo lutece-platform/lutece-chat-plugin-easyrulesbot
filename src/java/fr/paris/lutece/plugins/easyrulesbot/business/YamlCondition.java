@@ -32,34 +32,35 @@
  * License 1.0
  */
 
-
 package fr.paris.lutece.plugins.easyrulesbot.business;
 
 /**
  * YamlCondition
  */
-public class YamlCondition 
+public class YamlCondition
 {
-        // Variables declarations 
-        private String _strCondition;
-    
-    
-       /**
-        * Returns the Condition
-        * @return The Condition
-        */ 
-        public String getCondition()
-        {
-            return _strCondition;
-        }
-    
-       /**
-        * Sets the Condition
-        * @param strCondition The Condition
-        */ 
-        public void setCondition( String strCondition )
-        {
-            _strCondition = strCondition;
-        }
+    // Variables declarations
+    private String _strCondition;
+
+    /**
+     * Returns the Condition
+     * 
+     * @return The Condition
+     */
+    public String getCondition( )
+    {
+        return _strCondition;
+    }
+
+    /**
+     * Sets the Condition
+     * 
+     * @param strCondition
+     *            The Condition
+     */
+    public void setCondition( String strCondition )
+    {
+        _strCondition = strCondition;
+    }
 
 }

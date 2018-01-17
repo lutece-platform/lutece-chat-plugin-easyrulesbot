@@ -40,7 +40,7 @@ import java.util.List;
  */
 public class YamlBot
 {
-    // Variables declarations 
+    // Variables declarations
     private String _strKey;
     private String _strName;
     private String _strDescription;
@@ -56,7 +56,7 @@ public class YamlBot
      *
      * @return The Key
      */
-    public String getKey()
+    public String getKey( )
     {
         return _strKey;
     }
@@ -64,7 +64,8 @@ public class YamlBot
     /**
      * Sets the Key
      *
-     * @param strKey The Key
+     * @param strKey
+     *            The Key
      */
     public void setKey( String strKey )
     {
@@ -76,7 +77,7 @@ public class YamlBot
      *
      * @return The Name
      */
-    public String getName()
+    public String getName( )
     {
         return _strName;
     }
@@ -84,7 +85,8 @@ public class YamlBot
     /**
      * Sets the Name
      *
-     * @param strName The Name
+     * @param strName
+     *            The Name
      */
     public void setName( String strName )
     {
@@ -96,7 +98,7 @@ public class YamlBot
      *
      * @return The Description
      */
-    public String getDescription()
+    public String getDescription( )
     {
         return _strDescription;
     }
@@ -104,7 +106,8 @@ public class YamlBot
     /**
      * Sets the Description
      *
-     * @param strDescription The Description
+     * @param strDescription
+     *            The Description
      */
     public void setDescription( String strDescription )
     {
@@ -116,7 +119,7 @@ public class YamlBot
      *
      * @return The Language
      */
-    public String getLanguage()
+    public String getLanguage( )
     {
         return _strLanguage;
     }
@@ -124,7 +127,8 @@ public class YamlBot
     /**
      * Sets the Language
      *
-     * @param strLanguage The Language
+     * @param strLanguage
+     *            The Language
      */
     public void setLanguage( String strLanguage )
     {
@@ -136,7 +140,7 @@ public class YamlBot
      *
      * @return The WelcomeMessage
      */
-    public String getWelcomeMessage()
+    public String getWelcomeMessage( )
     {
         return _strWelcomeMessage;
     }
@@ -144,7 +148,8 @@ public class YamlBot
     /**
      * Sets the WelcomeMessage
      *
-     * @param strWelcomeMessage The WelcomeMessage
+     * @param strWelcomeMessage
+     *            The WelcomeMessage
      */
     public void setWelcomeMessage( String strWelcomeMessage )
     {
@@ -156,7 +161,7 @@ public class YamlBot
      *
      * @return The AvatarUrl
      */
-    public String getAvatarUrl()
+    public String getAvatarUrl( )
     {
         return _strAvatarUrl;
     }
@@ -164,7 +169,8 @@ public class YamlBot
     /**
      * Sets the AvatarUrl
      *
-     * @param strAvatarUrl The AvatarUrl
+     * @param strAvatarUrl
+     *            The AvatarUrl
      */
     public void setAvatarUrl( String strAvatarUrl )
     {
@@ -176,7 +182,7 @@ public class YamlBot
      *
      * @return The Standalone
      */
-    public boolean getStandalone()
+    public boolean getStandalone( )
     {
         return _bStandalone;
     }
@@ -184,7 +190,8 @@ public class YamlBot
     /**
      * Sets the Standalone
      *
-     * @param bStandalone The Standalone
+     * @param bStandalone
+     *            The Standalone
      */
     public void setStandalone( boolean bStandalone )
     {
@@ -196,7 +203,7 @@ public class YamlBot
      *
      * @return The Rules
      */
-    public List<YamlRule> getRules()
+    public List<YamlRule> getRules( )
     {
         return _listRules;
     }
@@ -204,19 +211,20 @@ public class YamlBot
     /**
      * Sets the Rules
      *
-     * @param listRules The Rules
+     * @param listRules
+     *            The Rules
      */
     public void setRules( List<YamlRule> listRules )
     {
         _listRules = listRules;
     }
-    
+
     /**
      * Returns the Filters
      *
      * @return The Filters
      */
-    public List<YamlFilter> getFilters()
+    public List<YamlFilter> getFilters( )
     {
         return _listFilters;
     }
@@ -224,11 +232,12 @@ public class YamlBot
     /**
      * Sets the Filters
      *
-     * @param listFilters The Filters
+     * @param listFilters
+     *            The Filters
      */
     public void setFilters( List<YamlFilter> listFilters )
     {
         _listFilters = listFilters;
     }
-    
+
 }

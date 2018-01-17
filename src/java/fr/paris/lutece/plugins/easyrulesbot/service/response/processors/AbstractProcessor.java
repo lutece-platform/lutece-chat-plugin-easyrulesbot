@@ -32,32 +32,33 @@
  * License 1.0
  */
 
-
 package fr.paris.lutece.plugins.easyrulesbot.service.response.processors;
 
 /**
  * AbstractProcessor
  */
-public class AbstractProcessor 
+public class AbstractProcessor
 {
-        private String _strName;
-    
-    
-       /**
-        * Returns the Name
-        * @return The Name
-        */ 
-        public String getName()
-        {
-            return _strName;
-        }
-    
-       /**
-        * Sets the Name
-        * @param strName The Name
-        */ 
-        public void setName( String strName )
-        {
-            _strName = strName;
-        }
+    private String _strName;
+
+    /**
+     * Returns the Name
+     * 
+     * @return The Name
+     */
+    public String getName( )
+    {
+        return _strName;
+    }
+
+    /**
+     * Sets the Name
+     * 
+     * @param strName
+     *            The Name
+     */
+    public void setName( String strName )
+    {
+        _strName = strName;
+    }
 }

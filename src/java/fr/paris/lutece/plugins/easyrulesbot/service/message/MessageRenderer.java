@@ -34,22 +34,23 @@
 
 package fr.paris.lutece.plugins.easyrulesbot.service.message;
 
-
 /**
  * MessageRenderer
  */
-public interface MessageRenderer 
+public interface MessageRenderer
 {
     /**
      * Return the message type handled by the renderer
+     * 
      * @return The message type
      */
-    String getMessageType();
-    
+    String getMessageType( );
+
     /**
      * Render a message
+     * 
      * @param strInput
-     * @return 
+     * @return
      */
     String render( String strInput );
 }

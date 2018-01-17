@@ -32,7 +32,6 @@
  * License 1.0
  */
 
-
 package fr.paris.lutece.plugins.easyrulesbot.service.response.processors;
 
 import fr.paris.lutece.portal.service.spring.SpringContextService;
@@ -43,24 +42,26 @@ import java.util.Map;
 /**
  * ProcessorsService
  */
-public class ProcessorsService 
+public class ProcessorsService
 {
     private static Map<String, ResponseProcessor> _mapProcessors;
-    
+
     /**
      * Get a Processor by its name
-     * @param strName The name
+     * 
+     * @param strName
+     *            The name
      * @return The preocessor
      */
     public static ResponseProcessor getProcessor( String strName )
     {
-        if( _mapProcessors == null )
+        if ( _mapProcessors == null )
         {
-            _mapProcessors = new HashMap<>();
+            _mapProcessors = new HashMap<>( );
             List<ResponseProcessor> listProcessors = SpringContextService.getBeansOfType( ResponseProcessor.class );
-            for( ResponseProcessor processor : listProcessors )
+            for ( ResponseProcessor processor : listProcessors )
             {
-                _mapProcessors.put( processor.getName() , processor );
+                _mapProcessors.put( processor.getName( ), processor );
             }
         }
         return _mapProcessors.get( strName );

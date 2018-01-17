@@ -32,34 +32,35 @@
  * License 1.0
  */
 
-
 package fr.paris.lutece.plugins.easyrulesbot.business;
 
 /**
  * YamlFilter
  */
-public class YamlFilter 
+public class YamlFilter
 {
-        // Variables declarations 
-        private String _strFilter;
-    
-    
-       /**
-        * Returns the Filter
-        * @return The Filter
-        */ 
-        public String getFilter()
-        {
-            return _strFilter;
-        }
-    
-       /**
-        * Sets the Filter
-        * @param strFilter The Filter
-        */ 
-        public void setFilter( String strFilter )
-        {
-            _strFilter = strFilter;
-        }
+    // Variables declarations
+    private String _strFilter;
+
+    /**
+     * Returns the Filter
+     * 
+     * @return The Filter
+     */
+    public String getFilter( )
+    {
+        return _strFilter;
+    }
+
+    /**
+     * Sets the Filter
+     * 
+     * @param strFilter
+     *            The Filter
+     */
+    public void setFilter( String strFilter )
+    {
+        _strFilter = strFilter;
+    }
 
 }

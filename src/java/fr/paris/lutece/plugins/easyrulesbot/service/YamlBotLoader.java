@@ -32,7 +32,6 @@
  * License 1.0
  */
 
-
 package fr.paris.lutece.plugins.easyrulesbot.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -63,19 +62,19 @@ import org.easyrules.spring.RulesEngineFactoryBean;
 /**
  * YamlBotLoader
  */
-public class YamlBotLoader 
+public class YamlBotLoader
 {
     private static final String PATH_BOTS = "/WEB-INF/plugins/easyrulesbot/bots";
     private static RulesEngineFactoryBean _factory;
-    
-    public static void loadBots()
+
+    public static void loadBots( )
     {
         String strBotPath = AppPathService.getAbsolutePathFromRelativePath( PATH_BOTS );
         File fBotPath = new File( strBotPath );
 
-        File[] files = fBotPath.listFiles( new YamlFilenameFilter() );
+        File [ ] files = fBotPath.listFiles( new YamlFilenameFilter( ) );
         AppLogService.info( "Loading YAML bots ... " );
-        for( File file : files )
+        for ( File file : files )
         {
             try
             {
@@ -83,65 +82,67 @@ public class YamlBotLoader
                 YamlBot yBot = loadYamlBot( strYaml );
                 EasyRulesBot bot = createBot( yBot );
                 BotService.register( bot );
-                AppLogService.info( "New YAML bot registered : " + yBot.getName() );
+                AppLogService.info( "New YAML bot registered : " + yBot.getName( ) );
             }
             catch( IOException | YamlBotLoadingException ex )
             {
-                AppLogService.error( "Unable to load bot. Error : " + ex.getMessage() , ex );
+                AppLogService.error( "Unable to load bot. Error : " + ex.getMessage( ), ex );
             }
         }
     }
 
-    
     public static YamlBot loadYamlBot( String strYaml ) throws IOException
     {
-        ObjectMapper mapper = new ObjectMapper( new YAMLFactory() );
+        ObjectMapper mapper = new ObjectMapper( new YAMLFactory( ) );
 
         YamlBot bot = mapper.readValue( strYaml, YamlBot.class );
-        
+
         return bot;
     }
-    
+
     /**
      * Create a bot from a YAML decription of the bot
-     * @param yamlBot The YAML decription of the bot
+     * 
+     * @param yamlBot
+     *            The YAML decription of the bot
      * @return The bot
-     * @throws YamlBotLoadingException if the loading fails 
+     * @throws YamlBotLoadingException
+     *             if the loading fails
      */
     public static EasyRulesBot createBot( YamlBot yamlBot ) throws YamlBotLoadingException
     {
-        EasyRulesBot bot = new EasyRulesBot();
-        bot.setKey( yamlBot.getKey() );
-        bot.setName( yamlBot.getName() );
-        bot.setDescription( yamlBot.getDescription() );
-        bot.setWelcomeMessage( yamlBot.getWelcomeMessage() );
-        bot.setAvatarUrl(  yamlBot.getAvatarUrl() );
-        bot.setStandalone( yamlBot.getStandalone() );
+        EasyRulesBot bot = new EasyRulesBot( );
+        bot.setKey( yamlBot.getKey( ) );
+        bot.setName( yamlBot.getName( ) );
+        bot.setDescription( yamlBot.getDescription( ) );
+        bot.setWelcomeMessage( yamlBot.getWelcomeMessage( ) );
+        bot.setAvatarUrl( yamlBot.getAvatarUrl( ) );
+        bot.setStandalone( yamlBot.getStandalone( ) );
 
         // Get an engine and register rules
-        RulesEngine engine = getEngine();
-        for( YamlRule yamlRule : yamlBot.getRules() )
+        RulesEngine engine = getEngine( );
+        for ( YamlRule yamlRule : yamlBot.getRules( ) )
         {
-            BotRule rule = new BotRule();
-            rule.setName( yamlRule.getRule() );
-            rule.setDescription( yamlRule.getDescription());
-            rule.setPriority( yamlRule.getPriority() );
-            rule.setMessageTemplate( yamlRule.getMessage() );
-            rule.setDataKey( yamlRule.getDataKey() );
-            ResponseProcessor processor = ProcessorsService.getProcessor( yamlRule.getProcessor() );
-            if( processor == null )
+            BotRule rule = new BotRule( );
+            rule.setName( yamlRule.getRule( ) );
+            rule.setDescription( yamlRule.getDescription( ) );
+            rule.setPriority( yamlRule.getPriority( ) );
+            rule.setMessageTemplate( yamlRule.getMessage( ) );
+            rule.setDataKey( yamlRule.getDataKey( ) );
+            ResponseProcessor processor = ProcessorsService.getProcessor( yamlRule.getProcessor( ) );
+            if ( processor == null )
             {
-                throw new YamlBotLoadingException( "Failed to create bot : unable to find processor " + yamlRule.getProcessor() );
+                throw new YamlBotLoadingException( "Failed to create bot : unable to find processor " + yamlRule.getProcessor( ) );
             }
             rule.setResponseProcessor( processor );
-            rule.setResponseCommentTemplate( yamlRule.getResponseComment() );
-            List<Condition> listConditions = new ArrayList<>();
-            for( YamlCondition yamlCondition : yamlRule.getConditions() )
+            rule.setResponseCommentTemplate( yamlRule.getResponseComment( ) );
+            List<Condition> listConditions = new ArrayList<>( );
+            for ( YamlCondition yamlCondition : yamlRule.getConditions( ) )
             {
-                Condition condition = ConditionsService.getCondition( yamlCondition.getCondition() );
-                if( condition == null )
+                Condition condition = ConditionsService.getCondition( yamlCondition.getCondition( ) );
+                if ( condition == null )
                 {
-                    throw new YamlBotLoadingException( "Failed to create bot : unable to find condition " + yamlCondition.getCondition() );
+                    throw new YamlBotLoadingException( "Failed to create bot : unable to find condition " + yamlCondition.getCondition( ) );
                 }
                 listConditions.add( condition );
             }
@@ -150,40 +151,39 @@ public class YamlBotLoader
         }
         bot.setRulesEngine( engine );
 
-        
-        List<ResponseFilter> listFilters = new ArrayList<>();
-        for( YamlFilter yamlFilter : yamlBot.getFilters() )
+        List<ResponseFilter> listFilters = new ArrayList<>( );
+        for ( YamlFilter yamlFilter : yamlBot.getFilters( ) )
         {
-            ResponseFilter filter = FiltersService.getFilter(  yamlFilter.getFilter() );
-            if( filter == null )
+            ResponseFilter filter = FiltersService.getFilter( yamlFilter.getFilter( ) );
+            if ( filter == null )
             {
-                throw new YamlBotLoadingException( "Failed to create bot : unable to find filter " + yamlFilter.getFilter() );
+                throw new YamlBotLoadingException( "Failed to create bot : unable to find filter " + yamlFilter.getFilter( ) );
             }
         }
         bot.setListResponseFilters( listFilters );
-        
+
         return bot;
     }
-    
-    private static RulesEngine getEngine()
+
+    private static RulesEngine getEngine( )
     {
-        if( _factory == null )
+        if ( _factory == null )
         {
-            _factory = new RulesEngineFactoryBean();
+            _factory = new RulesEngineFactoryBean( );
             _factory.setSkipOnFirstAppliedRule( true );
             _factory.setSkipOnFirstFailedRule( true );
             _factory.setPriorityThreshold( 100 );
             _factory.setSilentMode( false );
         }
-        return _factory.getObject();
+        return _factory.getObject( );
     }
 
-    private static class YamlFilenameFilter implements FilenameFilter 
-    { 
+    private static class YamlFilenameFilter implements FilenameFilter
+    {
         @Override
-        public boolean accept(File dir, String filename)
-        { 
-            return filename.endsWith(".yml") || filename.endsWith(".yaml"); 
+        public boolean accept( File dir, String filename )
+        {
+            return filename.endsWith( ".yml" ) || filename.endsWith( ".yaml" );
         }
     }
 }

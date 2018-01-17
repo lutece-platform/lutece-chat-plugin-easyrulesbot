@@ -33,206 +33,232 @@
  */
 package fr.paris.lutece.plugins.easyrulesbot.business;
 
-
 import java.util.List;
-
 
 /**
  * YamlRule
  */
-public class YamlRule 
+public class YamlRule
 {
-        // Variables declarations 
-        private String _strRule;
-        private String _strDescription;
-        private int _nPriority;
-        private String _strMessage;
-        private List<Button> _listButtons;
-        private String _strImage;
-        private String _strDataKey;
-        private String _strProcessor;
-        private List<YamlCondition> _listConditions;
-        private String _strResponseComment;
-    
-    
-       /**
-        * Returns the Rule Name
-        * @return The Rule Name
-        */ 
-        public String getRule()
-        {
-            return _strRule;
-        }
-    
-       /**
-        * Sets the Rule Name
-        * @param strRule The Rule Name
-        */ 
-        public void setRule( String strRule )
-        {
-            _strRule = strRule;
-        }
-    
-       /**
-        * Returns the Description
-        * @return The Description
-        */ 
-        public String getDescription()
-        {
-            return _strDescription;
-        }
-    
-       /**
-        * Sets the Description
-        * @param strDescription The Description
-        */ 
-        public void setDescription( String strDescription )
-        {
-            _strDescription = strDescription;
-        }
-    
-    
-    
-       /**
-        * Returns the Priority
-        * @return The Priority
-        */ 
-        public int getPriority()
-        {
-            return _nPriority;
-        }
-    
-       /**
-        * Sets the Priority
-        * @param nPriority The Priority
-        */ 
-        public void setPriority( int nPriority )
-        {
-            _nPriority = nPriority;
-        }
-       /**
-        * Returns the Message
-        * @return The Message
-        */ 
-        public String getMessage()
-        {
-            return _strMessage;
-        }
-    
-       /**
-        * Sets the Message
-        * @param strMessage The Message
-        */ 
-        public void setMessage( String strMessage )
-        {
-            _strMessage = strMessage;
-        }
-    
-       /**
-        * Returns the Buttons
-        * @return The Buttons
-        */ 
-        public List<Button> getButtons()
-        {
-            return _listButtons;
-        }
-    
-       /**
-        * Sets the Buttons
-        * @param listButtons The Buttons
-        */ 
-        public void setButtons( List<Button> listButtons )
-        {
-            _listButtons = listButtons;
-        }
-    
-       /**
-        * Returns the Image
-        * @return The Image
-        */ 
-        public String getImage()
-        {
-            return _strImage;
-        }
-    
-       /**
-        * Sets the Image
-        * @param strImage The Image
-        */ 
-        public void setImage( String strImage )
-        {
-            _strImage = strImage;
-        }
-    
-       /**
-        * Returns the DataKey
-        * @return The DataKey
-        */ 
-        public String getDataKey()
-        {
-            return _strDataKey;
-        }
-    
-       /**
-        * Sets the DataKey
-        * @param strDataKey The DataKey
-        */ 
-        public void setDataKey( String strDataKey )
-        {
-            _strDataKey = strDataKey;
-        }
-    
-       /**
-        * Returns the Processor
-        * @return The Processor
-        */ 
-        public String getProcessor()
-        {
-            return _strProcessor;
-        }
-    
-       /**
-        * Sets the Processor
-        * @param strProcessor The Processor
-        */ 
-        public void setProcessor( String strProcessor )
-        {
-            _strProcessor = strProcessor;
-        }
-    
-       /**
-        * Returns the Conditions
-        * @return The Conditions
-        */ 
-        public List<YamlCondition> getConditions()
-        {
-            return _listConditions;
-        }
-    
-       /**
-        * Sets the Conditions
-        * @param listConditions The Conditions
-        */ 
-        public void setConditions( List<YamlCondition> listConditions )
-        {
-            _listConditions = listConditions;
-        }
-    
-       /**
-        * Returns the ResponseComment
-        * @return The ResponseComment
-        */ 
-        public String getResponseComment()
-        {
-            return _strResponseComment;
-        }
-    
-       /**
-        * Sets the ResponseComment
-        * @param strResponseComment The ResponseComment
-        */ 
-        public void setResponseComment( String strResponseComment )
-        {
-            _strResponseComment = strResponseComment;
-        }
+    // Variables declarations
+    private String _strRule;
+    private String _strDescription;
+    private int _nPriority;
+    private String _strMessage;
+    private List<Button> _listButtons;
+    private String _strImage;
+    private String _strDataKey;
+    private String _strProcessor;
+    private List<YamlCondition> _listConditions;
+    private String _strResponseComment;
+
+    /**
+     * Returns the Rule Name
+     * 
+     * @return The Rule Name
+     */
+    public String getRule( )
+    {
+        return _strRule;
+    }
+
+    /**
+     * Sets the Rule Name
+     * 
+     * @param strRule
+     *            The Rule Name
+     */
+    public void setRule( String strRule )
+    {
+        _strRule = strRule;
+    }
+
+    /**
+     * Returns the Description
+     * 
+     * @return The Description
+     */
+    public String getDescription( )
+    {
+        return _strDescription;
+    }
+
+    /**
+     * Sets the Description
+     * 
+     * @param strDescription
+     *            The Description
+     */
+    public void setDescription( String strDescription )
+    {
+        _strDescription = strDescription;
+    }
+
+    /**
+     * Returns the Priority
+     * 
+     * @return The Priority
+     */
+    public int getPriority( )
+    {
+        return _nPriority;
+    }
+
+    /**
+     * Sets the Priority
+     * 
+     * @param nPriority
+     *            The Priority
+     */
+    public void setPriority( int nPriority )
+    {
+        _nPriority = nPriority;
+    }
+
+    /**
+     * Returns the Message
+     * 
+     * @return The Message
+     */
+    public String getMessage( )
+    {
+        return _strMessage;
+    }
+
+    /**
+     * Sets the Message
+     * 
+     * @param strMessage
+     *            The Message
+     */
+    public void setMessage( String strMessage )
+    {
+        _strMessage = strMessage;
+    }
+
+    /**
+     * Returns the Buttons
+     * 
+     * @return The Buttons
+     */
+    public List<Button> getButtons( )
+    {
+        return _listButtons;
+    }
+
+    /**
+     * Sets the Buttons
+     * 
+     * @param listButtons
+     *            The Buttons
+     */
+    public void setButtons( List<Button> listButtons )
+    {
+        _listButtons = listButtons;
+    }
+
+    /**
+     * Returns the Image
+     * 
+     * @return The Image
+     */
+    public String getImage( )
+    {
+        return _strImage;
+    }
+
+    /**
+     * Sets the Image
+     * 
+     * @param strImage
+     *            The Image
+     */
+    public void setImage( String strImage )
+    {
+        _strImage = strImage;
+    }
+
+    /**
+     * Returns the DataKey
+     * 
+     * @return The DataKey
+     */
+    public String getDataKey( )
+    {
+        return _strDataKey;
+    }
+
+    /**
+     * Sets the DataKey
+     * 
+     * @param strDataKey
+     *            The DataKey
+     */
+    public void setDataKey( String strDataKey )
+    {
+        _strDataKey = strDataKey;
+    }
+
+    /**
+     * Returns the Processor
+     * 
+     * @return The Processor
+     */
+    public String getProcessor( )
+    {
+        return _strProcessor;
+    }
+
+    /**
+     * Sets the Processor
+     * 
+     * @param strProcessor
+     *            The Processor
+     */
+    public void setProcessor( String strProcessor )
+    {
+        _strProcessor = strProcessor;
+    }
+
+    /**
+     * Returns the Conditions
+     * 
+     * @return The Conditions
+     */
+    public List<YamlCondition> getConditions( )
+    {
+        return _listConditions;
+    }
+
+    /**
+     * Sets the Conditions
+     * 
+     * @param listConditions
+     *            The Conditions
+     */
+    public void setConditions( List<YamlCondition> listConditions )
+    {
+        _listConditions = listConditions;
+    }
+
+    /**
+     * Returns the ResponseComment
+     * 
+     * @return The ResponseComment
+     */
+    public String getResponseComment( )
+    {
+        return _strResponseComment;
+    }
+
+    /**
+     * Sets the ResponseComment
+     * 
+     * @param strResponseComment
+     *            The ResponseComment
+     */
+    public void setResponseComment( String strResponseComment )
+    {
+        _strResponseComment = strResponseComment;
+    }
 }

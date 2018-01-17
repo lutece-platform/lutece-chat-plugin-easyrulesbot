@@ -32,7 +32,6 @@
  * License 1.0
  */
 
-
 package fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions;
 
 import fr.paris.lutece.portal.service.spring.SpringContextService;
@@ -43,24 +42,26 @@ import java.util.Map;
 /**
  * ConditionsService
  */
-public class ConditionsService 
+public class ConditionsService
 {
     private static Map<String, Condition> _mapConditions;
-    
+
     /**
      * Get a Condition by its name
-     * @param strName The name
+     * 
+     * @param strName
+     *            The name
      * @return The preocessor
      */
     public static Condition getCondition( String strName )
     {
-        if( _mapConditions == null )
+        if ( _mapConditions == null )
         {
-            _mapConditions = new HashMap<>();
+            _mapConditions = new HashMap<>( );
             List<Condition> listConditions = SpringContextService.getBeansOfType( Condition.class );
-            for( Condition condition : listConditions )
+            for ( Condition condition : listConditions )
             {
-                _mapConditions.put( condition.getName() , condition );
+                _mapConditions.put( condition.getName( ), condition );
             }
         }
         return _mapConditions.get( strName );

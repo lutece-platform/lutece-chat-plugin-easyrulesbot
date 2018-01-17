@@ -57,10 +57,11 @@ public interface ResponseProcessor
      *             if an exception occurs during processing
      */
     String processResponse( String strResponse, Locale locale, Map mapData ) throws ResponseProcessingException;
-    
+
     /**
      * Get the processor's name
+     * 
      * @return The name
      */
-    String getName();
+    String getName( );
 }

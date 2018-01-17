@@ -32,7 +32,6 @@
  * License 1.0
  */
 
-
 package fr.paris.lutece.plugins.easyrulesbot.service.response.filters;
 
 import fr.paris.lutece.portal.service.spring.SpringContextService;
@@ -46,21 +45,23 @@ import java.util.Map;
 public class FiltersService
 {
     private static Map<String, ResponseFilter> _mapFilters;
-    
+
     /**
      * Get a Filter by its name
-     * @param strName The name
+     * 
+     * @param strName
+     *            The name
      * @return The preocessor
      */
     public static ResponseFilter getFilter( String strName )
     {
-        if( _mapFilters == null )
+        if ( _mapFilters == null )
         {
-            _mapFilters = new HashMap<>();
+            _mapFilters = new HashMap<>( );
             List<ResponseFilter> listFilters = SpringContextService.getBeansOfType( ResponseFilter.class );
-            for( ResponseFilter processor : listFilters )
+            for ( ResponseFilter processor : listFilters )
             {
-                _mapFilters.put( processor.getName() , processor );
+                _mapFilters.put( processor.getName( ), processor );
             }
         }
         return _mapFilters.get( strName );

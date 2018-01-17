@@ -32,7 +32,6 @@
  * License 1.0
  */
 
-
 package fr.paris.lutece.plugins.easyrulesbot.service.message;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -48,18 +47,18 @@ import java.util.Map;
 /**
  * ButtonsRenderer
  */
-public class ButtonsRenderer implements MessageRenderer 
+public class ButtonsRenderer implements MessageRenderer
 {
     private static final String MESSAGE_TYPE = "buttons";
     private static final String TEMPLATE_BUTTONS_MESSAGE = "/skin/plugins/easyrulesbot/buttons_message.html";
-    
-    private static ObjectMapper _mapper = new ObjectMapper();
-    
+
+    private static ObjectMapper _mapper = new ObjectMapper( );
+
     /**
      * {@inheritDoc }
      */
     @Override
-    public String getMessageType()
+    public String getMessageType( )
     {
         return MESSAGE_TYPE;
     }
@@ -73,14 +72,16 @@ public class ButtonsRenderer implements MessageRenderer
         String strMessage = null;
         try
         {
-            Map<String, Object> model = new HashMap<>();
-            model = _mapper.readValue( strJsonInput, new TypeReference<Map<String, Object>>(){});
-            HtmlTemplate message = AppTemplateService.getTemplate( TEMPLATE_BUTTONS_MESSAGE , LocaleService.getDefault(), model );
-            strMessage = message.getHtml();
+            Map<String, Object> model = new HashMap<>( );
+            model = _mapper.readValue( strJsonInput, new TypeReference<Map<String, Object>>( )
+            {
+            } );
+            HtmlTemplate message = AppTemplateService.getTemplate( TEMPLATE_BUTTONS_MESSAGE, LocaleService.getDefault( ), model );
+            strMessage = message.getHtml( );
         }
         catch( IOException ex )
         {
-            AppLogService.error( "Error rendering message : " + ex.getMessage() , ex );
+            AppLogService.error( "Error rendering message : " + ex.getMessage( ), ex );
         }
         return strMessage;
     }

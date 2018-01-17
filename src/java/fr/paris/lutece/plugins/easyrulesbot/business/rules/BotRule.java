@@ -185,8 +185,8 @@ public class BotRule implements Rule, Comparable, Serializable
     public String getMessage( Map<String, String> mapData, Locale locale )
     {
         String strMessage = _strMessageTemplate;
-        
-        MessageRenderer renderer = MessageRendererService.getRenderer( getMessageType() );
+
+        MessageRenderer renderer = MessageRendererService.getRenderer( getMessageType( ) );
         strMessage = renderer.render( strMessage );
 
         return fillTemplate( strMessage, mapData );
@@ -268,7 +268,7 @@ public class BotRule implements Rule, Comparable, Serializable
      */
     public String getResponseComment( Map<String, String> mapData, Locale locale )
     {
-        String strTemplate =  _strResponseCommentTemplate;
+        String strTemplate = _strResponseCommentTemplate;
 
         if ( strTemplate != null )
         {
