@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.easyrulesbot.service.response.filters;
 
-import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseFilter;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
 import fr.paris.lutece.plugins.easyrulesbot.util.FileUtils;
 import fr.paris.lutece.portal.service.util.AppLogService;
@@ -49,7 +48,7 @@ import java.util.Random;
 /**
  * Stop On Word Processor
  */
-public class StopOnWordFilter implements ResponseFilter
+public class StopOnWordFilter extends AbstractFilter implements ResponseFilter
 {
 
     private List<String> _listStopWords;

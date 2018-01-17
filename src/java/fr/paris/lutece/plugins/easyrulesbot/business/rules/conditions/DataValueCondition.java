@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * DataValueCondition
  */
-public class DataValueCondition implements Condition
+public class DataValueCondition extends AbstractCondition implements Condition
 {
     private static final String UNDEFINED = "undefined";
 

@@ -33,56 +33,33 @@
  */
 
 
-package fr.paris.lutece.plugins.easyrulesbot.service.message;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.paris.lutece.portal.service.template.AppTemplateService;
-import fr.paris.lutece.portal.service.util.AppLogService;
-import fr.paris.lutece.portal.web.l10n.LocaleService;
-import fr.paris.lutece.util.html.HtmlTemplate;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+package fr.paris.lutece.plugins.easyrulesbot.business;
 
 /**
- * ButtonsRenderer
+ * YamlFilter
  */
-public class ButtonsRenderer implements MessageRenderer 
+public class YamlFilter 
 {
-    private static final String MESSAGE_TYPE = "buttons";
-    private static final String TEMPLATE_BUTTONS_MESSAGE = "/skin/plugins/easyrulesbot/buttons_message.html";
+        // Variables declarations 
+        private String _strFilter;
     
-    private static ObjectMapper _mapper = new ObjectMapper();
     
-    /**
-     * {@inheritDoc }
-     */
-    @Override
-    public String getMessageType()
-    {
-        return MESSAGE_TYPE;
-    }
-
-    /**
-     * {@inheritDoc }
-     */
-    @Override
-    public String render( String strJsonInput )
-    {
-        String strMessage = null;
-        try
+       /**
+        * Returns the Filter
+        * @return The Filter
+        */ 
+        public String getFilter()
         {
-            Map<String, Object> model = new HashMap<>();
-            model = _mapper.readValue( strJsonInput, new TypeReference<Map<String, Object>>(){});
-            HtmlTemplate message = AppTemplateService.getTemplate( TEMPLATE_BUTTONS_MESSAGE , LocaleService.getDefault(), model );
-            strMessage = message.getHtml();
+            return _strFilter;
         }
-        catch( IOException ex )
+    
+       /**
+        * Sets the Filter
+        * @param strFilter The Filter
+        */ 
+        public void setFilter( String strFilter )
         {
-            AppLogService.error( "Error rendering message : " + ex.getMessage() , ex );
+            _strFilter = strFilter;
         }
-        return strMessage;
-    }
 
 }

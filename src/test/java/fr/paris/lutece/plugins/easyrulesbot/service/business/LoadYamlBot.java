@@ -31,58 +31,33 @@
  *
  * License 1.0
  */
+package fr.paris.lutece.plugins.easyrulesbot.service.business;
 
-
-package fr.paris.lutece.plugins.easyrulesbot.service.message;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.paris.lutece.portal.service.template.AppTemplateService;
-import fr.paris.lutece.portal.service.util.AppLogService;
-import fr.paris.lutece.portal.web.l10n.LocaleService;
-import fr.paris.lutece.util.html.HtmlTemplate;
+import fr.paris.lutece.plugins.easyrulesbot.business.YamlBot;
+import fr.paris.lutece.plugins.easyrulesbot.service.YamlBotLoader;
+import fr.paris.lutece.test.Utils;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import org.junit.Test;
 
 /**
- * ButtonsRenderer
+ * LoadYamlBot
  */
-public class ButtonsRenderer implements MessageRenderer 
+public class LoadYamlBot
 {
-    private static final String MESSAGE_TYPE = "buttons";
-    private static final String TEMPLATE_BUTTONS_MESSAGE = "/skin/plugins/easyrulesbot/buttons_message.html";
-    
-    private static ObjectMapper _mapper = new ObjectMapper();
-    
-    /**
-     * {@inheritDoc }
-     */
-    @Override
-    public String getMessageType()
-    {
-        return MESSAGE_TYPE;
-    }
 
+    
+    private static final String YAML_FILE = "bot.yml";
     /**
-     * {@inheritDoc }
+     * Test of render method, of class ButtonsRenderer.
+     * @throws java.io.IOException
      */
-    @Override
-    public String render( String strJsonInput )
+    @Test
+    public void testLoadBot() throws IOException
     {
-        String strMessage = null;
-        try
-        {
-            Map<String, Object> model = new HashMap<>();
-            model = _mapper.readValue( strJsonInput, new TypeReference<Map<String, Object>>(){});
-            HtmlTemplate message = AppTemplateService.getTemplate( TEMPLATE_BUTTONS_MESSAGE , LocaleService.getDefault(), model );
-            strMessage = message.getHtml();
-        }
-        catch( IOException ex )
-        {
-            AppLogService.error( "Error rendering message : " + ex.getMessage() , ex );
-        }
-        return strMessage;
+        System.out.println( "YAML Loader" );
+        String strYAML = Utils.getFileContent( YAML_FILE );
+        YamlBot bot = YamlBotLoader.loadYamlBot( strYAML );
+        System.out.println( bot.getName() );
     }
-
+    
 }

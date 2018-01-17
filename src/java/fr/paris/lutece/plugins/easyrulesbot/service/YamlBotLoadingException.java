@@ -33,56 +33,19 @@
  */
 
 
-package fr.paris.lutece.plugins.easyrulesbot.service.message;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.paris.lutece.portal.service.template.AppTemplateService;
-import fr.paris.lutece.portal.service.util.AppLogService;
-import fr.paris.lutece.portal.web.l10n.LocaleService;
-import fr.paris.lutece.util.html.HtmlTemplate;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+package fr.paris.lutece.plugins.easyrulesbot.service;
 
 /**
- * ButtonsRenderer
+ * YamlBotLoadingException
  */
-public class ButtonsRenderer implements MessageRenderer 
+public class YamlBotLoadingException extends Exception 
 {
-    private static final String MESSAGE_TYPE = "buttons";
-    private static final String TEMPLATE_BUTTONS_MESSAGE = "/skin/plugins/easyrulesbot/buttons_message.html";
-    
-    private static ObjectMapper _mapper = new ObjectMapper();
-    
-    /**
-     * {@inheritDoc }
+    /** Constructor
+     * @param strMessage The message
      */
-    @Override
-    public String getMessageType()
+    public YamlBotLoadingException( String strMessage )
     {
-        return MESSAGE_TYPE;
+        super( strMessage );
     }
-
-    /**
-     * {@inheritDoc }
-     */
-    @Override
-    public String render( String strJsonInput )
-    {
-        String strMessage = null;
-        try
-        {
-            Map<String, Object> model = new HashMap<>();
-            model = _mapper.readValue( strJsonInput, new TypeReference<Map<String, Object>>(){});
-            HtmlTemplate message = AppTemplateService.getTemplate( TEMPLATE_BUTTONS_MESSAGE , LocaleService.getDefault(), model );
-            strMessage = message.getHtml();
-        }
-        catch( IOException ex )
-        {
-            AppLogService.error( "Error rendering message : " + ex.getMessage() , ex );
-        }
-        return strMessage;
-    }
-
+    
 }

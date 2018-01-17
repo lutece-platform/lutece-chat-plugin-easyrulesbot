@@ -36,7 +36,7 @@ package fr.paris.lutece.plugins.easyrulesbot.service;
 import fr.paris.lutece.plugins.chatbot.business.BotPost;
 import fr.paris.lutece.plugins.chatbot.service.bot.AbstractChatBot;
 import fr.paris.lutece.plugins.easyrulesbot.business.BotExecutor;
-import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseFilter;
+import fr.paris.lutece.plugins.easyrulesbot.service.response.filters.ResponseFilter;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import java.util.ArrayList;

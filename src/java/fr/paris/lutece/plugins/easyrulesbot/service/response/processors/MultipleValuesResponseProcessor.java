@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.easyrulesbot.service.response.processors;
 
-import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseProcessor;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseNotUnderstoodException;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
 import fr.paris.lutece.plugins.easyrulesbot.util.FileUtils;
@@ -46,7 +45,7 @@ import java.util.Map;
 /**
  * Multiple Values ResponseProcessor
  */
-public class MultipleValuesResponseProcessor implements ResponseProcessor
+public class MultipleValuesResponseProcessor extends AbstractProcessor implements ResponseProcessor
 {
     private String _strMutipleValuesMapFile;
     private Map<String, List<String>> _mapMultipleValues;

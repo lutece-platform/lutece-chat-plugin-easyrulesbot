@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.easyrulesbot.service.response.processors;
 
-import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseProcessor;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.InvalidResponseException;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 
@@ -45,7 +44,7 @@ import java.util.regex.Pattern;
 /**
  * InputStringResponseProcessor
  */
-public class InputStringResponseProcessor implements ResponseProcessor
+public class InputStringResponseProcessor extends AbstractProcessor implements ResponseProcessor
 {
     private static final String PATTERN_EMAIL_NAME = "email";
     private static final Pattern PATTERN_EMAIL_VALUE = Pattern.compile( "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE );

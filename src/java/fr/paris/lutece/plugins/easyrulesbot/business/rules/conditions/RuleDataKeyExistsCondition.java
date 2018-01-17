@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * RuleDataKeyExistsCondition
  */
-public class RuleDataKeyExistsCondition implements Condition
+public class RuleDataKeyExistsCondition extends AbstractCondition implements Condition
 {
     @Override
     public boolean evaluate( Map<String, String> mapData, String strRuleDataKey )

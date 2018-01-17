@@ -33,56 +33,70 @@
  */
 
 
-package fr.paris.lutece.plugins.easyrulesbot.service.message;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.paris.lutece.portal.service.template.AppTemplateService;
-import fr.paris.lutece.portal.service.util.AppLogService;
-import fr.paris.lutece.portal.web.l10n.LocaleService;
-import fr.paris.lutece.util.html.HtmlTemplate;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+package fr.paris.lutece.plugins.easyrulesbot.business;
 
 /**
- * ButtonsRenderer
+ * Button
  */
-public class ButtonsRenderer implements MessageRenderer 
+public class Button 
 {
-    private static final String MESSAGE_TYPE = "buttons";
-    private static final String TEMPLATE_BUTTONS_MESSAGE = "/skin/plugins/easyrulesbot/buttons_message.html";
+        // Variables declarations 
+        private String _strIcon;
+        private String _strTitle;
+        private String _strValue;
     
-    private static ObjectMapper _mapper = new ObjectMapper();
     
-    /**
-     * {@inheritDoc }
-     */
-    @Override
-    public String getMessageType()
-    {
-        return MESSAGE_TYPE;
-    }
-
-    /**
-     * {@inheritDoc }
-     */
-    @Override
-    public String render( String strJsonInput )
-    {
-        String strMessage = null;
-        try
+       /**
+        * Returns the Icon
+        * @return The Icon
+        */ 
+        public String getIcon()
         {
-            Map<String, Object> model = new HashMap<>();
-            model = _mapper.readValue( strJsonInput, new TypeReference<Map<String, Object>>(){});
-            HtmlTemplate message = AppTemplateService.getTemplate( TEMPLATE_BUTTONS_MESSAGE , LocaleService.getDefault(), model );
-            strMessage = message.getHtml();
+            return _strIcon;
         }
-        catch( IOException ex )
+    
+       /**
+        * Sets the Icon
+        * @param strIcon The Icon
+        */ 
+        public void setIcon( String strIcon )
         {
-            AppLogService.error( "Error rendering message : " + ex.getMessage() , ex );
+            _strIcon = strIcon;
         }
-        return strMessage;
-    }
-
+    
+       /**
+        * Returns the Title
+        * @return The Title
+        */ 
+        public String getTitle()
+        {
+            return _strTitle;
+        }
+    
+       /**
+        * Sets the Title
+        * @param strTitle The Title
+        */ 
+        public void setTitle( String strTitle )
+        {
+            _strTitle = strTitle;
+        }
+    
+       /**
+        * Returns the Value
+        * @return The Value
+        */ 
+        public String getValue()
+        {
+            return _strValue;
+        }
+    
+       /**
+        * Sets the Value
+        * @param strValue The Value
+        */ 
+        public void setValue( String strValue )
+        {
+            _strValue = strValue;
+        }
 }

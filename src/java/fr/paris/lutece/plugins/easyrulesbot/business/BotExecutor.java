@@ -36,7 +36,7 @@ package fr.paris.lutece.plugins.easyrulesbot.business;
 import fr.paris.lutece.plugins.chatbot.business.BotPost;
 import fr.paris.lutece.plugins.easyrulesbot.business.rules.BotRule;
 import fr.paris.lutece.plugins.easyrulesbot.service.EasyRulesBot;
-import fr.paris.lutece.plugins.easyrulesbot.service.response.ResponseFilter;
+import fr.paris.lutece.plugins.easyrulesbot.service.response.filters.ResponseFilter;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
 import fr.paris.lutece.portal.service.security.LuteceUser;
 import fr.paris.lutece.portal.service.security.SecurityService;

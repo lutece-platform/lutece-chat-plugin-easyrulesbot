@@ -52,4 +52,10 @@ public interface Condition extends Serializable
      * @return true if the condition is validated, otherwise false
      */
     boolean evaluate( Map<String, String> mapData, String strRuleDataKey );
+    
+    /**
+     * Gets condition name
+     * @return The name
+     */
+    String getName();
 }

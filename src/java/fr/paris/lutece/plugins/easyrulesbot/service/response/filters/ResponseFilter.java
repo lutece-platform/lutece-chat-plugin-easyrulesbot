@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.service.response;
+package fr.paris.lutece.plugins.easyrulesbot.service.response.filters;
 
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
 
@@ -39,10 +39,16 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * ResponseProcessor
+ * ResponseFilter
  */
-public interface ResponseProcessor
+public interface ResponseFilter
 {
+    /**
+     * Gets the filter's name
+     * @return The name;
+     */
+    String getName();
+    
     /**
      * Analyzes the response and formats it.
      * 
@@ -56,5 +62,5 @@ public interface ResponseProcessor
      * @throws ResponseProcessingException
      *             if an exception occurs during processing
      */
-    String processResponse( String strResponse, Locale locale, Map mapData ) throws ResponseProcessingException;
+    String filterResponse( String strResponse, Locale locale, Map mapData ) throws ResponseProcessingException;
 }

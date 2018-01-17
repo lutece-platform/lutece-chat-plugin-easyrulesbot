@@ -1,0 +1,22 @@
+## YAML Template.
+--- 
+name: Site Builder
+description: Bot de création d'un site Lutece
+language: fr
+rules:
+- rule: Greetings
+  priority: 0
+  message: Bonjour, quel est votre nom ?
+  dataKey: user_firstname
+  processor: INPUT_STRING
+  conditions:
+  - name: UNDEFINED_DATA_KEY
+  responseComment: Bonjour {user_firstname} ! Je vais vous aider à construire votre site LUTECE.
+- rule: Mylutece
+  priority: 10
+  dataKey: mylutece
+  processor: YES_NO
+  message: Souhaitez-vous que tout ou partie du site soit soumis à authentification ?
+  conditions:
+  - name: UNDEFINED_DATA_KEY
+  responseComment: <#if mylutece="true">Nous allons maintenant choisir le type d'authentification.</#if>

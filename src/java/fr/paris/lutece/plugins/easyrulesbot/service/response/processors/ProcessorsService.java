@@ -33,56 +33,36 @@
  */
 
 
-package fr.paris.lutece.plugins.easyrulesbot.service.message;
+package fr.paris.lutece.plugins.easyrulesbot.service.response.processors;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.paris.lutece.portal.service.template.AppTemplateService;
-import fr.paris.lutece.portal.service.util.AppLogService;
-import fr.paris.lutece.portal.web.l10n.LocaleService;
-import fr.paris.lutece.util.html.HtmlTemplate;
-import java.io.IOException;
+import fr.paris.lutece.portal.service.spring.SpringContextService;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
- * ButtonsRenderer
+ * ProcessorsService
  */
-public class ButtonsRenderer implements MessageRenderer 
+public class ProcessorsService 
 {
-    private static final String MESSAGE_TYPE = "buttons";
-    private static final String TEMPLATE_BUTTONS_MESSAGE = "/skin/plugins/easyrulesbot/buttons_message.html";
-    
-    private static ObjectMapper _mapper = new ObjectMapper();
+    private static Map<String, ResponseProcessor> _mapProcessors;
     
     /**
-     * {@inheritDoc }
+     * Get a Processor by its name
+     * @param strName The name
+     * @return The preocessor
      */
-    @Override
-    public String getMessageType()
+    public static ResponseProcessor getProcessor( String strName )
     {
-        return MESSAGE_TYPE;
-    }
-
-    /**
-     * {@inheritDoc }
-     */
-    @Override
-    public String render( String strJsonInput )
-    {
-        String strMessage = null;
-        try
+        if( _mapProcessors == null )
         {
-            Map<String, Object> model = new HashMap<>();
-            model = _mapper.readValue( strJsonInput, new TypeReference<Map<String, Object>>(){});
-            HtmlTemplate message = AppTemplateService.getTemplate( TEMPLATE_BUTTONS_MESSAGE , LocaleService.getDefault(), model );
-            strMessage = message.getHtml();
+            _mapProcessors = new HashMap<>();
+            List<ResponseProcessor> listProcessors = SpringContextService.getBeansOfType( ResponseProcessor.class );
+            for( ResponseProcessor processor : listProcessors )
+            {
+                _mapProcessors.put( processor.getName() , processor );
+            }
         }
-        catch( IOException ex )
-        {
-            AppLogService.error( "Error rendering message : " + ex.getMessage() , ex );
-        }
-        return strMessage;
+        return _mapProcessors.get( strName );
     }
-
 }
