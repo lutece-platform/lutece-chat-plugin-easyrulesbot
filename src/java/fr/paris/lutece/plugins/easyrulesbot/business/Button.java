@@ -43,6 +43,7 @@ public class Button
     private String _strIcon;
     private String _strTitle;
     private String _strValue;
+    private String _strType;
 
     /**
      * Returns the Icon
@@ -106,4 +107,27 @@ public class Button
     {
         _strValue = strValue;
     }
+    
+    /**
+     * Returns the Type
+     * 
+     * @return The Type
+     */
+    public String getType( )
+    {
+        return _strType;
+    }
+
+    /**
+     * Sets the Type
+     * 
+     * @param strType
+     *            The Type
+     */
+    public void setType( String strType )
+    {
+        _strType = strType;
+    }
+
+    
 }

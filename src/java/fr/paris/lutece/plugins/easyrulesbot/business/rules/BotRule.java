@@ -34,11 +34,9 @@
 package fr.paris.lutece.plugins.easyrulesbot.business.rules;
 
 import fr.paris.lutece.plugins.easyrulesbot.business.BotExecutor;
+import fr.paris.lutece.plugins.easyrulesbot.business.Button;
 import fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions.Condition;
-import fr.paris.lutece.plugins.easyrulesbot.service.MessageRendererService;
-import fr.paris.lutece.plugins.easyrulesbot.service.message.MessageRenderer;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.processors.ResponseProcessor;
-import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.web.l10n.LocaleService;
 import fr.paris.lutece.util.html.HtmlTemplate;
@@ -46,6 +44,7 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import org.easyrules.api.Rule;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 import java.util.List;
 import java.util.Locale;
@@ -56,6 +55,8 @@ import java.util.Map;
  */
 public class BotRule implements Rule, Comparable, Serializable
 {
+    private static final String TEMPLATE_BUTTONS = "/skin/plugins/easyrulesbot/buttons_message.html";
+    private static final String MARK_BUTTONS = "buttons";
     private static final String DEFAULT_MESSAGE_TYPE = "text";
     private static final long serialVersionUID = 1L;
 
@@ -66,6 +67,7 @@ public class BotRule implements Rule, Comparable, Serializable
     private String _strMessageType = DEFAULT_MESSAGE_TYPE;
     private String _strResponseCommentTemplate;
     private String _strDataKey;
+    private List<Button> _listButtons;
     private int _nPriority;
     private BotExecutor _executor;
     private ResponseProcessor _responseProcessor;
@@ -174,6 +176,27 @@ public class BotRule implements Rule, Comparable, Serializable
     }
 
     /**
+     * Returns the Buttons
+     * 
+     * @return The Buttons
+     */
+    public List<Button> getButtons( )
+    {
+        return _listButtons;
+    }
+
+    /**
+     * Sets the Buttons
+     * 
+     * @param listButtons
+     *            The Buttons
+     */
+    public void setButtons( List<Button> listButtons )
+    {
+        _listButtons = listButtons;
+    }
+
+    /**
      * Returns the Question
      * 
      * @param mapData
@@ -184,12 +207,19 @@ public class BotRule implements Rule, Comparable, Serializable
      */
     public String getMessage( Map<String, String> mapData, Locale locale )
     {
-        String strMessage = _strMessageTemplate;
+        String strMessage = fillTemplate( _strMessageTemplate , mapData );
+        
+        
+        if( (_listButtons != null) && ! _listButtons.isEmpty() )
+        {
+            Map< String , Object> model = new HashMap<>();
+            model.put( MARK_BUTTONS , _listButtons );
+            HtmlTemplate tButtons = AppTemplateService.getTemplate( TEMPLATE_BUTTONS, locale, model );
+            String strButtons = tButtons.getHtml();
+            strMessage += "\n" + strButtons; 
+        }
 
-        MessageRenderer renderer = MessageRendererService.getRenderer( getMessageType( ) );
-        strMessage = renderer.render( strMessage );
-
-        return fillTemplate( strMessage, mapData );
+        return strMessage;
     }
 
     /**

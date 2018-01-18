@@ -147,6 +147,7 @@ public class YamlBotLoader
                 listConditions.add( condition );
             }
             rule.setListConditions( listConditions );
+            rule.setButtons( yamlRule.getButtons() );
             engine.registerRule( rule );
         }
         bot.setRulesEngine( engine );

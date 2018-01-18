@@ -261,4 +261,6 @@ public class YamlRule
     {
         _strResponseComment = strResponseComment;
     }
+    
+    
 }
