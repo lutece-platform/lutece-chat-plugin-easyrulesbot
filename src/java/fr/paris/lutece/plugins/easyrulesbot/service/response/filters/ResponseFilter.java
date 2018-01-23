@@ -63,5 +63,5 @@ public interface ResponseFilter
      * @throws ResponseProcessingException
      *             if an exception occurs during processing
      */
-    String filterResponse( String strResponse, Locale locale, Map mapData ) throws ResponseProcessingException;
+    String filterResponse( String strResponse, Locale locale, Map<String, String> mapData ) throws ResponseProcessingException;
 }

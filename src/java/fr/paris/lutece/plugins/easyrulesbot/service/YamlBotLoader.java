@@ -163,6 +163,7 @@ public class YamlBotLoader
             {
                 throw new YamlBotLoadingException( "Failed to create bot : unable to find filter " + yamlFilter.getFilter( ) );
             }
+            listFilters.add( filter );
         }
         bot.setListResponseFilters( listFilters );
 
