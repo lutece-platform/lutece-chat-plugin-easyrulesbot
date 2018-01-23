@@ -137,14 +137,17 @@ public class YamlBotLoader
             rule.setResponseProcessor( processor );
             rule.setResponseCommentTemplate( yamlRule.getResponseComment( ) );
             List<Condition> listConditions = new ArrayList<>( );
-            for ( YamlCondition yamlCondition : yamlRule.getConditions( ) )
+            if( yamlRule.getConditions( ) != null )
             {
-                Condition condition = ConditionsService.getCondition( yamlCondition.getCondition( ) );
-                if ( condition == null )
+                for ( YamlCondition yamlCondition : yamlRule.getConditions( ) )
                 {
-                    throw new YamlBotLoadingException( "Failed to create bot : unable to find condition " + yamlCondition.getCondition( ) );
+                    Condition condition = ConditionsService.getCondition( yamlCondition.getCondition( ) );
+                    if ( condition == null )
+                    {
+                        throw new YamlBotLoadingException( "Failed to create bot : unable to find condition " + yamlCondition.getCondition( ) );
+                    }
+                    listConditions.add( condition );
                 }
-                listConditions.add( condition );
             }
             rule.setListConditions( listConditions );
             rule.setButtons( yamlRule.getButtons() );

@@ -84,7 +84,11 @@ public class EasyRulesBot extends AbstractChatBot
         executor.fireRules( );
 
         String strQuestion = executor.getQuestion( );
-        listBotPost.add( new BotPost( strQuestion, BotPost.CONTENT_TYPE_TEXT ) );
+        
+        if( strQuestion != null )
+        {
+            listBotPost.add( new BotPost( strQuestion, BotPost.CONTENT_TYPE_TEXT ) );
+        }
 
         executor.traceData( );
 
@@ -133,30 +137,15 @@ public class EasyRulesBot extends AbstractChatBot
     {
         return _listResponseFilters;
     }
-
+    
     /**
-     * Last bot post build with data collected. Default implementation. Should be override
-     * 
-     * @param mapData
-     *            The data
-     * @param locale
-     *            The locale
-     * @return The last message
+     * {@inheritDoc }
      */
     @Override
-    public String processData( Map<String, String> mapData, Locale locale )
+    public void reset( String strConversationId )
     {
-        String strLastMessage = I18nService.getLocalizedString( PROPERTY_LAST_MESSAGE, locale );
-        StringBuilder sbLastMessage = new StringBuilder( strLastMessage );
-        sbLastMessage.append( "<ul>" );
-
-        for ( String strKey : mapData.keySet( ) )
-        {
-            sbLastMessage.append( "<li>" ).append( strKey ).append( " : " ).append( mapData.get( strKey ) ).append( "</li>" );
-        }
-
-        sbLastMessage.append( "</ul>" );
-
-        return sbLastMessage.toString( );
+        super.reset( strConversationId );
+        
+        _mapBotExecutor.remove( strConversationId );
     }
 }

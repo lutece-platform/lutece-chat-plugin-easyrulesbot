@@ -128,7 +128,7 @@ public class StopOnWordFilter extends AbstractFilter implements ResponseFilter
      */
     private String getStopResponseMessage( Locale locale )
     {
-        String strMessage = "";
+        String strMessage;
 
         if ( locale == null )
         {

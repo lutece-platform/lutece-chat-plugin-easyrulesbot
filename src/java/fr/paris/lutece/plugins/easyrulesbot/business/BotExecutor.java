@@ -74,6 +74,8 @@ public class BotExecutor implements Serializable
      * 
      * @param bot
      *            The bot to execute
+     * @param locale
+     *            The locale
      */
     public BotExecutor( EasyRulesBot bot, Locale locale )
     {
@@ -98,16 +100,11 @@ public class BotExecutor implements Serializable
      */
     public String getQuestion( )
     {
-        String strQuestion;
+        String strQuestion = null;
 
         if ( _currentRule != null )
         {
             strQuestion = _currentRule.getMessage( _mapData, _locale );
-        }
-        else
-        {
-            // All rules has been triggered
-            strQuestion = _bot.processData( _mapData, _locale );
         }
 
         return strQuestion;
@@ -116,16 +113,17 @@ public class BotExecutor implements Serializable
     /**
      * Process the response
      * 
-     * @param strResponse
-     *            The user response
+     * @param strUserMessage
+     *            The user message
      * @return The list of post
      * @throws ResponseProcessingException
      *             if an exception occurs during processing
      */
-    public List<BotPost> processResponse( String strResponse ) throws ResponseProcessingException
+    public List<BotPost> processResponse( String strUserMessage ) throws ResponseProcessingException
     {
         List<BotPost> listBotPost = new ArrayList<>( );
-        String strResponseValue = processFilters( strResponse );
+        
+        String strResponseValue = processFilters( strUserMessage );
 
         if ( _currentRule != null )
         {
@@ -255,4 +253,6 @@ public class BotExecutor implements Serializable
     {
         return _bot.getAvatarUrl( );
     }
+
+    
 }
