@@ -33,36 +33,56 @@
  */
 
 
-package fr.paris.lutece.plugins.easyrulesbot.service.response.filters;
+package fr.paris.lutece.plugins.easyrulesbot.service.bot.rules.conditions;
 
-import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
-import java.util.Locale;
+import java.util.List;
 import java.util.Map;
 
 /**
- * DebugFilter
+ * DataMissingCondition
  */
-public class DebugFilter extends AbstractFilter implements ResponseFilter
+public class DataMissingCondition  extends AbstractCondition implements Condition
 {
-    private static final String KEYWORD_SHOW_DATA_KEYS = "showdatakeys";
     /**
      * {@inheritDoc }
      */
     @Override
-    public String filterResponse( String strResponse, Locale locale, Map<String, String> mapData ) throws ResponseProcessingException
+    public boolean evaluate( Map<String, String> mapData, String strRuleDataKey )
     {
-        if( KEYWORD_SHOW_DATA_KEYS.equalsIgnoreCase( strResponse ) )
+        List<String> listParameters = getParameters();
+        
+        if( listParameters == null || listParameters.isEmpty() )
         {
-            StringBuilder sbDataKeysDump = new StringBuilder();
-            sbDataKeysDump.append( "<ul>");
-            for( String strKey : mapData.keySet() )
-            {
-                sbDataKeysDump.append( "<li>").append( strKey ).append( " : ").append( mapData.get( strKey ) ).append( "</li>" );
-            }
-            sbDataKeysDump.append( "</ul>" );
-            throw new  ResponseProcessingException( sbDataKeysDump.toString() );
+            // if no parameter check if rule datakey is missing
+            return !mapData.containsKey( strRuleDataKey );
         }
-        return strResponse;
+        
+        for( String strDataKey : listParameters )
+        {
+            if( !mapData.containsKey( strDataKey ))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public String toString()
+    {
+        StringBuilder sbOutput = new StringBuilder( "Condition DataMissing : following datakeys should be defined :");
+        if(  getParameters() != null )
+        {
+            for( String strDataKey : getParameters() )
+            {
+                sbOutput.append( " " ).append( strDataKey );
+            }
+        }
+        return sbOutput.toString(); 
+    }
+    
+    
 }

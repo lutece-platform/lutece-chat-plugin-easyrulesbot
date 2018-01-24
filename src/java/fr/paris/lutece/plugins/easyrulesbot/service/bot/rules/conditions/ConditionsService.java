@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,35 +32,42 @@
  * License 1.0
  */
 
-package fr.paris.lutece.plugins.easyrulesbot.business;
+package fr.paris.lutece.plugins.easyrulesbot.service.bot.rules.conditions;
+
+import fr.paris.lutece.portal.service.spring.SpringContextService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * YamlCondition
+ * ConditionsService
  */
-public class YamlCondition
+public class ConditionsService
 {
-    // Variables declarations
-    private String _strCondition;
+    private static Map<String, ConditionFactory> _mapConditionFactories;
 
     /**
-     * Returns the Condition
+     * Get a Condition by its name
      * 
-     * @return The Condition
+     * @param strName
+     *            The name
+     * @return The preocessor
      */
-    public String getCondition( )
+    public static Condition getCondition( String strName )
     {
-        return _strCondition;
-    }
-
-    /**
-     * Sets the Condition
-     * 
-     * @param strCondition
-     *            The Condition
-     */
-    public void setCondition( String strCondition )
-    {
-        _strCondition = strCondition;
+        
+        if ( _mapConditionFactories == null )
+        {
+            _mapConditionFactories = new HashMap<>( );
+            List<ConditionFactory> listConditionsFactory = SpringContextService.getBeansOfType( ConditionFactory.class );
+            for ( ConditionFactory factory : listConditionsFactory )
+            {
+                _mapConditionFactories.put( factory.getName( ), factory );
+            }
+        }
+        ConditionFactory factory = _mapConditionFactories.get( strName );
+        
+        return factory.createObject();
     }
 
 }

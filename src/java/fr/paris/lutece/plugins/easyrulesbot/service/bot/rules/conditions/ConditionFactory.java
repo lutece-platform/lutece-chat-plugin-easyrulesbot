@@ -33,36 +33,13 @@
  */
 
 
-package fr.paris.lutece.plugins.easyrulesbot.service.response.filters;
+package fr.paris.lutece.plugins.easyrulesbot.service.bot.rules.conditions;
 
-import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
-import java.util.Locale;
-import java.util.Map;
+import fr.paris.lutece.plugins.easyrulesbot.service.ObjectFactory;
 
 /**
- * DebugFilter
+ * ConditionFactory
  */
-public class DebugFilter extends AbstractFilter implements ResponseFilter
+public class ConditionFactory extends ObjectFactory<Condition>
 {
-    private static final String KEYWORD_SHOW_DATA_KEYS = "showdatakeys";
-    /**
-     * {@inheritDoc }
-     */
-    @Override
-    public String filterResponse( String strResponse, Locale locale, Map<String, String> mapData ) throws ResponseProcessingException
-    {
-        if( KEYWORD_SHOW_DATA_KEYS.equalsIgnoreCase( strResponse ) )
-        {
-            StringBuilder sbDataKeysDump = new StringBuilder();
-            sbDataKeysDump.append( "<ul>");
-            for( String strKey : mapData.keySet() )
-            {
-                sbDataKeysDump.append( "<li>").append( strKey ).append( " : ").append( mapData.get( strKey ) ).append( "</li>" );
-            }
-            sbDataKeysDump.append( "</ul>" );
-            throw new  ResponseProcessingException( sbDataKeysDump.toString() );
-        }
-        return strResponse;
-    }
-
 }

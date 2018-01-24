@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,19 +31,20 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.service;
+package fr.paris.lutece.plugins.easyrulesbot.service.bot;
 
 import fr.paris.lutece.plugins.chatbot.business.BotPost;
 import fr.paris.lutece.plugins.chatbot.service.bot.AbstractChatBot;
-import fr.paris.lutece.plugins.easyrulesbot.business.BotExecutor;
+import fr.paris.lutece.plugins.easyrulesbot.service.bot.rules.BotRule;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.filters.ResponseFilter;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
-import fr.paris.lutece.portal.service.i18n.I18nService;
+import fr.paris.lutece.portal.web.l10n.LocaleService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import org.easyrules.api.Rule;
 import org.easyrules.api.RulesEngine;
 
 /**
@@ -148,4 +149,27 @@ public class EasyRulesBot extends AbstractChatBot
         
         _mapBotExecutor.remove( strConversationId );
     }
+    
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public String toString()
+    {
+        StringBuilder sbOutput = new StringBuilder( "\nEASYRULE BOT\n");
+        sbOutput.append( "\n key : " ).append( getKey() );
+        sbOutput.append( "\n name : " ).append( getName( LocaleService.getDefault()) );
+        sbOutput.append( "\n description : " ).append( getDescription( LocaleService.getDefault() ) );
+        sbOutput.append( "\n avatar URL : " ).append( getAvatarUrl() );
+        sbOutput.append( "\n welcome message : " ).append( getWelcomeMessage() );
+        sbOutput.append( "\n Rules : " );
+        for( Rule rule : getRulesEngine().getRules() )
+        {
+            BotRule br = (BotRule) rule;
+            sbOutput.append( br );
+        }
+        return sbOutput.toString();
+    }
+
+    
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2016, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,40 +31,41 @@
  *
  * License 1.0
  */
+package fr.paris.lutece.plugins.easyrulesbot.service.bot.rules.conditions;
 
-package fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions;
-
-import fr.paris.lutece.portal.service.spring.SpringContextService;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
- * ConditionsService
+ * DataValueCondition
  */
-public class ConditionsService
+public class DataValueCondition extends AbstractCondition implements Condition
 {
-    private static Map<String, Condition> _mapConditions;
-
     /**
-     * Get a Condition by its name
-     * 
-     * @param strName
-     *            The name
-     * @return The preocessor
+     * {@inheritDoc }
      */
-    public static Condition getCondition( String strName )
+    @Override
+    public boolean evaluate( Map<String, String> mapData, String strRuleDataKey )
     {
-        if ( _mapConditions == null )
-        {
-            _mapConditions = new HashMap<>( );
-            List<Condition> listConditions = SpringContextService.getBeansOfType( Condition.class );
-            for ( Condition condition : listConditions )
-            {
-                _mapConditions.put( condition.getName( ), condition );
-            }
-        }
-        return _mapConditions.get( strName );
-    }
+        String strDataKey = getParameters().get( 0 );
+        String strDataValue = getParameters().get( 1 );
 
+        return strDataValue.equals( mapData.get( strDataKey ) );
+    }
+    
+    
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public String toString()
+    {
+        StringBuilder sbOutput = new StringBuilder( );
+        
+        sbOutput.append(  "Condition DataValue : the datakey '"  ).append( getParameters().get( 0 ))
+                .append( "' must have the value '").append( getParameters().get( 1 ) ).append( "'");
+
+        return sbOutput.toString(); 
+    }
+    
+    
 }

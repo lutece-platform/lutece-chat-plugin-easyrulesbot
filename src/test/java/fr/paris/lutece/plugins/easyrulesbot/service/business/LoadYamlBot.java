@@ -33,8 +33,8 @@
  */
 package fr.paris.lutece.plugins.easyrulesbot.service.business;
 
-import fr.paris.lutece.plugins.easyrulesbot.business.YamlBot;
-import fr.paris.lutece.plugins.easyrulesbot.service.YamlBotLoader;
+import fr.paris.lutece.plugins.easyrulesbot.service.yaml.model.YamlBot;
+import fr.paris.lutece.plugins.easyrulesbot.service.yaml.YamlBotLoader;
 import fr.paris.lutece.test.Utils;
 import java.io.IOException;
 import org.junit.Test;

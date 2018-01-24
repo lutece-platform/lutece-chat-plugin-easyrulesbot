@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,102 +32,76 @@
  * License 1.0
  */
 
-package fr.paris.lutece.plugins.easyrulesbot.business;
+package fr.paris.lutece.plugins.easyrulesbot.service.yaml.model;
+
+import java.util.List;
 
 /**
- * Button
+ * YamlCondition
  */
-public class Button
+public class YamlCondition
 {
     // Variables declarations
-    private String _strIcon;
-    private String _strTitle;
-    private String _strValue;
-    private String _strType;
+    private String _strCondition;
+    private List<String> _listParameters;
+
 
     /**
-     * Returns the Icon
+     * Returns the Condition
      * 
-     * @return The Icon
+     * @return The Condition
      */
-    public String getIcon( )
+    public String getCondition( )
     {
-        return _strIcon;
+        return _strCondition;
     }
 
     /**
-     * Sets the Icon
+     * Sets the Condition
      * 
-     * @param strIcon
-     *            The Icon
+     * @param strCondition
+     *            The Condition
      */
-    public void setIcon( String strIcon )
+    public void setCondition( String strCondition )
     {
-        _strIcon = strIcon;
+        _strCondition = strCondition;
+    }
+
+   /**
+    * Returns the Parameters
+    * @return The Parameters
+    */ 
+    public List<String> getParameters()
+    {
+        return _listParameters;
+    }
+
+   /**
+    * Sets the Parameters
+    * @param listParameters The Parameters
+    */ 
+    public void setParameters( List<String> listParameters )
+    {
+        _listParameters = listParameters;
     }
 
     /**
-     * Returns the Title
-     * 
-     * @return The Title
+     * {@inheritDoc }
      */
-    public String getTitle( )
+    @Override
+    public String toString()
     {
-        return _strTitle;
+        StringBuilder sbOutput = new StringBuilder( "\n     CONDITION");
+        sbOutput.append( "\n     name : " ).append( _strCondition );
+        sbOutput.append( "\n     parameters : " );
+        if( _listParameters != null )
+        {
+            for( String strParameter : _listParameters )
+            {
+                sbOutput.append( " " ).append( strParameter );
+            }
+        }
+        return sbOutput.toString();
     }
-
-    /**
-     * Sets the Title
-     * 
-     * @param strTitle
-     *            The Title
-     */
-    public void setTitle( String strTitle )
-    {
-        _strTitle = strTitle;
-    }
-
-    /**
-     * Returns the Value
-     * 
-     * @return The Value
-     */
-    public String getValue( )
-    {
-        return _strValue;
-    }
-
-    /**
-     * Sets the Value
-     * 
-     * @param strValue
-     *            The Value
-     */
-    public void setValue( String strValue )
-    {
-        _strValue = strValue;
-    }
-    
-    /**
-     * Returns the Type
-     * 
-     * @return The Type
-     */
-    public String getType( )
-    {
-        return _strType;
-    }
-
-    /**
-     * Sets the Type
-     * 
-     * @param strType
-     *            The Type
-     */
-    public void setType( String strType )
-    {
-        _strType = strType;
-    }
-
     
 }

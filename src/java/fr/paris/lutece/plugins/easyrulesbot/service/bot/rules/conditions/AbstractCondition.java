@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2016, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,73 +31,60 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions;
 
-import java.util.Map;
+package fr.paris.lutece.plugins.easyrulesbot.service.bot.rules.conditions;
+
+import java.util.List;
 
 /**
- * DataValueCondition
+ * AbstractCondition
  */
-public class DataValueCondition extends AbstractCondition implements Condition
+public abstract class AbstractCondition implements Condition
 {
-    private static final String UNDEFINED = "undefined";
-
-    // Variables declarations
-    private String _strDataKey;
-    private String _strDataValue;
+    private String _strName;
 
     /**
-     * Returns the DataKey
+     * Returns the Name
      * 
-     * @return The DataKey
+     * @return The Name
      */
-    public String getDataKey( )
-    {
-        return _strDataKey;
-    }
-
-    /**
-     * Sets the DataKey
-     * 
-     * @param strDataKey
-     *            The DataKey
-     */
-    public void setDataKey( String strDataKey )
-    {
-        _strDataKey = strDataKey;
-    }
-
-    /**
-     * Returns the DataValue
-     * 
-     * @return The DataValue
-     */
-    public String getDataValue( )
-    {
-        return _strDataValue;
-    }
-
-    /**
-     * Sets the DataValue
-     * 
-     * @param strDataValue
-     *            The DataValue
-     */
-    public void setDataValue( String strDataValue )
-    {
-        _strDataValue = strDataValue;
-    }
-
     @Override
-    public boolean evaluate( Map<String, String> mapData, String strRuleDataKey )
+    public String getName( )
     {
-        if ( UNDEFINED.equalsIgnoreCase( _strDataValue ) )
-        {
-            return !mapData.containsKey( _strDataKey );
-        }
+        return _strName;
+    }
 
-        String strValue = mapData.get( _strDataKey );
+    /**
+     * Sets the Name
+     * 
+     * @param strName
+     *            The Name
+     */
+    public void setName( String strName )
+    {
+        _strName = strName;
+    }
 
-        return _strDataValue.equals( strValue );
+    private List<String> _listParameters;
+
+
+   /**
+    * Returns the Parameters
+    * @return The Parameters
+    */ 
+    @Override
+    public List<String> getParameters()
+    {
+        return _listParameters;
+    }
+
+   /**
+    * Sets the Parameters
+    * @param listParameters The Parameters
+    */ 
+    @Override
+    public void setParameters( List<String> listParameters )
+    {
+        _listParameters = listParameters;
     }
 }

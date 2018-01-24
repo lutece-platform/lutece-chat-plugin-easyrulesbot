@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2016, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,11 +31,11 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.business.rules;
+package fr.paris.lutece.plugins.easyrulesbot.service.bot.rules;
 
-import fr.paris.lutece.plugins.easyrulesbot.business.BotExecutor;
-import fr.paris.lutece.plugins.easyrulesbot.business.Button;
-import fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions.Condition;
+import fr.paris.lutece.plugins.easyrulesbot.service.bot.BotExecutor;
+import fr.paris.lutece.plugins.easyrulesbot.service.yaml.model.YamlButton;
+import fr.paris.lutece.plugins.easyrulesbot.service.bot.rules.conditions.Condition;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.processors.ResponseProcessor;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.web.l10n.LocaleService;
@@ -67,7 +67,7 @@ public class BotRule implements Rule, Comparable, Serializable
     private String _strMessageType = DEFAULT_MESSAGE_TYPE;
     private String _strResponseCommentTemplate;
     private String _strDataKey;
-    private List<Button> _listButtons;
+    private List<YamlButton> _listButtons;
     private int _nPriority;
     private BotExecutor _executor;
     private ResponseProcessor _responseProcessor;
@@ -180,7 +180,7 @@ public class BotRule implements Rule, Comparable, Serializable
      * 
      * @return The Buttons
      */
-    public List<Button> getButtons( )
+    public List<YamlButton> getButtons( )
     {
         return _listButtons;
     }
@@ -191,7 +191,7 @@ public class BotRule implements Rule, Comparable, Serializable
      * @param listButtons
      *            The Buttons
      */
-    public void setButtons( List<Button> listButtons )
+    public void setButtons( List<YamlButton> listButtons )
     {
         _listButtons = listButtons;
     }
@@ -369,4 +369,29 @@ public class BotRule implements Rule, Comparable, Serializable
 
         return template.getHtml( );
     }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public String toString()
+    {
+        StringBuilder sbOutput = new StringBuilder( "\n   RULE");
+        sbOutput.append( "\n   name : " ).append( _strName );
+        sbOutput.append( "\n   description : " ).append( _strDescription );
+        sbOutput.append( "\n   message : " ).append( _strMessageTemplate );
+        sbOutput.append( "\n   priority : " ).append( _nPriority );
+        sbOutput.append( "\n   data key : " ).append( _strDataKey );
+        sbOutput.append( "\n   Conditions : " );
+        if( _listConditions != null )
+        {
+            for( Condition condition : _listConditions )
+            {
+                sbOutput.append( "\n  " ).append( condition );
+            }
+        }
+        return sbOutput.toString();
+    }
+    
+    
 }

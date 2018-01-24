@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,34 +32,102 @@
  * License 1.0
  */
 
-package fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions;
+package fr.paris.lutece.plugins.easyrulesbot.service.yaml.model;
 
 /**
- * AbstractCondition
+ * YamlButton
  */
-public class AbstractCondition
+public class YamlButton
 {
-    private String _strName;
+    // Variables declarations
+    private String _strIcon;
+    private String _strTitle;
+    private String _strValue;
+    private String _strType;
 
     /**
-     * Returns the Name
+     * Returns the Icon
      * 
-     * @return The Name
+     * @return The Icon
      */
-    public String getName( )
+    public String getIcon( )
     {
-        return _strName;
+        return _strIcon;
     }
 
     /**
-     * Sets the Name
+     * Sets the Icon
      * 
-     * @param strName
-     *            The Name
+     * @param strIcon
+     *            The Icon
      */
-    public void setName( String strName )
+    public void setIcon( String strIcon )
     {
-        _strName = strName;
+        _strIcon = strIcon;
     }
 
+    /**
+     * Returns the Title
+     * 
+     * @return The Title
+     */
+    public String getTitle( )
+    {
+        return _strTitle;
+    }
+
+    /**
+     * Sets the Title
+     * 
+     * @param strTitle
+     *            The Title
+     */
+    public void setTitle( String strTitle )
+    {
+        _strTitle = strTitle;
+    }
+
+    /**
+     * Returns the Value
+     * 
+     * @return The Value
+     */
+    public String getValue( )
+    {
+        return _strValue;
+    }
+
+    /**
+     * Sets the Value
+     * 
+     * @param strValue
+     *            The Value
+     */
+    public void setValue( String strValue )
+    {
+        _strValue = strValue;
+    }
+    
+    /**
+     * Returns the Type
+     * 
+     * @return The Type
+     */
+    public String getType( )
+    {
+        return _strType;
+    }
+
+    /**
+     * Sets the Type
+     * 
+     * @param strType
+     *            The Type
+     */
+    public void setType( String strType )
+    {
+        _strType = strType;
+    }
+
+    
 }

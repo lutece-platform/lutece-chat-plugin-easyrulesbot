@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,18 +32,19 @@
  * License 1.0
  */
 
-package fr.paris.lutece.plugins.easyrulesbot.service;
+package fr.paris.lutece.plugins.easyrulesbot.service.yaml;
 
+import fr.paris.lutece.plugins.easyrulesbot.service.yaml.model.YamlFilter;
+import fr.paris.lutece.plugins.easyrulesbot.service.yaml.model.YamlBot;
+import fr.paris.lutece.plugins.easyrulesbot.service.yaml.model.YamlRule;
+import fr.paris.lutece.plugins.easyrulesbot.service.yaml.model.YamlCondition;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import fr.paris.lutece.plugins.chatbot.service.BotService;
-import fr.paris.lutece.plugins.easyrulesbot.business.YamlBot;
-import fr.paris.lutece.plugins.easyrulesbot.business.YamlCondition;
-import fr.paris.lutece.plugins.easyrulesbot.business.YamlRule;
-import fr.paris.lutece.plugins.easyrulesbot.business.YamlFilter;
-import fr.paris.lutece.plugins.easyrulesbot.business.rules.BotRule;
-import fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions.Condition;
-import fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions.ConditionsService;
+import fr.paris.lutece.plugins.easyrulesbot.service.bot.rules.BotRule;
+import fr.paris.lutece.plugins.easyrulesbot.service.bot.rules.conditions.Condition;
+import fr.paris.lutece.plugins.easyrulesbot.service.bot.rules.conditions.ConditionsService;
+import fr.paris.lutece.plugins.easyrulesbot.service.bot.EasyRulesBot;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.filters.FiltersService;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.filters.ResponseFilter;
 import fr.paris.lutece.plugins.easyrulesbot.service.response.processors.ProcessorsService;
@@ -73,7 +74,7 @@ public class YamlBotLoader
         File fBotPath = new File( strBotPath );
 
         File [ ] files = fBotPath.listFiles( new YamlFilenameFilter( ) );
-        AppLogService.info( "Loading YAML bots ... " );
+        AppLogService.debug( "Loading YAML bots ... " );
         for ( File file : files )
         {
             try
@@ -82,7 +83,7 @@ public class YamlBotLoader
                 YamlBot yBot = loadYamlBot( strYaml );
                 EasyRulesBot bot = createBot( yBot );
                 BotService.register( bot );
-                AppLogService.info( "New YAML bot registered : " + yBot.getName( ) );
+                AppLogService.debug( "New YAML bot registered : " + yBot.getName( ) );
             }
             catch( IOException | YamlBotLoadingException ex )
             {
@@ -97,6 +98,7 @@ public class YamlBotLoader
 
         YamlBot bot = mapper.readValue( strYaml, YamlBot.class );
 
+        AppLogService.debug( "Loaded bot : " + bot );
         return bot;
     }
 
@@ -146,6 +148,7 @@ public class YamlBotLoader
                     {
                         throw new YamlBotLoadingException( "Failed to create bot : unable to find condition " + yamlCondition.getCondition( ) );
                     }
+                    condition.setParameters( yamlCondition.getParameters() );
                     listConditions.add( condition );
                 }
             }
@@ -166,6 +169,8 @@ public class YamlBotLoader
             listFilters.add( filter );
         }
         bot.setListResponseFilters( listFilters );
+        
+        AppLogService.debug( "Loaded bot : " + bot );
 
         return bot;
     }

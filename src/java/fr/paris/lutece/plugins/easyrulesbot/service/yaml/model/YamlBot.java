@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.business;
+package fr.paris.lutece.plugins.easyrulesbot.service.yaml.model;
 
 import java.util.List;
 
@@ -240,4 +240,26 @@ public class YamlBot
         _listFilters = listFilters;
     }
 
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public String toString()
+    {
+        StringBuilder sbOutput = new StringBuilder( "\nEASYRULE BOT\n");
+        sbOutput.append( "\n key : " ).append( _strKey );
+        sbOutput.append( "\n name : " ).append( _strName );
+        sbOutput.append( "\n language : " ).append( _strLanguage );
+        sbOutput.append( "\n description : " ).append( _strDescription );
+        sbOutput.append( "\n avatar URL : " ).append( _strAvatarUrl );
+        sbOutput.append( "\n welcome message : " ).append( _strWelcomeMessage );
+        sbOutput.append( "\n Rules : " );
+        for( YamlRule rule : _listRules )
+        {
+            sbOutput.append( "\n  " ).append( rule );
+        }
+        return sbOutput.toString();
+    }
+
+    
 }

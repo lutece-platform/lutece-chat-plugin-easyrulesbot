@@ -31,38 +31,81 @@
  *
  * License 1.0
  */
+package fr.paris.lutece.plugins.easyrulesbot.service;
 
-
-package fr.paris.lutece.plugins.easyrulesbot.service.response.filters;
-
-import fr.paris.lutece.plugins.easyrulesbot.service.response.exceptions.ResponseProcessingException;
-import java.util.Locale;
-import java.util.Map;
+import fr.paris.lutece.portal.service.util.AppLogService;
 
 /**
- * DebugFilter
+ * ConditionFactory
+ *
+ * @param <T>
  */
-public class DebugFilter extends AbstractFilter implements ResponseFilter
+public class ObjectFactory<T>
 {
-    private static final String KEYWORD_SHOW_DATA_KEYS = "showdatakeys";
+    // Variables declarations 
+
+    private String _strName;
+    private String _strClassName;
+
     /**
-     * {@inheritDoc }
+     * Returns the Name
+     *
+     * @return The Name
      */
-    @Override
-    public String filterResponse( String strResponse, Locale locale, Map<String, String> mapData ) throws ResponseProcessingException
+    public String getName()
     {
-        if( KEYWORD_SHOW_DATA_KEYS.equalsIgnoreCase( strResponse ) )
-        {
-            StringBuilder sbDataKeysDump = new StringBuilder();
-            sbDataKeysDump.append( "<ul>");
-            for( String strKey : mapData.keySet() )
-            {
-                sbDataKeysDump.append( "<li>").append( strKey ).append( " : ").append( mapData.get( strKey ) ).append( "</li>" );
-            }
-            sbDataKeysDump.append( "</ul>" );
-            throw new  ResponseProcessingException( sbDataKeysDump.toString() );
-        }
-        return strResponse;
+        return _strName;
     }
 
+    /**
+     * Sets the Name
+     *
+     * @param strName The Name
+     */
+    public void setName( String strName )
+    {
+        _strName = strName;
+    }
+
+    /**
+     * Returns the ClassName
+     *
+     * @return The ClassName
+     */
+    public String getClassName()
+    {
+        return _strClassName;
+    }
+
+    /**
+     * Sets the ClassName
+     *
+     * @param strClassName The ClassName
+     */
+    public void setClassName( String strClassName )
+    {
+        _strClassName = strClassName;
+    }
+
+    /**
+     * Create
+     *
+     * @param <T>
+     * @return
+     */
+    public <T> T createObject()
+    {
+        T object = null;
+
+        try
+        {
+            object = (T) Class.forName( _strClassName ).newInstance();
+        }
+        catch( InstantiationException | IllegalAccessException | ClassNotFoundException ex )
+        {
+            AppLogService.error( "Error creating object :" + ex.getMessage(), ex);
+        }
+
+        return object;
+    }
 }

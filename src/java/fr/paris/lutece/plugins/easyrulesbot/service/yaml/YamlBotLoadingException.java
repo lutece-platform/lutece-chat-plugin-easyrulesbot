@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2016, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,32 +31,23 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.business.rules.conditions;
 
-import java.io.Serializable;
-
-import java.util.Map;
+package fr.paris.lutece.plugins.easyrulesbot.service.yaml;
 
 /**
- * Condition
+ * YamlBotLoadingException
  */
-public interface Condition extends Serializable
+public class YamlBotLoadingException extends Exception
 {
     /**
-     * Evaluate athe condition
+     * Constructor
      * 
-     * @param mapData
-     *            The data
-     * @param strRuleDataKey
-     *            The current rule data key
-     * @return true if the condition is validated, otherwise false
+     * @param strMessage
+     *            The message
      */
-    boolean evaluate( Map<String, String> mapData, String strRuleDataKey );
+    public YamlBotLoadingException( String strMessage )
+    {
+        super( strMessage );
+    }
 
-    /**
-     * Gets condition name
-     * 
-     * @return The name
-     */
-    String getName( );
 }

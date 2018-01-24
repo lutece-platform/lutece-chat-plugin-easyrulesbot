@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.easyrulesbot.business;
+package fr.paris.lutece.plugins.easyrulesbot.service.yaml.model;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class YamlRule
     private String _strDescription;
     private int _nPriority;
     private String _strMessage;
-    private List<Button> _listButtons;
+    private List<YamlButton> _listButtons;
     private String _strImage;
     private String _strDataKey;
     private String _strProcessor;
@@ -141,7 +141,7 @@ public class YamlRule
      * 
      * @return The Buttons
      */
-    public List<Button> getButtons( )
+    public List<YamlButton> getButtons( )
     {
         return _listButtons;
     }
@@ -152,7 +152,7 @@ public class YamlRule
      * @param listButtons
      *            The Buttons
      */
-    public void setButtons( List<Button> listButtons )
+    public void setButtons( List<YamlButton> listButtons )
     {
         _listButtons = listButtons;
     }
@@ -262,5 +262,27 @@ public class YamlRule
         _strResponseComment = strResponseComment;
     }
     
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public String toString()
+    {
+        StringBuilder sbOutput = new StringBuilder( "\n   RULE");
+        sbOutput.append( "\n   name : " ).append( _strRule );
+        sbOutput.append( "\n   description : " ).append( _strDescription );
+        sbOutput.append( "\n   message : " ).append( _strMessage );
+        sbOutput.append( "\n   priority : " ).append( _nPriority );
+        sbOutput.append( "\n   data key : " ).append( _strDataKey );
+        sbOutput.append( "\n   Conditions : " );
+        if( _listConditions != null )
+        {
+            for( YamlCondition condition : _listConditions )
+            {
+                sbOutput.append( "\n  " ).append( condition );
+            }
+        }
+        return sbOutput.toString();
+    }
     
 }
