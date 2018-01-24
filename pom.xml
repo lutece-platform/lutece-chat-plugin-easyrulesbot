@@ -10,7 +10,7 @@
     <groupId>fr.paris.lutece.plugins</groupId>
     <artifactId>plugin-easyrulesbot</artifactId>
     <packaging>lutece-plugin</packaging>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>Lutece easyrulesbot plugin</name>
 
     <repositories>
@@ -88,7 +88,7 @@
         <connection>scm:git:https://github.com/lutece-platform/lutece-chat-plugin-easyrulesbot.git</connection>
         <developerConnection>scm:git:https://github.com/lutece-platform/lutece-chat-plugin-easyrulesbot.git</developerConnection>
         <url>https://github.com/lutece-platform/lutece-chat-plugin-easyrulesbot.git</url>
-        <tag>lutece-chat-plugin-easyrulesbot-1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
  
 </project>
