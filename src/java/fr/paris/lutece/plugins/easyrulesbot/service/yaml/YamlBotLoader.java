@@ -120,6 +120,9 @@ public class YamlBotLoader
         bot.setWelcomeMessage( yamlBot.getWelcomeMessage( ) );
         bot.setAvatarUrl( yamlBot.getAvatarUrl( ) );
         bot.setStandalone( yamlBot.getStandalone( ) );
+        List<String> listLanguages = new ArrayList<String>();
+        listLanguages.add( yamlBot.getLanguage() );
+        bot.setListAvailableLanguages( listLanguages );
 
         // Get an engine and register rules
         RulesEngine engine = getEngine( );
