@@ -18,7 +18,11 @@
                     <code>module-easyrulesbot-mybot</code>.
                 </p>
                 <p>
-                    See the <a href="http://dev.lutece.paris.fr/incubator/jsp/site/Portal.jsp?page=bot">
+                    This plugin uses the <a href="https://github.com/lutece-platform/lutece-chat-plugin-chatbot" target="_blank">Plugin Chatbot</a>
+                    as conversation UI.
+                </p>
+                <p>
+                    See the <a href="http://dev.lutece.paris.fr/incubator/jsp/site/Portal.jsp?page=chatbot">
                     online demo </a> of a bot that helps you to create a pom.xml
                     in order to build a Lutece web site.
                      
@@ -27,20 +31,8 @@
         </section>
         <section name="Configuration">
             <p>
-                All the rules configuration should be defined into the Spring context file of 
+                All the rules configuration should be defined into a YAML file of 
                 the bot module. 
-            </p>
-            <p>
-                Bot rules are specialized EasyRules rules.
-            </p>
-            <p>
-                They inherit fields such as ( name, description, priority ) but have
-                also additional fields such as ( question, response processor, response comment, conditions list, ...). 
-                Each rule has also one datakey associated that is being valuated by a response processor. 
-            </p>
-            <p>
-                All messages can be defined either in the Spring context file or in the localized messages_*.properties 
-                using i18n keys. The second way is recommended. 
             </p>
             <subsection name="Response Processors">
                 <p>
@@ -63,7 +55,7 @@
             </p>
             <p>
                 <pre>
-  http://domain.com/context/jsp/site/Portal.jsp?page=bot
+  http://domain.com/context/jsp/site/Portal.jsp?page=chatbot
                 </pre>
             </p>
         </section>

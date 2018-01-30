@@ -1,27 +1,23 @@
-
-#Plugin easyrulesbot
+![](http://dev.lutece.paris.fr/jenkins/buildStatus/icon?job=chat-plugin-easyrulesbot-deploy)
+# Plugin easyrulesbot
 
 ![](http://dev.lutece.paris.fr/plugins/plugin-easyrulesbot/images/easyrulesbot.jpg)
 
-##Introduction
+## Introduction
 
 This plugin provides a chat bot engine based on the rules engine [EasyRules](https://github.com/EasyRules/easyrules) .
 
 Bots can be made by simply configure rules into a separate Lutece module : `module-easyrulesbot-mybot` .
 
-See the [online demo](http://dev.lutece.paris.fr/incubator/jsp/site/Portal.jsp?page=bot) of a bot that helps you to create a pom.xml in order to build a Lutece web site.
+This plugin uses the [Plugin Chatbot](https://github.com/lutece-platform/lutece-chat-plugin-chatbot) as conversation UI.
 
-#Configuration
+See the [online demo](http://dev.lutece.paris.fr/incubator/jsp/site/Portal.jsp?page=chatbot) of a bot that helps you to create a pom.xml in order to build a Lutece web site.
 
-All the rules configuration should be defined into the Spring context file of the bot module.
+# Configuration
 
-Bot rules are specialized EasyRules rules.
+All the rules configuration should be defined into a YAML file of the bot module.
 
-They inherit fields such as ( name, description, priority ) but have also additional fields such as ( question, response processor, response comment, conditions list, ...).Each rule has also one datakey associated that is being valuated by a response processor.
-
-All messages can be defined either in the Spring context file or in the localized messages_*.properties using i18n keys. The second way is recommended.
-
-##Response Processors
+## Response Processors
 
 Some standard processors are available for commun response handling :
  
@@ -29,14 +25,14 @@ Some standard processors are available for commun response handling :
 *  **MultipleValuesResponseProcessor** : define the datakey of the rule among several values associated each to a list of terms.
 
 
-#Usage
+# Usage
 
 For Front office bots :
 
 
 ```
 
-  http://domain.com/context/jsp/site/Portal.jsp?page=bot
+  http://domain.com/context/jsp/site/Portal.jsp?page=chatbot
                 
 ```
 
