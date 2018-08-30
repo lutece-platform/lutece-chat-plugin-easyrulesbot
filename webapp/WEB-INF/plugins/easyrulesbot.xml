@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><plug-in>
     <name>easyrulesbot</name>
-    <class>fr.paris.lutece.plugins.easyrulesbot.service.EasyRulesBotPlugin</class>
+    <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
     <version>1.0.1-SNAPSHOT</version>
     <documentation/>
     <installation/>
