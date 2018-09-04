@@ -47,11 +47,13 @@
         <property name="name" value="INSULT" />
         <property name="mapLocaleStopWordsFile">
             <map>
+                <entry key="en" value="/WEB-INF/plugins/easyrulesbot/profanity-words.txt" />
                 <entry key="fr" value="/WEB-INF/plugins/easyrulesbot/profanity-words_fr.txt" />
             </map>
         </property>
         <property name="mapLocaleResponseMessageFile">
             <map>
+                <entry key="en" value="/WEB-INF/plugins/easyrulesbot/profanity-responses.txt" />
                 <entry key="fr" value="/WEB-INF/plugins/easyrulesbot/profanity-responses_fr.txt" />
             </map>
         </property>
@@ -61,11 +63,16 @@
         <property name="name" value="THANK" />
         <property name="listStopWords">
             <list>
+                <value>Thanks</value>
+		<value>Thank you</value>
+		<value>Thx</value>
+		<value>Ty</value>
                 <value>merci</value>
             </list>
         </property>
         <property name="mapLocaleResponseMessageFile">
             <map>
+                <entry key="en" value="/WEB-INF/plugins/easyrulesbot/thankful-responses.txt" />
                 <entry key="fr" value="/WEB-INF/plugins/easyrulesbot/thankful-responses_fr.txt" />
             </map>
         </property>
@@ -76,16 +83,18 @@
         <property name="listStopWords">
             <list>
                 <value>lol</value>
+                <value>lmao</value>
+                <value>rofl</value>
                 <value>mdr</value>
-                <value>ptdr</value>
+                <value>ptdr</value>	
             </list>
         </property>
         <property name="mapLocaleResponseMessageFile">
             <map>
+                <entry key="en" value="/WEB-INF/plugins/easyrulesbot/laughfing-responses.txt" />
                 <entry key="fr" value="/WEB-INF/plugins/easyrulesbot/laughfing-responses_fr.txt" />
             </map>
         </property>
     </bean>
-    
 
 </beans>
